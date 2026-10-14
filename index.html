@@ -2,1131 +2,816 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Devraj Parmar — SDE · Full Stack · GenAI Engineer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devraj Parmar — Full Stack · GenAI · Software Engineer</title>
+<meta name="description" content="Devraj Parmar — software engineer building production-grade full-stack systems, distributed backends and agentic AI pipelines. Projects, experience, architecture and contact.">
+<meta name="theme-color" content="#05050a">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Devraj Parmar — Full Stack · GenAI Engineer">
+<meta property="og:description" content="Production-grade systems — from logistics algorithms and distributed backends to agentic AI pipelines that ship real code.">
+<meta property="og:url" content="https://portfoli0dev.netlify.app/">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://portfoli0dev.netlify.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300e5ff'/%3E%3Cstop offset='1' stop-color='%239b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='25' text-anchor='middle' fill='%2305050a'%3EDP%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-/* ─── RESET & BASE ───────────────────────────────────────── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-
-:root{
-  --bg:#050508;
-  --bg2:#0a0a10;
-  --bg3:#0f0f18;
-  --s1:#131320;
-  --s2:#1a1a2a;
-  --b1:rgba(255,255,255,0.06);
-  --b2:rgba(255,255,255,0.11);
-  --b3:rgba(255,255,255,0.18);
-  --c:#00eeff;
-  --v:#9b5cf6;
-  --g:#34d399;
-  --a:#f59e0b;
-  --pk:#ec4899;
-  --t1:#eaeaf5;
-  --t2:#7878a0;
-  --t3:#3a3a58;
-  --fd:'Syne',sans-serif;
-  --fb:'Outfit',sans-serif;
-  --fm:'JetBrains Mono',monospace;
-  --tr:.25s cubic-bezier(.4,0,.2,1);
-}
-
-body{
-  background:var(--bg);
-  color:var(--t1);
-  font-family:var(--fb);
-  font-size:15px;
-  line-height:1.6;
-  overflow-x:hidden;
-}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:linear-gradient(var(--c),var(--v));border-radius:2px}
-
-/* ─── TYPOGRAPHY ─────────────────────────────────────────── */
-.eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:var(--fm);font-size:.65rem;
-  color:var(--c);letter-spacing:3px;text-transform:uppercase;
-  margin-bottom:.75rem;
-}
-.eyebrow::before{content:'';width:18px;height:1px;background:var(--c);flex-shrink:0}
-.h1{font-family:var(--fd);font-weight:800;font-size:clamp(1.8rem,4vw,2.75rem);letter-spacing:-1.5px;line-height:1.08;color:var(--t1)}
-.sub{font-size:.95rem;color:var(--t2);line-height:1.7;max-width:520px}
-
-/* ─── NAV ─────────────────────────────────────────────────── */
-#nav{
-  position:fixed;top:0;left:0;right:0;z-index:900;
-  height:60px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(1.25rem,4vw,3rem);
-  background:rgba(5,5,8,.8);backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--b1);
-  transition:border-color var(--tr),background var(--tr);
-}
-#nav.up{background:rgba(5,5,8,.96);border-bottom-color:rgba(0,238,255,.1)}
-.nlogo{
-  font-family:var(--fd);font-weight:800;font-size:1.15rem;
-  background:linear-gradient(120deg,var(--c),var(--v));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  text-decoration:none;letter-spacing:-.5px;
-}
-.nlinks{display:flex;gap:1px;list-style:none}
-.nlinks a{
-  font-family:var(--fm);font-size:.62rem;color:var(--t2);
-  text-decoration:none;padding:5px 11px;border-radius:6px;
-  transition:color var(--tr),background var(--tr);
-  letter-spacing:.6px;text-transform:uppercase;
-}
-.nlinks a:hover,.nlinks a.on{color:var(--c);background:rgba(0,238,255,.07)}
-.nresume{
-  font-family:var(--fm);font-size:.68rem;letter-spacing:.3px;
-  padding:7px 16px;border-radius:7px;border:1px solid rgba(0,238,255,.45);
-  color:var(--c);text-decoration:none;
-  transition:all var(--tr);
-}
-.nresume:hover{background:var(--c);color:#050508;box-shadow:0 0 18px rgba(0,238,255,.35)}
-@media(max-width:768px){.nlinks{display:none}}
-
-/* ─── HERO ────────────────────────────────────────────────── */
-#hero{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-  padding:80px clamp(1.25rem,4vw,3rem) 3rem;
-}
-/* mesh blobs */
-.hbg{position:absolute;inset:0;z-index:0;overflow:hidden}
-.hblob{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform}
-.hb1{width:600px;height:600px;background:radial-gradient(var(--c),transparent 70%);opacity:.09;top:-180px;left:-120px;animation:hb1 14s ease-in-out infinite}
-.hb2{width:520px;height:520px;background:radial-gradient(var(--v),transparent 70%);opacity:.1;bottom:-140px;right:-80px;animation:hb2 16s ease-in-out infinite}
-.hb3{width:280px;height:280px;background:radial-gradient(var(--pk),transparent 70%);opacity:.05;top:40%;left:55%;animation:hb3 10s ease-in-out infinite}
-@keyframes hb1{0%,100%{transform:translate(0,0)}40%{transform:translate(40px,-30px)}70%{transform:translate(-25px,25px)}}
-@keyframes hb2{0%,100%{transform:translate(0,0)}35%{transform:translate(-30px,20px)}65%{transform:translate(20px,-35px)}}
-@keyframes hb3{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-45%,-55%) scale(1.1)}}
-/* grid */
-.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,238,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,238,255,.022) 1px,transparent 1px);background-size:56px 56px}
-/* diagonal accent line */
-.hgrid::after{content:'';position:absolute;top:0;right:25%;width:1px;height:100%;background:linear-gradient(transparent,rgba(0,238,255,.06) 30%,rgba(155,92,246,.06) 70%,transparent)}
-
-.hcontent{position:relative;z-index:1;text-align:center;max-width:840px;width:100%}
-
-.h-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--fm);font-size:.65rem;letter-spacing:1.8px;text-transform:uppercase;
-  color:var(--c);border:1px solid rgba(0,238,255,.25);background:rgba(0,238,255,.05);
-  padding:5px 16px;border-radius:100px;margin-bottom:2rem;
-  animation:fu .8s ease both;
-}
-.ldot{width:6px;height:6px;background:var(--g);border-radius:50%;animation:lp 2.2s ease infinite}
-@keyframes lp{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,.5)}50%{opacity:.5;box-shadow:0 0 0 7px transparent}}
-
-.hname{
-  font-family:var(--fd);font-weight:800;
-  font-size:clamp(3.5rem,11vw,8rem);
-  line-height:.9;letter-spacing:-3px;
-  background:linear-gradient(165deg,#fff 0%,rgba(255,255,255,.55) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:1.5rem;
-  animation:fu .8s ease .08s both;
-}
-
-.hrole-wrap{height:44px;overflow:hidden;margin-bottom:1.75rem;animation:fu .8s ease .16s both}
-.hrole{
-  display:block;
-  font-family:var(--fd);font-weight:700;
-  font-size:clamp(.95rem,2.6vw,1.5rem);letter-spacing:-.3px;
-  background:linear-gradient(90deg,var(--c),var(--v));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .45s ease;
-}
-
-.htagline{
-  font-size:clamp(.88rem,1.8vw,1rem);color:var(--t2);
-  max-width:520px;margin:0 auto 2.75rem;line-height:1.75;
-  animation:fu .8s ease .24s both;
-}
-.htagline strong{color:var(--t1);font-weight:500}
-
-.hbtns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;animation:fu .8s ease .32s both}
-
-/* ─── BUTTONS ─────────────────────────────────────────────── */
-.btn-cyan{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,var(--c),#00bbd4);
-  color:#050508;font-family:var(--fm);font-size:.74rem;font-weight:700;
-  letter-spacing:.3px;padding:12px 26px;border-radius:9px;
-  text-decoration:none;border:none;
-  transition:transform var(--tr),box-shadow var(--tr);
-}
-.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,238,255,.4)}
-.btn-out{
-  display:inline-flex;align-items:center;gap:8px;
-  background:transparent;color:var(--t1);font-family:var(--fm);font-size:.74rem;
-  letter-spacing:.3px;padding:11px 22px;border-radius:9px;
-  text-decoration:none;border:1px solid var(--b2);
-  transition:all var(--tr);
-}
-.btn-out:hover{border-color:var(--v);color:var(--v);background:rgba(155,92,246,.07);transform:translateY(-2px)}
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:8px;
-  background:transparent;color:var(--t2);font-family:var(--fm);font-size:.74rem;
-  letter-spacing:.3px;padding:11px 20px;border-radius:9px;
-  text-decoration:none;border:1px solid var(--b1);
-  transition:all var(--tr);
-}
-.btn-ghost:hover{border-color:var(--b2);color:var(--t1);transform:translateY(-2px)}
-
-.scrollhint{
-  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  font-family:var(--fm);font-size:.58rem;color:var(--t3);
-  letter-spacing:2px;text-transform:uppercase;
-  animation:fu .8s ease 1.2s both;
-}
-.sline{width:1px;height:40px;background:linear-gradient(var(--c),transparent);animation:sg 2.2s ease infinite}
-@keyframes sg{0%,100%{opacity:.25}50%{opacity:.9}}
-@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* ─── LAYOUT ──────────────────────────────────────────────── */
-.wrap{max-width:1140px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
-section{padding:88px 0;border-top:1px solid var(--b1)}
-
-/* ─── REVEAL ──────────────────────────────────────────────── */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s cubic-bezier(.4,0,.2,1)}
-.rv.on{opacity:1;transform:translateY(0)}
-.rv[data-d="1"]{transition-delay:.1s}
-.rv[data-d="2"]{transition-delay:.2s}
-.rv[data-d="3"]{transition-delay:.3s}
-
-/* ─── ABOUT ───────────────────────────────────────────────── */
-.about-grid{
-  display:grid;grid-template-columns:260px 1fr;
-  gap:5rem;align-items:start;margin-top:3.5rem;
-}
-@media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:2.5rem}}
-
-.about-left{position:sticky;top:84px}
-@media(max-width:820px){.about-left{position:static;display:flex;flex-direction:column;align-items:center;text-align:center}}
-
-.av-wrap{position:relative;width:190px;height:190px;margin-bottom:2rem}
-@media(max-width:820px){.av-wrap{margin:0 auto 2rem}}
-.av-ring{position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(from 0deg,var(--c),var(--v),var(--c));animation:spin 5s linear infinite}
-.av-ring::after{content:'';position:absolute;inset:3px;background:var(--bg);border-radius:50%}
-@keyframes spin{to{transform:rotate(360deg)}}
-.av-inner{
-  position:relative;z-index:1;width:100%;height:100%;border-radius:50%;
-  background:linear-gradient(135deg,var(--s2),var(--bg3));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fd);font-size:2.8rem;font-weight:800;color:var(--c);
-  overflow:hidden;
-}
-
-.scard-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.scard{
-  background:var(--s1);border:1px solid var(--b1);border-radius:12px;
-  padding:1rem .85rem;text-align:center;
-  transition:border-color var(--tr),transform var(--tr),box-shadow var(--tr);
-}
-.scard:hover{border-color:rgba(0,238,255,.22);transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.35)}
-.sval{font-family:var(--fd);font-size:1.6rem;font-weight:800;line-height:1;margin-bottom:.25rem;background:linear-gradient(135deg,var(--c),var(--v));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.slbl{font-family:var(--fm);font-size:.6rem;color:var(--t3);letter-spacing:.8px;text-transform:uppercase}
-
-.bio{font-size:.93rem;color:var(--t2);line-height:1.8;margin-bottom:1.2rem}
-.bio strong{color:var(--t1);font-weight:600}
-.bio .hl{color:var(--c);font-weight:500}
-
-.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.75rem}
-.tag{font-family:var(--fm);font-size:.64rem;padding:4px 11px;border-radius:100px;border:1px solid var(--b2);color:var(--t2);transition:all var(--tr)}
-.tag:hover{border-color:var(--v);color:var(--v);background:rgba(155,92,246,.07)}
-
-.about-btns{display:flex;gap:.6rem;flex-wrap:wrap}
-
-/* ─── STACK ───────────────────────────────────────────────── */
-.sk-table{margin-top:3rem;display:flex;flex-direction:column;gap:1.6rem}
-.sk-row{display:grid;grid-template-columns:140px 1fr;gap:1.5rem;align-items:start}
-@media(max-width:600px){.sk-row{grid-template-columns:1fr;gap:.4rem}}
-.sk-cat{font-family:var(--fm);font-size:.62rem;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;padding-top:6px}
-.pills{display:flex;flex-wrap:wrap;gap:.45rem}
-.pill{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:5px 13px;border-radius:7px;border:1px solid var(--b1);
-  background:var(--s1);font-family:var(--fm);font-size:.7rem;color:var(--t2);
-  transition:all .22s;
-}
-.pill:hover{border-color:var(--b2);color:var(--t1);transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.3)}
-.pd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.pe{background:var(--c);box-shadow:0 0 5px var(--c)}
-.ps{background:var(--v);box-shadow:0 0 5px var(--v)}
-.pg{background:var(--a);box-shadow:0 0 5px var(--a)}
-
-/* ─── EXPERIENCE ──────────────────────────────────────────── */
-.exp-wrap{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem}
-
-.exp-item{
-  background:var(--s1);border:1px solid var(--b1);border-radius:14px;
-  padding:1.75rem 2rem;
-  position:relative;overflow:hidden;
-  transition:border-color var(--tr),box-shadow var(--tr),transform var(--tr);
-}
-.exp-item::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:linear-gradient(to bottom,var(--c),var(--v));
-  border-radius:14px 0 0 14px;opacity:0;
-  transition:opacity var(--tr);
-}
-.exp-item:hover{
-  border-color:rgba(0,238,255,.18);
-  box-shadow:0 8px 32px rgba(0,0,0,.3);
-  transform:translateY(-2px);
-}
-.exp-item:hover::before{opacity:1}
-
-/* Header row */
-.exp-head{
-  display:flex;align-items:center;gap:1rem;
-  margin-bottom:1.1rem;
-}
-.exp-logo{
-  width:40px;height:40px;flex-shrink:0;border-radius:9px;
-  background:var(--bg3);border:1px solid var(--b2);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fd);font-size:.7rem;font-weight:800;color:var(--c);
-}
-.exp-headinfo{flex:1;min-width:0}
-.exp-company{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--t1);line-height:1.2}
-.exp-role{font-family:var(--fm);font-size:.68rem;color:var(--v);margin-top:2px;letter-spacing:.2px}
-.exp-badges{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;flex-shrink:0}
-.exp-period{
-  font-family:var(--fm);font-size:.62rem;color:var(--c);
-  background:rgba(0,238,255,.07);border:1px solid rgba(0,238,255,.18);
-  padding:3px 10px;border-radius:5px;white-space:nowrap;
-}
-.exp-loc{
-  font-family:var(--fm);font-size:.6rem;color:var(--t3);
-  border:1px solid var(--b1);padding:3px 9px;border-radius:5px;white-space:nowrap;
-}
-@media(max-width:640px){.exp-badges{margin-top:.5rem}.exp-head{flex-wrap:wrap}}
-
-/* Bullets */
-.exp-pts{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem}
-.exp-pts li{
-  display:flex;gap:.6rem;
-  font-size:.875rem;color:var(--t2);line-height:1.55;
-}
-.exp-pts li::before{
-  content:'–';color:var(--c);font-size:.8rem;
-  flex-shrink:0;margin-top:.05rem;font-family:var(--fm);
-}
-.exp-pts li strong{color:var(--t1);font-weight:600}
-
-/* Stack tags */
-.exp-stack{display:flex;flex-wrap:wrap;gap:.4rem;padding-top:.9rem;border-top:1px solid var(--b1)}
-.estag{
-  font-family:var(--fm);font-size:.6rem;color:var(--t3);
-  border:1px solid var(--b1);padding:3px 9px;border-radius:5px;
-  background:rgba(255,255,255,.02);
-  transition:color var(--tr),border-color var(--tr);
-}
-.estag:hover{color:var(--c);border-color:rgba(0,238,255,.2)}
-
-/* ─── PROJECTS ────────────────────────────────────────────── */
-.fbar{display:flex;gap:.45rem;flex-wrap:wrap;margin:2.5rem 0 2rem}
-.fbtn{
-  font-family:var(--fm);font-size:.64rem;letter-spacing:.5px;text-transform:uppercase;
-  padding:6px 16px;border-radius:7px;border:1px solid var(--b1);
-  background:transparent;color:var(--t2);cursor:pointer;
-  transition:all var(--tr);
-}
-.fbtn:hover{border-color:var(--b2);color:var(--t1)}
-.fbtn.on{background:rgba(0,238,255,.09);border-color:var(--c);color:var(--c)}
-
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.3rem}
-.pc.full2{grid-column:1/-1}
-@media(max-width:720px){.pc.full2{grid-column:span 1}}
-
-.pc{
-  background:var(--s1);border:1px solid var(--b1);border-radius:16px;
-  padding:1.6rem;
-  transition:all var(--tr);
-  position:relative;overflow:hidden;
-  display:flex;flex-direction:column;
-}
-.pc::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse at top left,rgba(0,238,255,.03),transparent 55%);
-}
-.pc:hover{
-  border-color:rgba(0,238,255,.2);
-  box-shadow:0 16px 56px rgba(0,0,0,.45),0 0 24px rgba(0,238,255,.07);
-  transform:translateY(-4px);
-}
-.pc.flagship{
-  background:linear-gradient(140deg,rgba(155,92,246,.07),rgba(0,238,255,.035));
-  border-color:rgba(155,92,246,.3);
-}
-.pc.flagship::after{background:radial-gradient(ellipse at top right,rgba(155,92,246,.09),transparent 55%)}
-.pc.flagship:hover{border-color:rgba(155,92,246,.55);box-shadow:0 20px 70px rgba(155,92,246,.22),0 0 40px rgba(0,238,255,.06)}
-.pc.featured{
-  background:linear-gradient(140deg,rgba(0,238,255,.05),rgba(0,70,90,.03));
-  border-color:rgba(0,238,255,.2);
-}
-.pc.featured:hover{border-color:rgba(0,238,255,.42);box-shadow:0 20px 70px rgba(0,238,255,.12)}
-
-.pbadge{
-  display:inline-flex;align-items:center;gap:5px;
-  font-family:var(--fm);font-size:.58rem;letter-spacing:1.8px;text-transform:uppercase;
-  padding:3px 11px;border-radius:100px;margin-bottom:1.1rem;width:fit-content;
-}
-.pb-v{color:var(--v);background:rgba(155,92,246,.1);border:1px solid rgba(155,92,246,.28)}
-.pb-c{color:var(--c);background:rgba(0,238,255,.08);border:1px solid rgba(0,238,255,.22)}
-
-.phead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.6rem}
-.picon{width:40px;height:40px;border-radius:9px;background:var(--s2);border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:1.15rem}
-.plnks{display:flex;gap:.4rem}
-.plnk{
-  width:32px;height:32px;border-radius:7px;background:var(--s2);border:1px solid var(--b1);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--t2);text-decoration:none;font-size:.8rem;
-  transition:all var(--tr);
-}
-.plnk:hover{border-color:var(--c);color:var(--c);background:rgba(0,238,255,.07)}
-
-.pcat{font-family:var(--fm);font-size:.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:.3rem}
-.pname{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--t1);margin-bottom:.6rem;letter-spacing:-.4px;line-height:1.2}
-.pc.flagship .pname,.pc.featured .pname{font-size:1.35rem}
-.pdesc{font-size:.83rem;color:var(--t2);line-height:1.68;flex:1;margin-bottom:1.1rem}
-.pdesc strong{color:var(--t1)}
-.pstack{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:auto}
-.sbadge{font-family:var(--fm);font-size:.58rem;color:var(--t3);border:1px solid var(--b1);background:rgba(255,255,255,.015);padding:2px 8px;border-radius:4px}
-
-/* route extras */
-.rbox{background:rgba(0,238,255,.04);border:1px solid rgba(0,238,255,.14);border-left:3px solid var(--c);border-radius:8px;padding:.9rem 1.1rem;margin:.85rem 0 1.25rem}
-.rbox-lbl{font-family:var(--fm);font-size:.58rem;color:var(--c);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem}
-.rbox p{font-size:.83rem;color:var(--t2);line-height:1.68}.rbox strong{color:var(--t1)}
-.rsecs{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.5rem 0}
-@media(max-width:650px){.rsecs{grid-template-columns:1fr}}
-.rsec{background:rgba(255,255,255,.02);border:1px solid var(--b1);border-radius:9px;padding:1rem;transition:border-color var(--tr)}
-.rsec:hover{border-color:rgba(0,238,255,.16)}
-.rsec-t{font-family:var(--fd);font-size:.8rem;font-weight:700;color:var(--t1);margin-bottom:.4rem}
-.rsec p{font-size:.78rem;color:var(--t2);line-height:1.65}.rsec strong{color:var(--t1)}
-
-/* hidden */
-.pc.hide{display:none!important}
-
-/* ─── SYSDESIGN ───────────────────────────────────────────── */
-.sd-trigger{
-  display:flex;align-items:center;gap:1rem;cursor:pointer;
-  margin-top:2.5rem;padding:1.4rem 1.6rem;
-  background:var(--s1);border:1px solid rgba(155,92,246,.25);border-radius:14px;
-  transition:all var(--tr);user-select:none;
-}
-.sd-trigger:hover{border-color:rgba(155,92,246,.5);background:rgba(155,92,246,.04)}
-.sd-ttl{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--t1);margin-bottom:.15rem}
-.sd-sub{font-size:.8rem;color:var(--t2)}
-.sd-arr{font-size:1.2rem;color:var(--v);transition:transform var(--tr);flex-shrink:0}
-.sd-trigger.open .sd-arr{transform:rotate(180deg)}
-.sd-body{max-height:0;overflow:hidden;transition:max-height .65s cubic-bezier(.4,0,.2,1)}
-.sd-body.open{max-height:4000px}
-.archbox{background:var(--bg2);border:1px solid var(--b1);border-radius:14px;padding:1.75rem;margin:1.75rem 0;overflow-x:auto}
-.archlbl{font-family:var(--fm);font-size:.6rem;color:var(--c);letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:1.75rem}
-.archflow{display:flex;flex-direction:column;align-items:center;gap:1rem;min-width:540px}
-.archrow{display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap}
-.anode{background:var(--s2);border:1px solid var(--b2);border-radius:9px;padding:.6rem 1rem;text-align:center;min-width:110px}
-.an-i{font-size:1rem;margin-bottom:.2rem}
-.an-n{font-family:var(--fm);font-size:.6rem;color:var(--t1);letter-spacing:.3px}
-.an-s{font-size:.54rem;color:var(--t3);margin-top:.1rem}
-.anode.ain{border-color:var(--c);background:rgba(0,238,255,.06)}
-.anode.aag{border-color:var(--v);background:rgba(155,92,246,.07)}
-.anode.atl{border-color:var(--a);background:rgba(245,158,11,.05);min-width:90px}
-.anode.amm{border-color:var(--g);background:rgba(52,211,153,.05)}
-.anode.aout{border-color:var(--pk);background:rgba(236,72,153,.05)}
-.aarr{color:var(--t3);font-size:.85rem;flex-shrink:0}
-.asep{width:1px;height:26px;background:linear-gradient(var(--v),var(--c))}
-.specgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-.specc{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:1.1rem}
-.spectt{font-family:var(--fm);font-size:.6rem;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.6rem}
-.specl{list-style:none;display:flex;flex-direction:column;gap:.35rem}
-.specl li{font-size:.77rem;color:var(--t2);display:flex;gap:7px;line-height:1.5}
-.specl li::before{content:'→';color:var(--c);flex-shrink:0;font-size:.68rem}
-
-/* ─── CERTS ───────────────────────────────────────────────── */
-.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1rem;margin-top:2.75rem}
-.cc{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:1.4rem;transition:all var(--tr);position:relative;overflow:hidden}
-.cc::before{content:'';position:absolute;top:0;right:0;width:50px;height:50px;background:radial-gradient(circle,rgba(0,238,255,.09),transparent 70%);border-radius:0 14px}
-.cc:hover{border-color:rgba(0,238,255,.2);transform:translateY(-3px);box-shadow:0 10px 32px rgba(0,0,0,.32)}
-.cc-icon{font-size:1.6rem;margin-bottom:.8rem}
-.cc-name{font-family:var(--fd);font-size:.9rem;font-weight:700;color:var(--t1);margin-bottom:.25rem;line-height:1.3}
-.cc-issuer{font-family:var(--fm);font-size:.64rem;color:var(--c);letter-spacing:.3px}
-.cc-yr{font-family:var(--fm);font-size:.6rem;color:var(--t3);margin-top:.6rem}
-
-/* ─── ACHIEVEMENTS ────────────────────────────────────────── */
-.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1.1rem;margin-top:2.75rem}
-.acard{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:1.75rem 1.25rem;text-align:center;transition:all var(--tr);position:relative;overflow:hidden}
-.acard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),var(--v));transform:scaleX(0);transition:transform .35s}
-.acard:hover::after{transform:scaleX(1)}
-.acard:hover{border-color:var(--b2);transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.3)}
-.ai{font-size:1.3rem;margin-bottom:.6rem}
-.an{font-family:var(--fd);font-size:2.5rem;font-weight:800;line-height:1;margin-bottom:.4rem;background:linear-gradient(135deg,var(--c),var(--v));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.al{font-size:.8rem;color:var(--t2);line-height:1.4}
-
-/* ─── CONTACT ─────────────────────────────────────────────── */
-#contact{text-align:center}
-.ci{max-width:580px;margin:0 auto}
-.cd{font-size:.95rem;color:var(--t2);line-height:1.75;margin:1.4rem 0 2.25rem}
-.cemail{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:13px 30px;
-  background:linear-gradient(135deg,rgba(0,238,255,.12),rgba(155,92,246,.12));
-  border:1px solid rgba(0,238,255,.25);border-radius:12px;
-  color:var(--t1);text-decoration:none;font-family:var(--fm);font-size:.84rem;
-  transition:all var(--tr);margin-bottom:2rem;
-}
-.cemail:hover{background:linear-gradient(135deg,rgba(0,238,255,.22),rgba(155,92,246,.22));border-color:var(--c);transform:translateY(-2px);box-shadow:0 0 28px rgba(0,238,255,.2)}
-.clinks{display:flex;justify-content:center;flex-wrap:wrap;gap:.75rem;margin-bottom:3rem}
-.clnk{
-  display:flex;align-items:center;gap:8px;padding:10px 20px;
-  background:var(--s1);border:1px solid var(--b1);border-radius:10px;
-  color:var(--t2);text-decoration:none;font-family:var(--fm);font-size:.72rem;
-  transition:all var(--tr);
-}
-.clnk:hover{border-color:var(--c);color:var(--c);background:rgba(0,238,255,.05);transform:translateY(-2px)}
-
-/* ─── FOOTER ──────────────────────────────────────────────── */
-footer{border-top:1px solid var(--b1);padding:1.6rem clamp(1.25rem,4vw,3rem)}
-.fi{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.ft{font-family:var(--fm);font-size:.64rem;color:var(--t3)}
-.fl{font-family:var(--fd);font-weight:800;font-size:.9rem;background:linear-gradient(120deg,var(--c),var(--v));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-/* ─── FLOATING GLOW ORBS (subtle bg decoration) ───────────── */
-.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:0;transition:opacity 2s ease}
-.orb.vis{opacity:1}
-</style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
+<body class="is-loading">
 
-<!-- ══════ NAV ══════════════════════════════════════════════ -->
-<nav id="nav">
-  <a href="#hero" class="nlogo">DP</a>
-  <ul class="nlinks">
-    <li><a href="#about">About</a></li>
-    <li><a href="#stack">Stack</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#sysdesign">Architecture</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="Resume_Devraj_Parmar.pdf" class="nresume" id="resume-btn" download>Resume ↗</a>
-</nav>
+<a class="skip" href="#main">Skip to content</a>
 
-<!-- ══════ HERO ══════════════════════════════════════════════ -->
-<section id="hero" style="border:none;padding:0;max-width:100%">
-  <div class="hbg">
-    <div class="hblob hb1"></div>
-    <div class="hblob hb2"></div>
-    <div class="hblob hb3"></div>
-    <div class="hgrid"></div>
+<!-- ============ Icon sprite ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></symbol>
+  <symbol id="i-git-pr" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M6 9v12"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-trending" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.8 7.2L21 12l-7.2 1.8L12 21l-1.8-7.2L3 12l7.2-1.8z"/><path d="M19 2v4"/><path d="M17 4h4"/></symbol>
+  <symbol id="i-graduation" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" rx="2"/><rect width="6" height="6" x="9" y="9"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-git-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3"/><path d="M7 15h10"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 18l-3-3c1-4 4.5-9.5 12-12 0 0 .5 6-12 15z"/><circle cx="15" cy="9" r="1.5"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15"/><path d="M15 6v15"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+</svg>
+
+<!-- ============ Loader ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <div class="loader-top"><span>Devraj Parmar</span><span>Portfolio © <span data-year>2026</span></span></div>
+    <p class="loader-status">Loading typefaces</p>
+    <div>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-row"><span>Full Stack · GenAI · Agentic AI</span><span class="loader-count"><span>0</span><small>%</small></span></div>
+    </div>
   </div>
-  <div class="hcontent">
-    <div class="h-pill"><span class="ldot"></span>Open to Opportunities — 2025/26</div>
-    <h1 class="hname">Devraj<br>Parmar</h1>
-    <div class="hrole-wrap"><span class="hrole" id="role-el">Full Stack Engineer</span></div>
-    <p class="htagline">
-      Final-year CS engineer who builds <strong>production-grade systems</strong> —
-      from logistics algorithms and distributed backends
-      to <strong>agentic AI pipelines</strong> that ship real code.
+</div>
+
+<!-- ============ Atmosphere ============ -->
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="gl-fallback" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor cursor-dot" aria-hidden="true"></div>
+<div class="cursor cursor-ring" aria-hidden="true"><div class="cursor-ring-in"><span>Drag</span></div></div>
+
+<!-- ============ Nav ============ -->
+<header class="nav" id="nav">
+  <a href="#hero" class="brand" aria-label="Devraj Parmar — back to top">
+    <span class="brand-mark" aria-hidden="true">DP</span><span class="brand-name">Devraj Parmar</span>
+  </a>
+  <nav class="nlinks-wrap" aria-label="Primary">
+    <span class="nind" aria-hidden="true"></span>
+    <ul class="nlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#sysdesign">Architecture</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-actions">
+    <button class="kbd-btn" type="button" data-cmdk-open aria-haspopup="dialog" aria-label="Open command palette">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <span class="kbd-keys" aria-hidden="true"><kbd data-mod>Ctrl</kbd><kbd>K</kbd></span>
+    </button>
+    <a class="btn btn-sm btn-ghost btn-resume" href="Resume_Devraj_Parmar.pdf" download data-magnetic=".25">
+      <span class="btn-label">Resume</span><svg class="icon icon-dl" aria-hidden="true"><use href="#i-download"/></svg>
+    </a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mmenu" id="mmenu" inert>
+  <nav aria-label="Mobile">
+    <ol>
+      <li style="--i:0"><a href="#about">About</a></li>
+      <li style="--i:1"><a href="#stack">Stack</a></li>
+      <li style="--i:2"><a href="#experience">Experience</a></li>
+      <li style="--i:3"><a href="#projects">Projects</a></li>
+      <li style="--i:4"><a href="#sysdesign">Architecture</a></li>
+      <li style="--i:5"><a href="#credentials">Credentials</a></li>
+      <li style="--i:6"><a href="#contact">Contact</a></li>
+    </ol>
+  </nav>
+  <div class="mmenu-foot">
+    <a class="btn btn-sm btn-primary" href="Resume_Devraj_Parmar.pdf" download><span class="btn-label">Resume</span><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+    <a class="btn btn-sm btn-ghost btn-icon" href="https://github.com/DevrajParmarr" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a class="btn btn-sm btn-ghost btn-icon" href="https://www.linkedin.com/in/devraj-parmar-459363187" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a class="btn btn-sm btn-ghost btn-icon" href="mailto:devrajparmar232@gmail.com" aria-label="Email"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ Hero ============ -->
+<section class="hero" id="hero" data-gl="shape:0;x:2.6;y:.05;s:1;a:1;n:.1;r:.12" data-gl-m="x:0;y:.9;s:.62;a:.7" aria-label="Introduction">
+  <div class="hud" aria-hidden="true">
+    <div>render <b data-hud="api">…</b> · particles <b data-hud="pts">…</b></div>
+    <div>cursor x <b data-hud="x">+0.000</b> y <b data-hud="y">+0.000</b></div>
+    <div>scroll <b data-hud="scroll">000%</b> · click to pulse</div>
+  </div>
+  <div class="wrap hero-inner">
+    <p class="status" data-intro>
+      <span class="dot" aria-hidden="true"></span>Open to SDE · Full Stack · GenAI roles
+      <span class="sep" aria-hidden="true"></span><span class="loc"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Indore, IN</span>
     </p>
-    <div class="hbtns">
-      <a href="#projects" class="btn-cyan">⚡ View Projects</a>
-      <a href="Resume_Devraj_Parmar.pdf" class="btn-out" id="dl-resume" download>↓ Download Resume</a>
-      <a href="https://github.com/DevrajParmarr" target="_blank" class="btn-ghost">⌥ GitHub</a>
-      <a href="https://leetcode.com/u/devrajparmar37/" target="_blank" class="btn-ghost">⬡ LeetCode</a>
+    <h1 class="hero-name" aria-label="Devraj Parmar" data-cursor="lens">
+      <span class="line" aria-hidden="true">Devraj</span>
+      <span class="line outline" aria-hidden="true">Parmar</span>
+    </h1>
+    <p class="hero-role" data-intro>
+      <span>I build</span>
+      <span class="scramble" id="role" aria-hidden="true">full-stack systems</span>
+      <span class="sr-only">full-stack systems, GenAI pipelines, agentic AI, distributed backends and real-time UIs</span>
+    </p>
+    <p class="hero-tag" data-intro>Final-year CS engineer who builds <strong>production-grade systems</strong> — from logistics algorithms and distributed backends to <strong>agentic AI pipelines</strong> that ship real code.</p>
+    <div class="hero-ctas" data-intro>
+      <a href="#projects" class="btn btn-primary" data-magnetic=".3"><span class="btn-label">View projects</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <a href="Resume_Devraj_Parmar.pdf" class="btn btn-ghost btn-cv" download data-magnetic=".3"><span class="btn-label">Download resume</span><svg class="icon icon-dl" aria-hidden="true"><use href="#i-download"/></svg></a>
+      <a href="https://github.com/DevrajParmarr" target="_blank" rel="noopener" class="btn btn-ghost btn-icon" aria-label="GitHub profile" data-magnetic=".4"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <a href="https://leetcode.com/u/devrajparmar37/" target="_blank" rel="noopener" class="btn btn-ghost btn-icon" aria-label="LeetCode profile" data-magnetic=".4"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg></a>
+      <a href="https://www.linkedin.com/in/devraj-parmar-459363187" target="_blank" rel="noopener" class="btn btn-ghost btn-icon" aria-label="LinkedIn profile" data-magnetic=".4"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
     </div>
   </div>
-  <div class="scrollhint"><div class="sline"></div><span>scroll</span></div>
+  <div class="hero-foot">
+    <div class="wrap">
+      <dl class="hero-stats">
+        <div><dt>LeetCode solved</dt><dd data-count="450" data-suffix="+">450+</dd></div>
+        <div><dt>CodeChef rating</dt><dd data-count="1680" data-suffix="+">1680+</dd></div>
+        <div><dt>Internships</dt><dd data-count="2">2</dd></div>
+        <div><dt>Projects shipped</dt><dd data-count="9">9</dd></div>
+      </dl>
+      <a href="#about" class="scroll-cue"><span class="mouse" aria-hidden="true"></span><span>Scroll to explore</span></a>
+    </div>
+  </div>
 </section>
 
-<!-- ══════ ABOUT ═════════════════════════════════════════════ -->
-<section id="about" class="rv">
-<div class="wrap">
-  <div class="eyebrow">About Me</div>
-  <h2 class="h1">Engineer. Builder.<br>Problem Solver.</h2>
-  <div class="about-grid">
-    <div class="about-left">
-      <div class="av-wrap">
-        <div class="av-ring"></div>
-        <div class="av-inner">DP</div>
-      </div>
-      <div class="scard-grid">
-        <div class="scard"><div class="sval">450+</div><div class="slbl">LeetCode</div></div>
-        <div class="scard"><div class="sval">1680+</div><div class="slbl">CodeChef</div></div>
-        <div class="scard"><div class="sval">9</div><div class="slbl">Projects</div></div>
-        <div class="scard"><div class="sval">2</div><div class="slbl">Internships</div></div>
-      </div>
-    </div>
-    <div>
-      <p class="bio">I'm <strong>Devraj Parmar</strong>, a final-year Computer Engineering student at <span class="hl">SGSITS Indore</span>. I build production-ready systems — not portfolio filler.</p>
-      <p class="bio">My work spans <strong>full-stack logistics platforms with real combinatorial algorithms</strong>, <strong>Dockerized execution engines deployed on AWS</strong>, and <strong>multi-agent AI systems</strong> that autonomously plan, code, test, and deploy software. I don't just learn technologies — I <span class="hl">ship them end-to-end</span>.</p>
-      <p class="bio">At <strong>AlgoUniversity</strong>, I delivered a complete competitive programming judge solo — custom Docker sandbox, JWT auth, AWS EC2. At <strong>Umbrella Corporate</strong>, I hit a measurable <span class="hl">25% load-time improvement</span> by rearchitecting the WebSocket layer on a live trading platform.</p>
-      <p class="bio">I hold <strong>Oracle certifications in AI Foundations and Generative AI</strong> and I'm actively building in the LLM/agentic AI space — the intersection of systems engineering and AI is where I want to work.</p>
-      <div class="tags">
-        <span class="tag">MERN Stack</span><span class="tag">GenAI / RAG</span>
-        <span class="tag">LangChain</span><span class="tag">Docker + K8s</span>
-        <span class="tag">AWS</span><span class="tag">FastAPI</span>
-        <span class="tag">System Design</span><span class="tag">Deep Learning</span>
-        <span class="tag">Algorithms</span>
-      </div>
-      <div class="about-btns">
-        <a href="mailto:devrajparmar232@gmail.com" class="btn-out" style="font-size:.72rem;padding:9px 16px">✉ Email Me</a>
-        <a href="https://www.linkedin.com/in/devraj-parmar-459363187" target="_blank" class="btn-ghost" style="font-size:.72rem;padding:9px 16px">in LinkedIn</a>
-        <a href="https://codolio.com/profile/Devraj_Parmar" target="_blank" class="btn-ghost" style="font-size:.72rem;padding:9px 16px">⌘ Codefolio</a>
-      </div>
-    </div>
-  </div>
+<!-- ============ Marquee ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-row"><span>React</span><span>Node.js</span><span>LangGraph</span><span>FastAPI</span><span>Docker</span><span>Kubernetes</span><span>AWS</span><span>PostgreSQL</span><span>Redis</span><span>TypeScript</span></div>
+  <div class="mq-row outline"><span>Agentic AI</span><span>RAG</span><span>System Design</span><span>Algorithms</span><span>WebSockets</span><span>CI/CD</span><span>Deep Learning</span><span>Next.js</span><span>pgvector</span></div>
 </div>
-</section>
 
-<!-- ══════ STACK ══════════════════════════════════════════════ -->
-<section id="stack" class="rv">
-<div class="wrap">
-  <div class="eyebrow">Technical Arsenal</div>
-  <h2 class="h1">Tools I Build With</h2>
-  <p class="sub">Full-spectrum stack — frontend to cloud infrastructure to AI pipelines.</p>
-  <div class="sk-table">
-    <div class="sk-row"><div class="sk-cat">Languages</div><div class="pills">
-      <div class="pill"><span class="pd pe"></span>C++</div>
-      <div class="pill"><span class="pd pe"></span>JavaScript ES6+</div>
-      <div class="pill"><span class="pd pe"></span>Python</div>
-      <div class="pill"><span class="pd ps"></span>SQL</div>
-      <div class="pill"><span class="pd ps"></span>PHP</div>
-      <div class="pill"><span class="pd pg"></span>TypeScript</div>
-    </div></div>
-    <div class="sk-row"><div class="sk-cat">Frontend</div><div class="pills">
-      <div class="pill"><span class="pd pe"></span>React.js</div>
-      <div class="pill"><span class="pd ps"></span>Next.js</div>
-      <div class="pill"><span class="pd pe"></span>HTML5 / CSS3</div>
-      <div class="pill"><span class="pd ps"></span>Leaflet.js</div>
-      <div class="pill"><span class="pd pg"></span>Tailwind CSS</div>
-    </div></div>
-    <div class="sk-row"><div class="sk-cat">Backend</div><div class="pills">
-      <div class="pill"><span class="pd pe"></span>Node.js</div>
-      <div class="pill"><span class="pd pe"></span>Express.js</div>
-      <div class="pill"><span class="pd ps"></span>FastAPI</div>
-      <div class="pill"><span class="pd ps"></span>REST APIs</div>
-      <div class="pill"><span class="pd ps"></span>WebSockets</div>
-    </div></div>
-    <div class="sk-row"><div class="sk-cat">AI / ML</div><div class="pills">
-      <div class="pill"><span class="pd ps"></span>TensorFlow / Keras</div>
-      <div class="pill"><span class="pd ps"></span>scikit-learn</div>
-      <div class="pill"><span class="pd ps"></span>LangChain</div>
-      <div class="pill"><span class="pd ps"></span>LangGraph</div>
-      <div class="pill"><span class="pd pg"></span>OpenAI API</div>
-      <div class="pill"><span class="pd pg"></span>FAISS / RAG</div>
-    </div></div>
-    <div class="sk-row"><div class="sk-cat">Databases</div><div class="pills">
-      <div class="pill"><span class="pd pe"></span>MongoDB</div>
-      <div class="pill"><span class="pd ps"></span>PostgreSQL</div>
-      <div class="pill"><span class="pd ps"></span>MySQL</div>
-      <div class="pill"><span class="pd ps"></span>Redis</div>
-      <div class="pill"><span class="pd pg"></span>pgvector</div>
-    </div></div>
-    <div class="sk-row"><div class="sk-cat">DevOps / Cloud</div><div class="pills">
-      <div class="pill"><span class="pd ps"></span>Docker</div>
-      <div class="pill"><span class="pd pg"></span>Kubernetes</div>
-      <div class="pill"><span class="pd ps"></span>AWS EC2 / ECR</div>
-      <div class="pill"><span class="pd ps"></span>GitHub Actions</div>
-      <div class="pill"><span class="pd ps"></span>Nginx</div>
-      <div class="pill"><span class="pd ps"></span>CI/CD</div>
-    </div></div>
-  </div>
-</div>
-</section>
-
-<!-- ══════ EXPERIENCE ════════════════════════════════════════ -->
-<section id="experience" class="rv">
-<div class="wrap">
-  <div class="eyebrow">Work Experience</div>
-  <h2 class="h1">Where I've Shipped</h2>
-  <p class="sub">Two internships. Real production systems. Real engineering pressure.</p>
-
-  <div class="exp-wrap">
-
-    <!-- AlgoUniversity -->
-    <div class="exp-item rv" data-d="1">
-      <div class="exp-head">
-        <div class="exp-logo">AU</div>
-        <div class="exp-headinfo">
-          <div class="exp-company">AlgoUniversity</div>
-          <div class="exp-role">Software Development Extern</div>
-        </div>
-        <div class="exp-badges">
-          <span class="exp-period">May – Jul 2025</span>
-          <span class="exp-loc">Remote</span>
-        </div>
-      </div>
-      <ul class="exp-pts">
-        <li>Built <strong>Judge My Code</strong> solo end-to-end — a production Online Judge with custom Docker-based code execution, no third-party sandbox APIs.</li>
-        <li>Execution engine spins isolated containers per submission, enforces CPU/memory limits, and returns verdicts (AC / WA / TLE) for C++, Python, Java.</li>
-        <li>Provisioned full AWS stack from scratch — Dockerfiles, ECR registry, EC2, Nginx reverse proxy. No click-ops, all manual infra setup.</li>
-        <li>Implemented stateless <strong>JWT auth</strong> with role-based access, token refresh, and protected API routes across submission and admin flows.</li>
-        <li>Shipped a polished React frontend with real-time verdict updates, difficulty filters, and per-user submission history.</li>
-      </ul>
-      <div class="exp-stack">
-        <span class="estag">React.js</span><span class="estag">Node.js</span><span class="estag">Express</span>
-        <span class="estag">MongoDB</span><span class="estag">Docker</span><span class="estag">AWS EC2/ECR</span>
-        <span class="estag">Nginx</span><span class="estag">JWT Auth</span>
+<!-- ============ About ============ -->
+<section class="section" id="about" data-gl="shape:1;x:-4.3;s:1;a:.55;rz:.45;n:.05;r:.3" data-gl-m="x:0;s:.8;a:.3" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><span class="num">01</span>About</p>
+        <h2 class="title" id="about-title">Engineer. Builder. Problem <em>solver.</em></h2>
       </div>
     </div>
 
-    <!-- Umbrella Corporate -->
-    <div class="exp-item rv" data-d="2">
-      <div class="exp-head">
-        <div class="exp-logo">UC</div>
-        <div class="exp-headinfo">
-          <div class="exp-company">Umbrella Corporate Ltd.</div>
-          <div class="exp-role">Software Developer Intern</div>
-        </div>
-        <div class="exp-badges">
-          <span class="exp-period">May – Jul 2024</span>
-          <span class="exp-loc">Onsite · Indore</span>
-        </div>
-      </div>
-      <ul class="exp-pts">
-        <li>Built a <strong>real-time trading dashboard</strong> (MERN + WebSocket) — live price feeds, candlestick charts, automated trade signals, zero page refresh.</li>
-        <li>Refactored polling → debounced WebSocket subscriptions, cutting <strong>page load time by 25%</strong> and eliminating render lag under high-frequency data.</li>
-        <li>Integrated <strong>LSTM-based ML models</strong> from Python into the Node.js trading engine — buy/sell signals surfaced on the live chart in near real-time.</li>
-        <li>Collaborated directly with the product team on financial data pipelines and performance-critical frontend architecture for a live trading system.</li>
-      </ul>
-      <div class="exp-stack">
-        <span class="estag">MERN Stack</span><span class="estag">WebSockets</span><span class="estag">LSTM / Python ML</span>
-        <span class="estag">Real-time UI</span><span class="estag">Performance Optimization</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-</section>
-
-<!-- ══════ PROJECTS ══════════════════════════════════════════ -->
-<section id="projects" class="rv">
-<div class="wrap">
-  <div class="eyebrow">Projects</div>
-  <h2 class="h1">Built. Shipped. Works.</h2>
-  <p class="sub">9 projects — each a real engineering problem solved, not a tutorial followed.</p>
-
-  <div class="fbar">
-    <button class="fbtn on" data-f="all">All</button>
-    <button class="fbtn" data-f="fullstack">Full Stack</button>
-    <button class="fbtn" data-f="mldl">ML / DL</button>
-    <button class="fbtn" data-f="genai">GenAI</button>
-    <button class="fbtn" data-f="devops">DevOps</button>
-    <button class="fbtn" data-f="agentic">Agentic AI</button>
-  </div>
-
-  <div class="pgrid">
-
-    <!-- NeuroAgent FLAGSHIP -->
-    <div class="pc flagship full2" data-cat="agentic">
-      <div class="pbadge pb-v">★ Flagship — Agentic AI</div>
-      <div class="phead">
-        <div class="picon">🧠</div>
-        <div class="plnks">
-          <a href="https://github.com/DevrajParmarr/neuroagent" target="_blank" class="plnk" title="GitHub">⌥</a>
-          <a href="https://neuroagent.netlify.app" target="_blank" class="plnk" title="Live">↗</a>
-        </div>
-      </div>
-      <div class="pname">NeuroAgent — Autonomous Software Engineering Agent</div>
-      <div class="pdesc">
-        Most engineers use AI as autocomplete. NeuroAgent is different — a fully autonomous multi-agent system that accepts plain English and delivers working, tested, committed code. Built on LangGraph's stateful graph with a ReAct loop: <strong>PlannerAgent</strong> decomposes tasks → <strong>CoderAgent</strong> implements with GPT-4/Claude → <strong>TestAgent</strong> writes and executes tests in a Docker sandbox → <strong>ReviewerAgent</strong> quality-gates and loops back on failures → <strong>DeployAgent</strong> commits to GitHub and fires CI/CD. Dual-layer memory: Redis for in-session context, PostgreSQL+pgvector for semantic long-term recall. React frontend streams each agent's live reasoning via WebSockets.
-      </div>
-      <div class="pstack">
-        <span class="sbadge">Python</span><span class="sbadge">LangGraph</span><span class="sbadge">GPT-4</span>
-        <span class="sbadge">Claude API</span><span class="sbadge">FastAPI</span><span class="sbadge">React</span>
-        <span class="sbadge">Docker</span><span class="sbadge">PostgreSQL+pgvector</span>
-        <span class="sbadge">Redis</span><span class="sbadge">WebSockets</span>
-      </div>
-    </div>
-
-    <!-- Route Optimizer FEATURED -->
-    <div class="pc featured full2" data-cat="fullstack">
-      <div class="pbadge pb-c">★ Major Project — Full Stack · Algorithms</div>
-      <div class="phead">
-        <div class="picon">🗺️</div>
-        <div class="plnks">
-          <a href="https://github.com/DevrajParmarr/route-optimizer" target="_blank" class="plnk">⌥</a>
-          <a href="https://route-optimizer.netlify.app" target="_blank" class="plnk">↗</a>
-        </div>
-      </div>
-      <div class="pname">Route Optimizer — Fleet Logistics Intelligence Platform</div>
-      <div class="rbox">
-        <div class="rbox-lbl">// The Problem</div>
-        <p>The <strong>Heterogeneous Fleet CVRP (HFCVRP)</strong> is NP-Hard. Real logistics companies — Amazon, Zomato, Dunzo — lose millions on suboptimal routing. Most academic solutions exist only on paper. I built a full-stack platform that <strong>solves it live on real map data</strong>, for 5–100 destinations with 2–50 mixed-capacity vehicles.</p>
-      </div>
-      <div class="rsecs">
-        <div class="rsec">
-          <div class="rsec-t">🔬 Algorithmic Core</div>
-          <p>Three routing strategies: <strong>2-opt local search</strong> (iterative swap), <strong>Clarke-Wright Savings</strong> (savings-matrix merging), and <strong>Greedy Nearest-Neighbor</strong>. Each exposes different quality vs. speed trade-offs. Run all three simultaneously and compare side-by-side on the same instance.</p>
-        </div>
-        <div class="rsec">
-          <div class="rsec-t">⚙️ Backend Engineering</div>
-          <p>Node.js/Express handles geospatial ingestion, vehicle constraint modeling, and async execution. <strong>OpenStreetMap API</strong> provides real road-network distances — not Euclidean guesses. MongoDB persists problem configs and solution histories for session comparison.</p>
-        </div>
-        <div class="rsec">
-          <div class="rsec-t">🗺️ Interactive Map UI</div>
-          <p>React + Leaflet.js — define problems <em>directly on the map</em>. Click to add waypoints, configure demand per stop, set vehicle capacities. Optimized routes render as animated multi-color polylines per vehicle. Analytics dashboard surfaces fuel estimates and algorithm comparisons reactively.</p>
-        </div>
-        <div class="rsec">
-          <div class="rsec-t">📊 Real-World Impact</div>
-          <p>Reduces estimated fuel consumption by <strong>up to 20%</strong> vs. naive routing on benchmark cases. Handles edge cases: overloaded vehicles, isolated stops, unserviceable demand — graceful fallbacks throughout.</p>
-        </div>
-      </div>
-      <div class="pstack" style="margin-top:1.25rem">
-        <span class="sbadge">React.js</span><span class="sbadge">Node.js</span><span class="sbadge">Express.js</span>
-        <span class="sbadge">MongoDB</span><span class="sbadge">Leaflet.js</span><span class="sbadge">OpenStreetMap</span>
-        <span class="sbadge">2-opt</span><span class="sbadge">Clarke-Wright</span>
-      </div>
-    </div>
-
-    <!-- Judge My Code -->
-    <div class="pc" data-cat="fullstack">
-      <div class="pcat">Full Stack · Cloud · DevOps</div>
-      <div class="phead"><div class="picon">⚖️</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/judge-my-code" target="_blank" class="plnk">⌥</a>
-        <a href="https://judgemycode.netlify.app" target="_blank" class="plnk">↗</a>
-      </div></div>
-      <div class="pname">Judge My Code — Online Judge Platform</div>
-      <div class="pdesc">A competitive programming judge that actually works — no third-party sandboxing, no shortcuts. Custom <strong>Docker execution engine</strong> with isolated containers, enforced CPU/memory limits, and verdicts: Accepted, WA, TLE, Runtime Error. Supports C++, Python, Java. Full MERN platform on top: JWT auth, problem CRUD with difficulty tags, per-user history. <strong>Deployed on AWS EC2 via ECR</strong> — full devops handled from scratch.</div>
-      <div class="pstack">
-        <span class="sbadge">React.js</span><span class="sbadge">Node.js/Express</span><span class="sbadge">MongoDB</span>
-        <span class="sbadge">Docker</span><span class="sbadge">AWS EC2/ECR</span><span class="sbadge">JWT</span><span class="sbadge">Nginx</span>
-      </div>
-    </div>
-
-    <!-- DocuMind -->
-    <div class="pc" data-cat="genai">
-      <div class="pcat">GenAI · RAG Pipeline</div>
-      <div class="phead"><div class="picon">📄</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/documind" target="_blank" class="plnk">⌥</a>
-        <a href="https://documind-ai.netlify.app" target="_blank" class="plnk">↗</a>
-      </div></div>
-      <div class="pname">DocuMind — RAG Document Intelligence</div>
-      <div class="pdesc">Production RAG — not a tutorial chatbot. Upload any PDF; DocuMind chunks semantically, embeds via OpenAI, stores in a <strong>FAISS vector index</strong>, retrieves top-k at query time, and injects as GPT-4 context. Answers <strong>stream token-by-token</strong> to the React UI. Multi-document sessions with conversation history. Grounding responses in actual document content eliminates hallucination on domain-specific material.</div>
-      <div class="pstack">
-        <span class="sbadge">Python</span><span class="sbadge">LangChain</span><span class="sbadge">GPT-4</span>
-        <span class="sbadge">FAISS</span><span class="sbadge">FastAPI</span><span class="sbadge">React</span>
-      </div>
-    </div>
-
-    <!-- CodeReview AI -->
-    <div class="pc" data-cat="genai">
-      <div class="pcat">GenAI · DevTools · Automation</div>
-      <div class="phead"><div class="picon">🔍</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/codereview-ai" target="_blank" class="plnk">⌥</a>
-      </div></div>
-      <div class="pname">CodeReview AI — Automated PR Reviewer</div>
-      <div class="pdesc">GitHub webhook-driven pipeline — PR opened → diff fetched → LLM reviews → <strong>severity-tagged inline comments</strong> (Critical / Warning / Suggestion) posted directly on the PR. Catches real bugs: SQL injection, unhandled rejections, naming violations, missing error boundaries. LangChain structured output ensures comments are always consistent and machine-parseable.</div>
-      <div class="pstack">
-        <span class="sbadge">Python</span><span class="sbadge">LangChain</span><span class="sbadge">OpenAI</span>
-        <span class="sbadge">GitHub API</span><span class="sbadge">FastAPI</span>
-      </div>
-    </div>
-
-    <!-- ASL -->
-    <div class="pc" data-cat="mldl">
-      <div class="pcat">ML / DL · Computer Vision</div>
-      <div class="phead"><div class="picon">🤟</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/asl-translator" target="_blank" class="plnk">⌥</a>
-      </div></div>
-      <div class="pname">ASL Language Translator</div>
-      <div class="pdesc">Custom <strong>CNN built from scratch</strong> — not a pre-trained model with a new head. Pipeline: OpenCV captures frames → hand crop normalized to 28×28 → CNN classifies 26 ASL letters in real time at <strong>&gt;92% accuracy</strong>. Architecture: Conv2D → MaxPooling → Dropout, tuned for lighting variation and partial occlusion. Built as an accessibility tool for the deaf community.</div>
-      <div class="pstack">
-        <span class="sbadge">Python</span><span class="sbadge">TensorFlow/Keras</span>
-        <span class="sbadge">CNN</span><span class="sbadge">OpenCV</span>
-      </div>
-    </div>
-
-    <!-- Trading Signal -->
-    <div class="pc" data-cat="mldl">
-      <div class="pcat">ML / DL · Time Series · Finance</div>
-      <div class="phead"><div class="picon">📈</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/trading-signal-predictor" target="_blank" class="plnk">⌥</a>
-      </div></div>
-      <div class="pname">Real-Time Trading Signal Predictor</div>
-      <div class="pdesc"><strong>LSTM model</strong> learning temporal patterns in OHLCV data to generate buy/sell/hold signals. Feature pipeline: RSI, MACD, Bollinger Bands via Pandas → normalized → LSTM sequences. Full <strong>backtesting framework</strong> with slippage/commission models reporting Sharpe ratio, drawdown, win rate. Wired directly into the live Umbrella Corporate dashboard.</div>
-      <div class="pstack">
-        <span class="sbadge">Python</span><span class="sbadge">LSTM/Keras</span>
-        <span class="sbadge">scikit-learn</span><span class="sbadge">Pandas</span><span class="sbadge">Plotly</span>
-      </div>
-    </div>
-
-    <!-- CI/CD -->
-    <div class="pc" data-cat="devops">
-      <div class="pcat">DevOps · Cloud Infrastructure</div>
-      <div class="phead"><div class="picon">🚀</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/cicd-k8s-pipeline" target="_blank" class="plnk">⌥</a>
-      </div></div>
-      <div class="pname">Cloud-Native CI/CD Pipeline</div>
-      <div class="pdesc">GitOps deployment for containerized microservices. Merge to <code style="font-family:var(--fm);font-size:.78em;color:var(--c)">main</code> triggers GitHub Actions: lint → test → Docker build → push ECR → <strong>K8s rolling update with zero downtime</strong>. Liveness/readiness probes ensure only healthy pods receive traffic. Nginx handles ingress + SSL. <strong>Infrastructure entirely as code</strong> — no manual server clicks.</div>
-      <div class="pstack">
-        <span class="sbadge">Docker</span><span class="sbadge">Kubernetes</span>
-        <span class="sbadge">GitHub Actions</span><span class="sbadge">AWS EC2/ECR</span><span class="sbadge">Nginx</span>
-      </div>
-    </div>
-
-    <!-- Digital Labour Chowk -->
-    <div class="pc" data-cat="fullstack">
-      <div class="pcat">Full Stack · Agile · Social Impact</div>
-      <div class="phead"><div class="picon">👷</div><div class="plnks">
-        <a href="https://github.com/DevrajParmarr/digital-labour-chowk" target="_blank" class="plnk">⌥</a>
-      </div></div>
-      <div class="pname">Digital Labour Chowk</div>
-      <div class="pdesc">Job marketplace connecting daily-wage laborers with contractors — solving informal labor markets where workers and employers have no reliable way to find each other. Multi-role platform with separate dashboards, job posting, real-time tracking. <strong>Normalized SQL schema</strong> with ACID-compliant transactions handles concurrent bookings without data corruption. Delivered via Agile/Scrum with bi-weekly sprints.</div>
-      <div class="pstack">
-        <span class="sbadge">PHP</span><span class="sbadge">MySQL</span>
-        <span class="sbadge">HTML/CSS/JS</span><span class="sbadge">Agile/Scrum</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-</section>
-
-<!-- ══════ SYSTEM DESIGN ═════════════════════════════════════ -->
-<section id="sysdesign" class="rv">
-<div class="wrap">
-  <div class="eyebrow">Architecture Deep Dive</div>
-  <h2 class="h1">NeuroAgent System Design</h2>
-  <p class="sub">Multi-agent orchestration powering an autonomous software engineering agent.</p>
-
-  <div class="sd-trigger" id="sd-trigger">
-    <div style="font-size:1.75rem">🧠</div>
-    <div style="flex:1">
-      <div class="sd-ttl">View Full Architecture Diagram</div>
-      <div class="sd-sub">Agent pipeline · Memory layers · Tool integrations · Deployment</div>
-    </div>
-    <div class="sd-arr" id="sd-arr">▾</div>
-  </div>
-
-  <div class="sd-body" id="sd-body">
-    <div class="archbox">
-      <div class="archlbl">// NeuroAgent — Multi-Agent Orchestration Pipeline</div>
-      <div class="archflow">
-        <div class="archrow">
-          <div class="anode ain"><div class="an-i">💬</div><div class="an-n">User Input</div><div class="an-s">Natural Language Task</div></div>
-        </div>
-        <div class="asep"></div>
-        <div class="archrow">
-          <div class="anode aag" style="min-width:175px"><div class="an-i">⚙️</div><div class="an-n">LangGraph Orchestrator</div><div class="an-s">ReAct · State Machine</div></div>
-        </div>
-        <div class="asep"></div>
-        <div class="archrow">
-          <div class="anode aag"><div class="an-i">📋</div><div class="an-n">PlannerAgent</div><div class="an-s">Decompose</div></div>
-          <div class="aarr">→</div>
-          <div class="anode aag"><div class="an-i">💻</div><div class="an-n">CoderAgent</div><div class="an-s">Generate</div></div>
-          <div class="aarr">→</div>
-          <div class="anode aag"><div class="an-i">🧪</div><div class="an-n">TestAgent</div><div class="an-s">Write &amp; run</div></div>
-          <div class="aarr">→</div>
-          <div class="anode aag"><div class="an-i">✅</div><div class="an-n">ReviewerAgent</div><div class="an-s">Quality gate</div></div>
-          <div class="aarr">→</div>
-          <div class="anode aag"><div class="an-i">🚀</div><div class="an-n">DeployAgent</div><div class="an-s">Trigger CI/CD</div></div>
-        </div>
-        <div class="asep"></div>
-        <div class="archrow" style="gap:2rem;flex-wrap:wrap">
-          <div>
-            <div style="font-family:var(--fm);font-size:.56rem;color:var(--t3);letter-spacing:1px;text-align:center;margin-bottom:.45rem;text-transform:uppercase">Memory Layer</div>
-            <div style="display:flex;gap:.6rem">
-              <div class="anode amm"><div class="an-i">⚡</div><div class="an-n">Redis</div><div class="an-s">Short-term</div></div>
-              <div class="anode amm"><div class="an-i">🗄️</div><div class="an-n">PostgreSQL</div><div class="an-s">+pgvector</div></div>
-            </div>
+    <div class="about-grid">
+      <div class="about-left">
+        <div data-reveal><div class="id-card card" data-tilt="9">
+          <span class="id-holo" aria-hidden="true"></span>
+          <div class="id-top">
+            <span class="id-label">Engineer ID · 0xDP</span>
+            <span class="id-chip" aria-hidden="true"></span>
           </div>
           <div>
-            <div style="font-family:var(--fm);font-size:.56rem;color:var(--t3);letter-spacing:1px;text-align:center;margin-bottom:.45rem;text-transform:uppercase">Tool Use</div>
-            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-              <div class="anode atl"><div class="an-i">⌥</div><div class="an-n">GitHub API</div></div>
-              <div class="anode atl"><div class="an-i">🐳</div><div class="an-n">Docker</div></div>
-              <div class="anode atl"><div class="an-i">🔍</div><div class="an-n">Web Search</div></div>
-              <div class="anode atl"><div class="an-i">📁</div><div class="an-n">File System</div></div>
-            </div>
+            <div class="id-mono" aria-hidden="true">DP</div>
+            <p class="id-name">Devraj Parmar</p>
+            <p class="id-role">Full Stack · GenAI Engineer</p>
+          </div>
+          <div>
+            <dl class="id-rows">
+              <div><dt>Study</dt><dd>Computer Engineering</dd></div>
+              <div><dt>Campus</dt><dd>SGSITS Indore</dd></div>
+              <div><dt>Certified</dt><dd>Oracle AI · GenAI</dd></div>
+              <div><dt>Status</dt><dd class="open">Open to work</dd></div>
+            </dl>
+            <div class="id-barcode" aria-hidden="true"></div>
+          </div>
+        </div></div>
+        <div class="stats">
+          <div class="stat card" data-reveal><b data-count="450" data-suffix="+">450+</b><span>LeetCode</span></div>
+          <div class="stat card" data-reveal><b data-count="1680" data-suffix="+">1680+</b><span>CodeChef</span></div>
+          <div class="stat card" data-reveal><b data-count="9">9</b><span>Projects</span></div>
+          <div class="stat card" data-reveal><b data-count="2">2</b><span>Internships</span></div>
+        </div>
+      </div>
+
+      <div class="about-right">
+        <p class="lead">I'm Devraj Parmar, a final-year Computer Engineering student at SGSITS Indore. I build production-ready systems — not portfolio filler.</p>
+        <div class="bio">
+          <p data-reveal>My work spans <strong>full-stack logistics platforms with real combinatorial algorithms</strong>, <strong>Dockerized execution engines deployed on AWS</strong>, and <strong>multi-agent AI systems</strong> that autonomously plan, code, test, and deploy software. I don't just learn technologies — I <span class="hl">ship them end-to-end</span>.</p>
+          <p data-reveal>At <strong>AlgoUniversity</strong>, I delivered a complete competitive programming judge solo — custom Docker sandbox, JWT auth, AWS EC2. At <strong>Umbrella Corporate</strong>, I hit a measurable <span class="hl">25% load-time improvement</span> by rearchitecting the WebSocket layer on a live trading platform.</p>
+          <p data-reveal>I hold <strong>Oracle certifications in AI Foundations and Generative AI</strong> and I'm actively building in the LLM/agentic AI space — the intersection of systems engineering and AI is where I want to work.</p>
+        </div>
+
+        <div class="focus">
+          <div class="focus-item card" data-reveal>
+            <svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>
+            <h3>Full-stack systems</h3>
+            <p>MERN &amp; Next.js apps, real-time UIs over WebSockets, algorithm-heavy backends.</p>
+          </div>
+          <div class="focus-item card" data-reveal>
+            <svg class="icon" aria-hidden="true"><use href="#i-bot"/></svg>
+            <h3>GenAI &amp; agents</h3>
+            <p>RAG pipelines, LangGraph multi-agent orchestration, LLM-powered dev tooling.</p>
+          </div>
+          <div class="focus-item card" data-reveal>
+            <svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>
+            <h3>Cloud &amp; DevOps</h3>
+            <p>Docker, Kubernetes, AWS and CI/CD — I deploy what I build.</p>
           </div>
         </div>
-        <div class="asep"></div>
-        <div class="archrow" style="gap:1rem">
-          <div class="anode aout"><div class="an-i">✨</div><div class="an-n">Tested Code</div><div class="an-s">Committed to Git</div></div>
-          <div class="anode aout"><div class="an-i">📡</div><div class="an-n">WebSocket Stream</div><div class="an-s">Live thought trace</div></div>
+
+        <div class="about-ctas" data-reveal>
+          <a href="mailto:devrajparmar232@gmail.com" class="btn btn-primary" data-magnetic=".3"><span class="btn-label">Email me</span><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+          <a href="https://www.linkedin.com/in/devraj-parmar-459363187" target="_blank" rel="noopener" class="btn btn-ghost" data-magnetic=".3"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg><span class="btn-label">LinkedIn</span></a>
+          <a href="https://codolio.com/profile/Devraj_Parmar" target="_blank" rel="noopener" class="btn btn-ghost" data-magnetic=".3"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="btn-label">Codolio</span></a>
         </div>
       </div>
     </div>
-    <div class="specgrid">
-      <div class="specc"><div class="spectt">Capabilities</div><ul class="specl"><li>Scaffold features from plain English</li><li>Write &amp; execute tests autonomously</li><li>Fix bugs from issue descriptions</li><li>Commit and push to GitHub</li><li>Self-correct on test failure</li></ul></div>
-      <div class="specc"><div class="spectt">Architecture</div><ul class="specl"><li>LangGraph stateful agent graph</li><li>ReAct loop per agent</li><li>Structured tool-use outputs</li><li>Conditional edges for quality gates</li><li>Async FastAPI backend</li></ul></div>
-      <div class="specc"><div class="spectt">Memory Design</div><ul class="specl"><li>Redis: in-session buffer</li><li>PostgreSQL: persistent history</li><li>pgvector: semantic search</li><li>Episodic cross-session recall</li></ul></div>
-      <div class="specc"><div class="spectt">Infrastructure</div><ul class="specl"><li>Docker: sandboxed execution</li><li>FastAPI: async Python API</li><li>WebSockets: real-time streaming</li><li>React: thought-stream UI</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ Stack ============ -->
+<section class="section" id="stack" data-gl="shape:2;x:0;s:1.2;a:.36;r:.18" data-gl-m="s:.75;a:.28" aria-labelledby="stack-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><span class="num">02</span>Stack</p>
+        <h2 class="title" id="stack-title">Technical <em>arsenal.</em></h2>
+      </div>
+      <p class="sec-sub">Full spectrum — frontend to cloud infrastructure to AI pipelines. Drag the sphere; hover a category to light it up.</p>
+    </div>
+
+    <div class="stack-grid">
+      <div data-reveal>
+        <div class="sphere" id="sphere" data-cursor="drag" aria-hidden="true">
+          <span class="sphere-ring"></span><span class="sphere-ring r2"></span>
+        </div>
+        <p class="sphere-hint" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-cube"/></svg>Drag to rotate</p>
+      </div>
+
+      <div class="cats">
+        <div class="cat" data-c="lang" style="--c:var(--cyan)" data-reveal>
+          <div><h3>Languages</h3><span class="cat-count">06 tools</span></div>
+          <ul class="pills"><li class="pill">C++</li><li class="pill">JavaScript</li><li class="pill">TypeScript</li><li class="pill">Python</li><li class="pill">SQL</li><li class="pill">PHP</li></ul>
+        </div>
+        <div class="cat" data-c="front" style="--c:var(--violet)" data-reveal>
+          <div><h3>Frontend</h3><span class="cat-count">05 tools</span></div>
+          <ul class="pills"><li class="pill">React.js</li><li class="pill">Next.js</li><li class="pill">HTML5 / CSS3</li><li class="pill">Tailwind CSS</li><li class="pill">Leaflet.js</li></ul>
+        </div>
+        <div class="cat" data-c="back" style="--c:var(--green)" data-reveal>
+          <div><h3>Backend</h3><span class="cat-count">05 tools</span></div>
+          <ul class="pills"><li class="pill">Node.js</li><li class="pill">Express.js</li><li class="pill">FastAPI</li><li class="pill">REST APIs</li><li class="pill">WebSockets</li></ul>
+        </div>
+        <div class="cat" data-c="ai" style="--c:var(--pink)" data-reveal>
+          <div><h3>AI / ML</h3><span class="cat-count">06 tools</span></div>
+          <ul class="pills"><li class="pill">TensorFlow / Keras</li><li class="pill">scikit-learn</li><li class="pill">LangChain</li><li class="pill">LangGraph</li><li class="pill">OpenAI API</li><li class="pill">FAISS / RAG</li></ul>
+        </div>
+        <div class="cat" data-c="db" style="--c:var(--amber)" data-reveal>
+          <div><h3>Databases</h3><span class="cat-count">05 tools</span></div>
+          <ul class="pills"><li class="pill">MongoDB</li><li class="pill">PostgreSQL</li><li class="pill">MySQL</li><li class="pill">Redis</li><li class="pill">pgvector</li></ul>
+        </div>
+        <div class="cat" data-c="ops" style="--c:var(--blue)" data-reveal>
+          <div><h3>DevOps / Cloud</h3><span class="cat-count">06 tools</span></div>
+          <ul class="pills"><li class="pill">Docker</li><li class="pill">Kubernetes</li><li class="pill">AWS EC2 / ECR</li><li class="pill">GitHub Actions</li><li class="pill">Nginx</li><li class="pill">CI/CD</li></ul>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </section>
 
-<!-- ══════ CERTIFICATIONS ════════════════════════════════════ -->
-<section id="certifications" class="rv">
-<div class="wrap">
-  <div class="eyebrow">Certifications</div>
-  <h2 class="h1">Credentials</h2>
-  <div class="cg">
-    <div class="cc"><div class="cc-icon">🏛️</div><div class="cc-name">Oracle Certified Professional</div><div class="cc-issuer">Generative AI</div><div class="cc-yr">Oracle · 2025</div></div>
-    <div class="cc"><div class="cc-icon">🎓</div><div class="cc-name">Oracle Certified Associate</div><div class="cc-issuer">AI Foundations</div><div class="cc-yr">Oracle · 2025</div></div>
-    <div class="cc"><div class="cc-icon">⚡</div><div class="cc-name">MERN Stack Development</div><div class="cc-issuer">LaunchED Platform</div><div class="cc-yr">April – June 2025</div></div>
-    <div class="cc"><div class="cc-icon">🌐</div><div class="cc-name">Web Development Program</div><div class="cc-issuer">Acmegrade</div><div class="cc-yr">June – July 2024</div></div>
-  </div>
-</div>
-</section>
-
-<!-- ══════ ACHIEVEMENTS ══════════════════════════════════════ -->
-<section id="achievements" class="rv">
-<div class="wrap">
-  <div class="eyebrow">Achievements</div>
-  <h2 class="h1">By the Numbers</h2>
-  <div class="ag">
-    <div class="acard"><div class="ai">⚡</div><div class="an">450+</div><div class="al">LeetCode problems — optimal time &amp; space complexity</div></div>
-    <div class="acard"><div class="ai">🏆</div><div class="an">1680+</div><div class="al">CodeChef rating — 3-star competitive programmer</div></div>
-    <div class="acard"><div class="ai">🎯</div><div class="an" style="font-size:1.6rem;margin-bottom:.5rem">AIR ~40K</div><div class="al">All India Rank in JEE MAINS 2022 out of 1M+ candidates</div></div>
-    <div class="acard"><div class="ai">🏐</div><div class="an" style="font-size:1.6rem;margin-bottom:.5rem">State</div><div class="al">State-level athlete — Volleyball &amp; Kho-Kho</div></div>
-    <div class="acard"><div class="ai">🎖️</div><div class="an">2×</div><div class="al">Oracle certifications in AI &amp; Generative AI</div></div>
-    <div class="acard"><div class="ai">🚀</div><div class="an">9</div><div class="al">Projects across Full Stack, ML, GenAI, DevOps, Agentic AI</div></div>
-  </div>
-</div>
-</section>
-
-<!-- ══════ CONTACT ════════════════════════════════════════════ -->
-<section id="contact" class="rv">
-<div class="wrap">
-  <div class="ci">
-    <div class="eyebrow" style="justify-content:center">Get In Touch</div>
-    <h2 class="h1">Let's Build Something.</h2>
-    <p class="cd">I'm actively seeking SDE, Full Stack, GenAI, or ML/DL Engineering roles for 2025/26. Full-time, internship, or something worth building — I want to hear about it.</p>
-    <div>
-      <a href="mailto:devrajparmar232@gmail.com" class="cemail">✉ devrajparmar232@gmail.com</a>
+<!-- ============ Experience ============ -->
+<section class="section" id="experience" data-gl="shape:3;x:1.4;y:-.3;s:1.15;a:.5;rx:.95;r:.08" data-gl-m="x:0;s:.8;a:.32" aria-labelledby="exp-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><span class="num">03</span>Experience</p>
+        <h2 class="title" id="exp-title">Where I've <em>shipped.</em></h2>
+      </div>
+      <p class="sec-sub">Two internships. Real production systems. Real engineering pressure.</p>
     </div>
-    <div class="clinks">
-      <a href="https://github.com/DevrajParmarr" target="_blank" class="clnk">⌥ GitHub</a>
-      <a href="https://linkedin.com/in/devrajparmar" target="_blank" class="clnk">in LinkedIn</a>
-      <a href="https://codolio.com/profile/Devraj_Parmar" target="_blank" class="clnk">⌘ Codefolio</a>
-      <a href="https://devrajparmarportfolio.netlify.app/" target="_blank" class="clnk">🌐 Portfolio</a>
-      <a href="tel:+916263610238" class="clnk">📞 +91 62636 10238</a>
+
+    <div class="timeline">
+      <div class="tl-rail" aria-hidden="true"><div class="tl-fill"></div></div>
+
+      <article class="job" data-reveal>
+        <span class="job-dot" aria-hidden="true"></span>
+        <div class="card job-card">
+          <header class="job-head">
+            <div class="job-logo" aria-hidden="true">AU</div>
+            <div class="job-id"><h3>AlgoUniversity</h3><p>Software Development Extern</p></div>
+            <div class="job-meta"><span class="tagp hot">May – Jul 2025</span><span class="tagp">Remote</span></div>
+          </header>
+          <ul class="job-metrics">
+            <li><b>Solo</b>end-to-end build &amp; deploy</li>
+            <li><b>3 langs</b>C++ · Python · Java verdicts</li>
+            <li><b>AWS</b>EC2 · ECR · Nginx, set up by hand</li>
+          </ul>
+          <ul class="job-pts">
+            <li>Built <strong>Judge My Code</strong> solo end-to-end — a production Online Judge with custom Docker-based code execution, no third-party sandbox APIs.</li>
+            <li>Execution engine spins isolated containers per submission, enforces CPU/memory limits, and returns verdicts (AC / WA / TLE) for C++, Python, Java.</li>
+            <li>Provisioned the full AWS stack from scratch — Dockerfiles, ECR registry, EC2, Nginx reverse proxy. No click-ops, all manual infra setup.</li>
+            <li>Implemented stateless <strong>JWT auth</strong> with role-based access, token refresh, and protected API routes across submission and admin flows.</li>
+            <li>Shipped a polished React frontend with real-time verdict updates, difficulty filters, and per-user submission history.</li>
+          </ul>
+          <ul class="chips"><li class="chip">React.js</li><li class="chip">Node.js</li><li class="chip">Express</li><li class="chip">MongoDB</li><li class="chip">Docker</li><li class="chip">AWS EC2/ECR</li><li class="chip">Nginx</li><li class="chip">JWT Auth</li></ul>
+        </div>
+      </article>
+
+      <article class="job" data-reveal>
+        <span class="job-dot" aria-hidden="true"></span>
+        <div class="card job-card">
+          <header class="job-head">
+            <div class="job-logo" aria-hidden="true">UC</div>
+            <div class="job-id"><h3>Umbrella Corporate Ltd.</h3><p>Software Developer Intern</p></div>
+            <div class="job-meta"><span class="tagp hot">May – Jul 2024</span><span class="tagp">Onsite · Indore</span></div>
+          </header>
+          <ul class="job-metrics">
+            <li><b>−25%</b>page load time</li>
+            <li><b>Live</b>real-time trading dashboard</li>
+            <li><b>LSTM</b>signals surfaced on the chart</li>
+          </ul>
+          <ul class="job-pts">
+            <li>Built a <strong>real-time trading dashboard</strong> (MERN + WebSocket) — live price feeds, candlestick charts, automated trade signals, zero page refresh.</li>
+            <li>Refactored polling → debounced WebSocket subscriptions, cutting <strong>page load time by 25%</strong> and eliminating render lag under high-frequency data.</li>
+            <li>Integrated <strong>LSTM-based ML models</strong> from Python into the Node.js trading engine — buy/sell signals surfaced on the live chart in near real-time.</li>
+            <li>Collaborated directly with the product team on financial data pipelines and performance-critical frontend architecture for a live trading system.</li>
+          </ul>
+          <ul class="chips"><li class="chip">MERN Stack</li><li class="chip">WebSockets</li><li class="chip">LSTM / Python ML</li><li class="chip">Real-time UI</li><li class="chip">Performance Optimization</li></ul>
+        </div>
+      </article>
     </div>
   </div>
-</div>
 </section>
 
-<footer>
-  <div class="fi">
-    <div class="ft">© 2025 Devraj Parmar — Built with precision.</div>
-    <div class="fl">DP</div>
-    <div class="ft">devrajparmar232@gmail.com</div>
+<!-- ============ Projects ============ -->
+<section class="section" id="projects" data-gl="shape:4;y:-2;s:1.1;a:.42;rx:.4;r:.025" data-gl-m="s:.8;a:.3" aria-labelledby="proj-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><span class="num">04</span>Projects</p>
+        <h2 class="title" id="proj-title">Built. Shipped. <em>Works.</em></h2>
+      </div>
+      <p class="sec-sub">9 projects — each a real engineering problem solved, not a tutorial followed.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button class="fbtn" type="button" data-f="all" aria-pressed="true">All<sup></sup></button>
+      <button class="fbtn" type="button" data-f="fullstack" aria-pressed="false">Full Stack<sup></sup></button>
+      <button class="fbtn" type="button" data-f="genai" aria-pressed="false">GenAI<sup></sup></button>
+      <button class="fbtn" type="button" data-f="agentic" aria-pressed="false">Agentic AI<sup></sup></button>
+      <button class="fbtn" type="button" data-f="mldl" aria-pressed="false">ML / DL<sup></sup></button>
+      <button class="fbtn" type="button" data-f="devops" aria-pressed="false">DevOps<sup></sup></button>
+    </div>
+    <p class="sr-only" id="pcount" role="status" aria-live="polite"></p>
+
+    <div class="pgrid">
+
+      <!-- NeuroAgent -->
+      <article class="pc is-wide flagship" data-cat="agentic genai" data-reveal>
+        <div class="pc-in card" data-tilt="1.5">
+          <div class="pc-body">
+            <span class="badge badge-v"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg>Flagship — Agentic AI</span>
+            <div class="pc-top">
+              <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-bot"/></svg></div>
+              <div class="pc-links">
+                <a class="ilink" href="https://github.com/DevrajParmarr/neuroagent" target="_blank" rel="noopener" aria-label="NeuroAgent source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+                <a class="ilink" href="https://neuroagent.netlify.app" target="_blank" rel="noopener" aria-label="NeuroAgent live demo"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+              </div>
+            </div>
+            <h3 class="pc-name">NeuroAgent — Autonomous Software Engineering Agent</h3>
+            <p class="pc-desc">Most engineers use AI as autocomplete. NeuroAgent is different — a fully autonomous multi-agent system that accepts plain English and delivers working, tested, committed code. Built on LangGraph's stateful graph with a ReAct loop: <strong>PlannerAgent</strong> decomposes tasks → <strong>CoderAgent</strong> implements with GPT-4/Claude → <strong>TestAgent</strong> writes and executes tests in a Docker sandbox → <strong>ReviewerAgent</strong> quality-gates and loops back on failures → <strong>DeployAgent</strong> commits to GitHub and fires CI/CD. Dual-layer memory: Redis for in-session context, PostgreSQL + pgvector for semantic long-term recall. The React frontend streams each agent's live reasoning via WebSockets.</p>
+            <ul class="chips"><li class="chip">Python</li><li class="chip">LangGraph</li><li class="chip">GPT-4</li><li class="chip">Claude API</li><li class="chip">FastAPI</li><li class="chip">React</li><li class="chip">Docker</li><li class="chip">PostgreSQL + pgvector</li><li class="chip">Redis</li><li class="chip">WebSockets</li></ul>
+          </div>
+          <div class="viz" aria-hidden="true">
+            <span class="viz-tag">Agent graph · live loop</span>
+            <svg viewBox="0 0 420 300">
+              <defs><pattern id="agrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.035)"/></pattern></defs>
+              <rect width="420" height="300" fill="url(#agrid)"/>
+              <path class="ag-edge" d="M124 80H158"/>
+              <path class="ag-edge" d="M262 80H296"/>
+              <path class="ag-edge" d="M348 101V179"/>
+              <path class="ag-edge" d="M296 200H262"/>
+              <path class="ag-edge retry" d="M320 179C300 140 250 140 228 101"/>
+              <path class="ag-edge mem" d="M180 101C160 140 120 160 104 179"/>
+              <text class="ag-label" x="262" y="146" fill="#f59e0b">retry</text>
+              <text class="ag-label" x="98" y="146" fill="#34d399">recall</text>
+              <g class="ag-nodes">
+                <g class="ag-node ag-cycle"><rect x="20" y="59" width="104" height="42" rx="10"/><text x="72" y="78" text-anchor="middle">Planner</text><text class="sub" x="72" y="92" text-anchor="middle">decompose</text></g>
+                <g class="ag-node ag-cycle"><rect x="158" y="59" width="104" height="42" rx="10"/><text x="210" y="78" text-anchor="middle">Coder</text><text class="sub" x="210" y="92" text-anchor="middle">generate</text></g>
+                <g class="ag-node ag-cycle"><rect x="296" y="59" width="104" height="42" rx="10"/><text x="348" y="78" text-anchor="middle">Tester</text><text class="sub" x="348" y="92" text-anchor="middle">docker sandbox</text></g>
+                <g class="ag-node ag-cycle"><rect x="296" y="179" width="104" height="42" rx="10"/><text x="348" y="198" text-anchor="middle">Reviewer</text><text class="sub" x="348" y="212" text-anchor="middle">quality gate</text></g>
+                <g class="ag-node ag-cycle"><rect x="158" y="179" width="104" height="42" rx="10"/><text x="210" y="198" text-anchor="middle">Deploy</text><text class="sub" x="210" y="212" text-anchor="middle">commit + CI</text></g>
+              </g>
+              <g class="ag-node"><rect x="20" y="179" width="104" height="42" rx="10" style="stroke:rgba(52,211,153,.5)"/><text x="72" y="198" text-anchor="middle">Memory</text><text class="sub" x="72" y="212" text-anchor="middle">redis · pgvector</text></g>
+              <text class="ag-label" x="210" y="262" text-anchor="middle" fill="rgba(161,161,189,.7)">tools · github · docker · web search · file system</text>
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- Route Optimizer -->
+      <article class="pc is-wide featured" data-cat="fullstack" data-reveal>
+        <div class="pc-in card" data-tilt="1.5">
+          <div class="pc-body">
+            <span class="badge badge-c"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg>Major project — Full Stack · Algorithms</span>
+            <div class="pc-top">
+              <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-route"/></svg></div>
+              <div class="pc-links">
+                <a class="ilink" href="https://github.com/DevrajParmarr/route-optimizer" target="_blank" rel="noopener" aria-label="Route Optimizer source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+                <a class="ilink" href="https://route-optimizer.netlify.app" target="_blank" rel="noopener" aria-label="Route Optimizer live demo"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+              </div>
+            </div>
+            <h3 class="pc-name">Route Optimizer — Fleet Logistics Intelligence Platform</h3>
+            <div class="rbox">
+              <p class="rbox-lbl">// The problem</p>
+              <p>The <strong>Heterogeneous Fleet CVRP (HFCVRP)</strong> is NP-Hard. Real logistics companies — Amazon, Zomato, Dunzo — lose millions on suboptimal routing. Most academic solutions exist only on paper. I built a full-stack platform that <strong>solves it live on real map data</strong>, for 5–100 destinations with 2–50 mixed-capacity vehicles.</p>
+            </div>
+          </div>
+          <div class="viz">
+            <span class="viz-tag" aria-hidden="true">Live demo · random stops</span>
+            <svg id="route-svg" viewBox="0 0 420 300" role="img" aria-label="Animated demo: 24 random stops split across 3 vehicles by angular sweep, routed greedily by nearest neighbour, then improved with 2-opt.">
+              <defs><pattern id="rgrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.035)"/></pattern></defs>
+              <rect width="420" height="300" fill="url(#rgrid)"/>
+              <g class="r-ghost" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1" stroke-dasharray="2 4"></g>
+              <g class="r-routes" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></g>
+              <g class="r-stops"></g>
+              <g><circle cx="210" cy="150" r="9" fill="#05050a" stroke="#fff" stroke-width="2"/><circle cx="210" cy="150" r="3" fill="#fff"/></g>
+              <g class="r-cars"></g>
+            </svg>
+            <div class="viz-bar">
+              <span>greedy <b id="r-greedy">—</b> → 2-opt <b id="r-opt">—</b> <b class="gain" id="r-gain"></b></span>
+              <button class="resolve" id="resolve" type="button"><svg class="icon" aria-hidden="true"><use href="#i-replay"/></svg>Re-solve</button>
+            </div>
+          </div>
+          <div class="rsecs">
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg>Algorithmic core</h4><p>Three strategies: <strong>2-opt local search</strong>, <strong>Clarke-Wright Savings</strong> and <strong>Greedy Nearest-Neighbor</strong> — run all three on the same instance and compare quality vs. speed side-by-side.</p></div>
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Backend engineering</h4><p>Node.js/Express for geospatial ingestion, vehicle constraints and async execution. <strong>OpenStreetMap</strong> road distances — not Euclidean guesses. MongoDB persists configs and solution history.</p></div>
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg>Interactive map UI</h4><p>React + Leaflet.js — define problems <em>directly on the map</em>: click to add waypoints, set demand and capacities. Routes render as animated multi-colour polylines per vehicle.</p></div>
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg>Real-world impact</h4><p>Cuts estimated fuel consumption by <strong>up to 20%</strong> vs. naive routing on benchmark cases, with graceful fallbacks for overloaded vehicles, isolated stops and unserviceable demand.</p></div>
+          </div>
+          <ul class="chips span-all"><li class="chip">React.js</li><li class="chip">Node.js</li><li class="chip">Express.js</li><li class="chip">MongoDB</li><li class="chip">Leaflet.js</li><li class="chip">OpenStreetMap</li><li class="chip">2-opt</li><li class="chip">Clarke-Wright</li></ul>
+        </div>
+      </article>
+
+      <!-- Judge My Code -->
+      <article class="pc" data-cat="fullstack devops" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-terminal"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/judge-my-code" target="_blank" rel="noopener" aria-label="Judge My Code source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+              <a class="ilink" href="https://judgemycode.netlify.app" target="_blank" rel="noopener" aria-label="Judge My Code live demo"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">Full Stack · Cloud · DevOps</p>
+          <h3 class="pc-name">Judge My Code — Online Judge Platform</h3>
+          <p class="pc-desc">A competitive programming judge that actually works — no third-party sandboxing. Custom <strong>Docker execution engine</strong> with isolated containers, enforced CPU/memory limits, and verdicts: Accepted, WA, TLE, Runtime Error for C++, Python and Java. Full MERN platform on top: JWT auth, problem CRUD, per-user history. <strong>Deployed on AWS EC2 via ECR</strong>.</p>
+          <ul class="chips"><li class="chip">React.js</li><li class="chip">Node.js/Express</li><li class="chip">MongoDB</li><li class="chip">Docker</li><li class="chip">AWS EC2/ECR</li><li class="chip">JWT</li><li class="chip">Nginx</li></ul>
+        </div>
+      </article>
+
+      <!-- DocuMind -->
+      <article class="pc" data-cat="genai" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-file"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/documind" target="_blank" rel="noopener" aria-label="DocuMind source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+              <a class="ilink" href="https://documind-ai.netlify.app" target="_blank" rel="noopener" aria-label="DocuMind live demo"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">GenAI · RAG Pipeline</p>
+          <h3 class="pc-name">DocuMind — RAG Document Intelligence</h3>
+          <p class="pc-desc">Production RAG — not a tutorial chatbot. Upload any PDF; DocuMind chunks semantically, embeds via OpenAI, stores in a <strong>FAISS vector index</strong>, retrieves top-k at query time and injects it as GPT-4 context. Answers <strong>stream token-by-token</strong>, with multi-document sessions and conversation history — grounded in the source to curb hallucination.</p>
+          <ul class="chips"><li class="chip">Python</li><li class="chip">LangChain</li><li class="chip">GPT-4</li><li class="chip">FAISS</li><li class="chip">FastAPI</li><li class="chip">React</li></ul>
+        </div>
+      </article>
+
+      <!-- CodeReview AI -->
+      <article class="pc" data-cat="genai" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-git-pr"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/codereview-ai" target="_blank" rel="noopener" aria-label="CodeReview AI source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">GenAI · DevTools · Automation</p>
+          <h3 class="pc-name">CodeReview AI — Automated PR Reviewer</h3>
+          <p class="pc-desc">GitHub-webhook pipeline: PR opened → diff fetched → LLM reviews → <strong>severity-tagged inline comments</strong> (Critical / Warning / Suggestion) posted on the PR. Catches SQL injection, unhandled rejections, naming violations and missing error boundaries. LangChain structured output keeps every comment consistent and machine-parseable.</p>
+          <ul class="chips"><li class="chip">Python</li><li class="chip">LangChain</li><li class="chip">OpenAI</li><li class="chip">GitHub API</li><li class="chip">FastAPI</li></ul>
+        </div>
+      </article>
+
+      <!-- ASL -->
+      <article class="pc" data-cat="mldl" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-eye"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/asl-translator" target="_blank" rel="noopener" aria-label="ASL Translator source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">ML / DL · Computer Vision</p>
+          <h3 class="pc-name">ASL Language Translator</h3>
+          <p class="pc-desc">Custom <strong>CNN built from scratch</strong> — not a pre-trained model with a new head. OpenCV captures frames → hand crop normalised to 28×28 → the CNN classifies 26 ASL letters in real time at <strong>&gt;92% accuracy</strong>. Conv2D → MaxPooling → Dropout, tuned for lighting variation and partial occlusion. Built as an accessibility tool for the deaf community.</p>
+          <ul class="chips"><li class="chip">Python</li><li class="chip">TensorFlow/Keras</li><li class="chip">CNN</li><li class="chip">OpenCV</li></ul>
+        </div>
+      </article>
+
+      <!-- Trading -->
+      <article class="pc" data-cat="mldl" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-trending"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/trading-signal-predictor" target="_blank" rel="noopener" aria-label="Trading Signal Predictor source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">ML / DL · Time Series · Finance</p>
+          <h3 class="pc-name">Real-Time Trading Signal Predictor</h3>
+          <p class="pc-desc"><strong>LSTM model</strong> learning temporal patterns in OHLCV data to generate buy/sell/hold signals. Feature pipeline: RSI, MACD and Bollinger Bands via Pandas → normalised → LSTM sequences. Full <strong>backtesting framework</strong> with slippage/commission models reporting Sharpe ratio, drawdown and win rate. Wired into the live Umbrella Corporate dashboard.</p>
+          <ul class="chips"><li class="chip">Python</li><li class="chip">LSTM/Keras</li><li class="chip">scikit-learn</li><li class="chip">Pandas</li><li class="chip">Plotly</li></ul>
+        </div>
+      </article>
+
+      <!-- CI/CD -->
+      <article class="pc" data-cat="devops" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-workflow"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/cicd-k8s-pipeline" target="_blank" rel="noopener" aria-label="CI/CD pipeline source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">DevOps · Cloud Infrastructure</p>
+          <h3 class="pc-name">Cloud-Native CI/CD Pipeline</h3>
+          <p class="pc-desc">GitOps deployment for containerised microservices. Merge to <code>main</code> triggers GitHub Actions: lint → test → Docker build → push to ECR → <strong>Kubernetes rolling update with zero downtime</strong>. Liveness/readiness probes keep traffic on healthy pods; Nginx handles ingress + SSL. <strong>Infrastructure entirely as code</strong>.</p>
+          <ul class="chips"><li class="chip">Docker</li><li class="chip">Kubernetes</li><li class="chip">GitHub Actions</li><li class="chip">AWS EC2/ECR</li><li class="chip">Nginx</li></ul>
+        </div>
+      </article>
+
+      <!-- Digital Labour Chowk -->
+      <article class="pc" data-cat="fullstack" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></div>
+            <div class="pc-links">
+              <a class="ilink" href="https://github.com/DevrajParmarr/digital-labour-chowk" target="_blank" rel="noopener" aria-label="Digital Labour Chowk source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+          <p class="pc-cat">Full Stack · Agile · Social Impact</p>
+          <h3 class="pc-name">Digital Labour Chowk</h3>
+          <p class="pc-desc">A job marketplace connecting daily-wage labourers with contractors — fixing informal labour markets where neither side can reliably find the other. Multi-role dashboards, job posting and real-time tracking. A <strong>normalised SQL schema</strong> with ACID transactions handles concurrent bookings safely. Delivered via Agile/Scrum in bi-weekly sprints.</p>
+          <ul class="chips"><li class="chip">PHP</li><li class="chip">MySQL</li><li class="chip">HTML/CSS/JS</li><li class="chip">Agile/Scrum</li></ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ Architecture ============ -->
+<section class="section" id="sysdesign" data-gl="shape:5;x:-3.8;s:.95;a:.5;r:.14" data-gl-m="x:0;s:.7;a:.28" aria-labelledby="arch-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><span class="num">05</span>Architecture</p>
+        <h2 class="title" id="arch-title">Inside <em>NeuroAgent.</em></h2>
+      </div>
+      <p class="sec-sub">Multi-agent orchestration for an autonomous software engineer. Watch a simulated run move through the graph — including a failed test and a self-correction.</p>
+    </div>
+
+    <div class="arch">
+      <div class="pipe card" id="pipeline" data-reveal>
+        <p class="pipe-label">Pipeline · LangGraph state machine</p>
+        <div class="pnode" data-agent="user" style="--c:var(--text)">
+          <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-message"/></svg></span>
+          <div><b>User input</b><small>natural-language task</small></div><span class="state">idle</span>
+        </div>
+        <div class="pconn" aria-hidden="true"></div>
+        <div class="pnode" data-agent="orchestrator" style="--c:var(--blue)">
+          <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-cpu"/></svg></span>
+          <div><b>Orchestrator</b><small>ReAct · conditional edges</small></div><span class="state">idle</span>
+        </div>
+        <div class="pconn" aria-hidden="true"></div>
+        <div class="agents">
+          <div class="pnode" data-agent="planner" style="--c:var(--cyan)">
+            <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-layers"/></svg></span>
+            <div><b>PlannerAgent</b><small>decompose</small></div><span class="state">idle</span>
+          </div>
+          <div class="pnode" data-agent="coder" style="--c:var(--violet)">
+            <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-code"/></svg></span>
+            <div><b>CoderAgent</b><small>generate</small></div><span class="state">idle</span>
+          </div>
+          <div class="pnode" data-agent="tester" style="--c:var(--green)">
+            <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-flask"/></svg></span>
+            <div><b>TestAgent</b><small>write &amp; run in Docker</small></div><span class="state">idle</span>
+          </div>
+          <div class="pnode" data-agent="reviewer" style="--c:var(--amber)">
+            <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
+            <div><b>ReviewerAgent</b><small>quality gate</small></div><span class="state">idle</span>
+          </div>
+          <div class="pnode" data-agent="deploy" style="--c:var(--pink)">
+            <span class="pnode-ic" aria-hidden="true"><svg class="icon"><use href="#i-rocket"/></svg></span>
+            <div><b>DeployAgent</b><small>commit + trigger CI/CD</small></div><span class="state">idle</span>
+          </div>
+          <div class="retry" aria-hidden="true"><span>retry</span></div>
+        </div>
+        <div class="pconn" aria-hidden="true"></div>
+        <div class="pipe-sub">
+          <div class="pipe-group"><h4>Memory</h4><ul class="mini mem"><li>Redis · short-term</li><li>Postgres + pgvector</li></ul></div>
+          <div class="pipe-group"><h4>Tools</h4><ul class="mini tools"><li>GitHub API</li><li>Docker</li><li>Web search</li><li>File system</li></ul></div>
+        </div>
+        <div class="pipe-group" style="margin-top:.8rem"><h4>Output</h4><ul class="mini out"><li>Tested code committed to Git</li><li>WebSocket thought stream</li></ul></div>
+      </div>
+
+      <div class="term" data-reveal>
+        <div class="term-bar">
+          <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="term-title">neuroagent — simulated run</span>
+          <div class="term-ctrl">
+            <button type="button" id="term-play" aria-label="Pause simulation" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-pause"/></svg></button>
+            <button type="button" id="term-replay" aria-label="Replay simulation"><svg class="icon" aria-hidden="true"><use href="#i-replay"/></svg></button>
+          </div>
+        </div>
+        <div class="term-body" id="term-body" data-lenis-prevent aria-label="Simulated NeuroAgent log" role="log"></div>
+        <div class="term-foot"><span class="live" id="term-state">waiting</span><span id="term-step">step 00/18</span><span>illustrative · not a live system</span></div>
+      </div>
+    </div>
+
+    <div class="specs">
+      <div class="spec card" data-reveal><h3><svg class="icon" aria-hidden="true"><use href="#i-zap"/></svg>Capabilities</h3><ul><li>Scaffold features from plain English</li><li>Write &amp; execute tests autonomously</li><li>Fix bugs from issue descriptions</li><li>Commit and push to GitHub</li><li>Self-correct on test failure</li></ul></div>
+      <div class="spec card" data-reveal><h3><svg class="icon" aria-hidden="true"><use href="#i-git-branch"/></svg>Architecture</h3><ul><li>LangGraph stateful agent graph</li><li>ReAct loop per agent</li><li>Structured tool-use outputs</li><li>Conditional edges for quality gates</li><li>Async FastAPI backend</li></ul></div>
+      <div class="spec card" data-reveal><h3><svg class="icon" aria-hidden="true"><use href="#i-database"/></svg>Memory design</h3><ul><li>Redis: in-session buffer</li><li>PostgreSQL: persistent history</li><li>pgvector: semantic search</li><li>Episodic cross-session recall</li></ul></div>
+      <div class="spec card" data-reveal><h3><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Infrastructure</h3><ul><li>Docker: sandboxed execution</li><li>FastAPI: async Python API</li><li>WebSockets: real-time streaming</li><li>React: thought-stream UI</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Credentials ============ -->
+<section class="section" id="credentials" data-gl="shape:0;x:4;s:.65;a:.45;n:.08;r:.15" data-gl-m="x:0;s:.6;a:.28" aria-labelledby="cred-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow"><span class="num">06</span>Credentials</p>
+        <h2 class="title" id="cred-title">By the <em>numbers.</em></h2>
+      </div>
+    </div>
+
+    <div class="bento">
+      <div class="ach big card" data-reveal>
+        <span class="ach-glow" aria-hidden="true"></span>
+        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-zap"/></svg></div>
+        <div>
+          <div class="ach-n" data-count="450" data-suffix="+">450+</div>
+          <p>LeetCode problems solved with optimal time &amp; space complexity — the habit behind every algorithm in my projects.</p>
+        </div>
+        <a class="link" href="https://leetcode.com/u/devrajparmar37/" target="_blank" rel="noopener">View LeetCode profile<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+      </div>
+      <div class="ach card" data-reveal>
+        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-trophy"/></svg></div>
+        <div><div class="ach-n" data-count="1680" data-suffix="+">1680+</div><p>CodeChef rating — 3-star competitive programmer</p></div>
+      </div>
+      <div class="ach card" data-reveal>
+        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-target"/></svg></div>
+        <div><div class="ach-n"><span class="tilde">~</span>40K</div><p>All India Rank (AIR) in JEE Mains 2022, out of 1M+ candidates</p></div>
+      </div>
+      <div class="ach card" data-reveal>
+        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-activity"/></svg></div>
+        <div><div class="ach-n">State</div><p>State-level athlete — Volleyball &amp; Kho-Kho</p></div>
+      </div>
+      <div class="ach card" data-reveal>
+        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-award"/></svg></div>
+        <div><div class="ach-n">2×</div><p>Oracle certifications in AI &amp; Generative AI</p></div>
+      </div>
+    </div>
+
+    <h3 class="subhead">Certifications</h3>
+    <div class="certs">
+      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg><h3>Oracle Certified Professional</h3><p class="issuer">Generative AI</p><p class="yr">Oracle · 2025</p></div>
+      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-graduation"/></svg><h3>Oracle Certified Associate</h3><p class="issuer">AI Foundations</p><p class="yr">Oracle · 2025</p></div>
+      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg><h3>MERN Stack Development</h3><p class="issuer">LaunchED Platform</p><p class="yr">April – June 2025</p></div>
+      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><h3>Web Development Program</h3><p class="issuer">Acmegrade</p><p class="yr">June – July 2024</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Contact ============ -->
+<section class="section contact" id="contact" data-gl="shape:6;y:.25;s:1.05;a:.95;rx:.15;r:.06" data-gl-m="s:.6;a:.65" aria-labelledby="contact-title">
+  <div class="wrap">
+    <p class="eyebrow"><span class="num">07</span>Get in touch</p>
+    <h2 class="title contact-title" id="contact-title">Let's build <em>something.</em></h2>
+    <p class="contact-sub" data-reveal>I'm actively seeking SDE, Full Stack, GenAI, or ML/DL engineering roles. Full-time, internship, or something worth building — I want to hear about it.</p>
+    <div data-reveal>
+      <a href="mailto:devrajparmar232@gmail.com" class="cta-orb" data-magnetic=".35"><span><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>Say hello</span></a>
+    </div>
+    <div data-reveal>
+      <div class="email-row">
+        <a href="mailto:devrajparmar232@gmail.com">devrajparmar232@gmail.com</a>
+        <button class="copy-btn" type="button" data-copy-email aria-label="Copy email address"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+    <div class="socials" data-reveal>
+      <a class="btn btn-sm btn-ghost" href="https://github.com/DevrajParmarr" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg><span class="btn-label">GitHub</span></a>
+      <a class="btn btn-sm btn-ghost" href="https://www.linkedin.com/in/devraj-parmar-459363187" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg><span class="btn-label">LinkedIn</span></a>
+      <a class="btn btn-sm btn-ghost" href="https://leetcode.com/u/devrajparmar37/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg><span class="btn-label">LeetCode</span></a>
+      <a class="btn btn-sm btn-ghost" href="https://codolio.com/profile/Devraj_Parmar" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="btn-label">Codolio</span></a>
+      <a class="btn btn-sm btn-ghost" href="tel:+916263610238"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span class="btn-label">+91 62636 10238</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="bigname" aria-hidden="true">DEVRAJ PARMAR</div>
+<footer class="footer">
+  <div class="wrap">
+    <p>© <span data-year>2026</span> Devraj Parmar — designed &amp; engineered by hand.</p>
+    <p class="clock" id="clock">Indore · IST</p>
+    <a href="#hero">Back to top<svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></a>
   </div>
 </footer>
 
+<!-- ============ Command palette ============ -->
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-bg" data-cmdk-close></div>
+  <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-search">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="cmdk-input" type="text" placeholder="Jump to a section, copy email, open GitHub…" autocomplete="off" spellcheck="false"
+             role="combobox" aria-expanded="false" aria-controls="cmdk-list" aria-autocomplete="list" aria-label="Search commands">
+      <kbd>Esc</kbd>
+    </div>
+    <ul class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Commands" data-lenis-prevent></ul>
+    <div class="cmdk-foot" aria-hidden="true">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>Esc</kbd> close</span><span><kbd>/</kbd> open anywhere</span>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="toast-msg"></span></div>
+
+<!-- ============ Scripts ============ -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Flip.min.js" integrity="sha384-CHvG5TSBYWY4gs18D+se5IrGOZ6r8JlhAWob7LbkaUcfqD8PWzaYz2pqZdH7LsXQ" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
+<script src="assets/js/scene.js" defer></script>
+<script src="assets/js/main.js" defer></script>
 <script>
-(function(){
-'use strict';
-
-/* NAV */
-var nav = document.getElementById('nav');
-window.addEventListener('scroll', function(){
-  nav.classList.toggle('up', window.scrollY > 50);
-}, {passive:true});
-
-/* ROLE SWITCHER */
-var roles = ['Full Stack Engineer','GenAI Engineer','ML/DL Engineer','Backend Developer','SDE'];
-var ri = 0;
-var rel = document.getElementById('role-el');
-if(rel){
-  setInterval(function(){
-    rel.style.transition='transform .45s cubic-bezier(.4,0,.2,1),opacity .4s ease';
-    rel.style.transform='translateY(-110%)';
-    rel.style.opacity='0';
-    setTimeout(function(){
-      ri=(ri+1)%roles.length;
-      rel.textContent=roles[ri];
-      rel.style.transition='none';
-      rel.style.transform='translateY(60%)';
-      rel.style.opacity='0';
-      setTimeout(function(){
-        rel.style.transition='transform .5s cubic-bezier(.4,0,.2,1),opacity .45s ease';
-        rel.style.transform='translateY(0)';
-        rel.style.opacity='1';
-      },30);
-    },430);
-  },2800);
-}
-
-/* REVEAL ON SCROLL */
-var rvEls = document.querySelectorAll('.rv');
-function checkRv(){
-  rvEls.forEach(function(el){
-    var r=el.getBoundingClientRect();
-    if(r.top < window.innerHeight-70){ el.classList.add('on'); }
-  });
-}
-window.addEventListener('scroll',checkRv,{passive:true});
-window.addEventListener('resize',checkRv,{passive:true});
-setTimeout(checkRv,100);
-
-/* NAV ACTIVE */
-var nsections=['about','stack','experience','projects','sysdesign','certifications','achievements','contact'];
-window.addEventListener('scroll',function(){
-  var sy=window.scrollY+130;
-  nsections.forEach(function(id){
-    var el=document.getElementById(id);
-    if(!el)return;
-    var lnk=document.querySelector('.nlinks a[href="#'+id+'"]');
-    if(!lnk)return;
-    if(el.offsetTop<=sy && el.offsetTop+el.offsetHeight>sy){
-      document.querySelectorAll('.nlinks a').forEach(function(a){a.classList.remove('on')});
-      lnk.classList.add('on');
-    }
-  });
-},{passive:true});
-
-/* PROJECT FILTER */
-var fbtns=document.querySelectorAll('.fbtn');
-var pcards=document.querySelectorAll('.pc');
-fbtns.forEach(function(btn){
-  btn.addEventListener('click',function(){
-    fbtns.forEach(function(b){b.classList.remove('on')});
-    btn.classList.add('on');
-    var f=btn.getAttribute('data-f');
-    pcards.forEach(function(c){
-      var cat=c.getAttribute('data-cat');
-      if(f==='all'||cat===f){ c.classList.remove('hide'); }
-      else{ c.classList.add('hide'); }
-    });
-  });
-});
-
-/* SYSTEM DESIGN TOGGLE */
-var sdTrigger=document.getElementById('sd-trigger');
-var sdBody=document.getElementById('sd-body');
-var sdArr=document.getElementById('sd-arr');
-if(sdTrigger&&sdBody){
-  sdTrigger.addEventListener('click',function(){
-    var isOpen=sdBody.classList.toggle('open');
-    if(sdArr){ sdArr.textContent=isOpen?'▴':'▾'; }
-    sdTrigger.classList.toggle('open',isOpen);
-  });
-}
-
-/* HOVER GLOW EFFECT on exp-item and proj-cards */
-var glowEls=document.querySelectorAll('.exp-item, .pc');
-glowEls.forEach(function(el){
-  el.addEventListener('mouseenter',function(e){
-    el.style.setProperty('--mx', e.offsetX+'px');
-    el.style.setProperty('--my', e.offsetY+'px');
-  });
-});
-
-})();
+  // Safety net: never leave the loader up if a script failed to load.
+  setTimeout(function () {
+    if (window.__app) return;
+    var l = document.getElementById('loader');
+    if (l) l.remove();
+    document.body.classList.remove('is-loading');
+  }, 7000);
 </script>
 </body>
 </html>
