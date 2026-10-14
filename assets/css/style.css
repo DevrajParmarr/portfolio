@@ -509,6 +509,18 @@ main { position: relative; z-index: var(--z-content); overflow-x: clip; }
   -webkit-mask-image: radial-gradient(circle 120px at var(--sx, -300px) var(--sy, -300px), #000 0%, transparent 100%);
   mask-image: radial-gradient(circle 120px at var(--sx, -300px) var(--sy, -300px), #000 0%, transparent 100%);
 }
+.ascii-rain { background: none; color: #dcfcff; text-shadow: 0 0 9px rgba(0, 229, 255, .95), 0 0 2px #fff; }
+.ascii-cap {
+  position: absolute; left: 6%; top: 3%; z-index: 2; display: flex; align-items: center; gap: .7rem;
+  padding: .35rem .7rem; border-radius: 8px; border: 1px solid rgba(0, 229, 255, .28); background: rgba(5, 5, 10, .72);
+  font: 500 .64rem var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-2);
+  opacity: 0; transform: translateY(-6px); transition: opacity .4s, transform .5s var(--ease-out);
+}
+.ascii-cap.is-on { opacity: 1; transform: none; }
+.cap-lv { color: var(--cyan); }
+.cap-bar { position: relative; width: 70px; height: 2px; border-radius: 2px; background: var(--line-2); overflow: hidden; }
+.cap-bar b { position: absolute; inset: 0; background: var(--grad); transform-origin: 0 50%; transform: scaleX(0); }
+.ascii-cap.is-done .cap-lv { color: var(--green); }
 .halftone { width: 100%; height: 100%; }
 @media (max-width: 900px), (max-aspect-ratio: 9/10) { .pstage { display: none; } }
 @media (max-width: 640px) {
@@ -719,6 +731,31 @@ main { position: relative; z-index: var(--z-content); overflow-x: clip; }
 .facts li { display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, .02); font-size: .88rem; color: var(--text-2); }
 .facts .icon { color: var(--cyan); font-size: 1rem; }
 .about .focus { margin-top: 0; }
+
+/* ---------- About: lanyard badge (verlet strap + hanging card) ---------- */
+.badge-stage { --strap: 150px; position: relative; padding-top: var(--strap); }
+.badge-strap { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.strap-edge { fill: none; stroke: rgba(0, 229, 255, .3); stroke-width: 21; stroke-linecap: round; stroke-linejoin: round; }
+.strap-band { fill: none; stroke: #17162c; stroke-width: 18; stroke-linecap: round; stroke-linejoin: round; }
+.strap-text { font: 600 7.5px var(--f-mono); letter-spacing: 2.4px; fill: var(--cyan); opacity: .9; }
+.badge-hook {
+  position: absolute; top: -9px; left: 50%; width: 52px; height: 18px; translate: -50% 0; z-index: 2; border-radius: 9px;
+  background: linear-gradient(180deg, #eef0f6, #9a9fb2 55%, #5d6175); box-shadow: inset 0 1px 0 #fff, 0 6px 16px rgba(0, 0, 0, .6);
+}
+.idc { position: relative; z-index: 1; transform-origin: 50% 0; will-change: transform; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.idc.is-drag { cursor: grabbing; }
+.idc-tilt { position: relative; will-change: transform; }
+.idc-clip {
+  position: absolute; top: -22px; left: 50%; translate: -50% 0; z-index: 5; width: 42px; height: 32px; border-radius: 9px 9px 11px 11px;
+  background: linear-gradient(180deg, #f2f4f9, #a3a8ba 55%, #696e82); box-shadow: inset 0 1px 0 #fff, 0 5px 12px rgba(0, 0, 0, .55);
+}
+.idc-clip::after { content: ''; position: absolute; left: 50%; top: 9px; width: 18px; height: 6px; translate: -50% 0; border-radius: 3px; background: #2c2f3d; }
+.badge-foot { display: flex; flex-direction: column; align-items: center; gap: .5rem; margin-top: 2.2rem; }
+.badge-foot .idc-flip { margin: 0; }
+.badge-hint { font: 400 .64rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+
+/* hero: a wider stage so the name has room left of the portrait */
+.hero .wrap { max-width: calc(var(--maxw) + 200px); }
 
 /* ---------- Stack ---------- */
 .stack-grid {

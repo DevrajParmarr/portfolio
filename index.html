@@ -158,7 +158,7 @@
 <!-- ============ Hero ============ -->
 <section class="hero" id="hero" data-gl="shape:7;x:3.4;y:-.15;s:1.12;a:1;n:.02;r:0;lk:1" data-gl-m="x:0;y:1.45;s:.56;a:.42;lk:1" aria-label="Introduction">
   <div class="pstage" data-mode="particles" aria-hidden="true">
-    <div class="ascii-wrap"><pre class="ascii"></pre><pre class="ascii ascii-hi"></pre></div>
+    <div class="ascii-wrap"><pre class="ascii"></pre><pre class="ascii ascii-rain"></pre><pre class="ascii ascii-hi"></pre><div class="ascii-cap"><span class="cap-lv">Level 1/4</span><span class="cap-nm">silhouette</span><i class="cap-bar"><b></b></i></div></div>
     <canvas class="halftone"></canvas>
   </div>
   <div class="wrap hero-inner">
@@ -232,8 +232,16 @@
   <div class="wrap">
     <div class="about-grid">
       <div class="about-left" data-reveal>
-        <div class="idc" id="idc">
-          <div class="idc-tilt" data-tilt="8">
+        <div class="badge-stage" id="badge-stage">
+          <svg class="badge-strap" aria-hidden="true">
+            <path class="strap-edge" d="M0 0"/>
+            <path class="strap-band" id="strap-path" d="M0 0"/>
+            <text class="strap-text" dy="2.6"><textPath href="#strap-path" startOffset="8">DEVRAJ PARMAR · ENGINEER ACCESS · DEVRAJ PARMAR · ENGINEER ACCESS ·</textPath></text>
+          </svg>
+          <span class="badge-hook" aria-hidden="true"></span>
+          <div class="idc" id="idc" data-cursor="drag">
+          <div class="idc-tilt">
+            <span class="idc-clip" aria-hidden="true"></span>
             <div class="idc-inner">
               <div class="idc-face idc-front">
                 <span class="idc-holo" aria-hidden="true"></span>
@@ -269,7 +277,11 @@
             </div>
           </div>
         </div>
-        <button class="idc-flip" type="button" aria-controls="idc" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-replay"/></svg><span>Flip the card</span></button>
+        </div>
+        <div class="badge-foot">
+          <button class="idc-flip" type="button" aria-controls="idc" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-replay"/></svg><span>Flip the card</span></button>
+          <span class="badge-hint" aria-hidden="true">drag to swing · tap to flip</span>
+        </div>
       </div>
 
       <div class="about-right">

@@ -220,7 +220,7 @@
     attribute vec3 aS4; attribute vec3 aS5; attribute vec3 aS6; attribute vec3 aS7;
     attribute vec4 aRand; attribute vec3 aScatter; attribute float aLum;
     uniform float uTime, uFrom, uTo, uProgress, uBloom, uBlob, uNoise, uIntro;
-    uniform float uSize, uPixelRatio, uAlpha, uMouseK, uPulseT, uPortrait, uDisperse;
+    uniform float uSize, uPixelRatio, uAlpha, uMouseK, uPulseT, uPortrait, uDisperse, uPour;
     uniform vec3 uMouse, uPulseO, uC1, uC2, uC3;
     varying vec3 vColor; varying float vAlpha;
     ${NOISE}
@@ -246,6 +246,19 @@
       float dsp = smoothstep(0., 1., uDisperse * uPortrait * 1.5 - aRand.y * .5);
       pos = mix(pos, aScatter * .55, dsp);
 
+      // particle pour: a thin stream from above fills the face bottom-up, like liquid in a glass
+      float pourVis = 1., pourLine = 0.;
+      if (uPour < 1.) {
+        float hgt = clamp((aS7.y + 2.5) / 5., 0., 1.);
+        float pp = clamp((uPour - hgt * .64 - aRand.y * .1) / .24, 0., 1.);
+        vec3 spout = vec3((aRand.x - .5) * .3, 3.7 + aRand.z * 1.4, aS7.z * .2);
+        vec3 poured = vec3(mix(spout.x, aS7.x, smoothstep(.5, 1., pp)), mix(spout.y, aS7.y, pp * pp), mix(spout.z, aS7.z, pp));
+        pos = mix(pos, poured, uPortrait);
+        pourVis = mix(1., step(.001, pp), uPortrait);
+        float level = (uPour - .12) / .64;                       // the rising "waterline"
+        pourLine = exp(-pow((hgt - level) * 12., 2.)) * step(.999, pp) * uPortrait;
+      }
+
       float ip = clamp((uIntro - aRand.y * .45) / .55, 0., 1.);
       ip = 1. - pow(1. - ip, 3.);
       pos = mix(aScatter, pos, ip);
@@ -261,7 +274,7 @@
 
       vec4 mv = viewMatrix * world;
       gl_Position = projectionMatrix * mv;
-      float size = uSize * (.35 + aRand.x * aRand.x * 1.45) * (1. + push * 1.4 + wave * 2.) * mix(1., .7 + .6 * aLum, uPortrait);
+      float size = uSize * (.35 + aRand.x * aRand.x * 1.45) * (1. + push * 1.4 + wave * 2.) * mix(1., .7 + .6 * aLum, uPortrait) * (1. + pourLine * 1.3);
       gl_PointSize = size * uPixelRatio / -mv.z;
 
       float h = clamp(world.y * .17 + .5 + (aRand.z - .5) * .55, 0., 1.);
@@ -270,8 +283,8 @@
       // portrait: colour follows the photo's light (violet shadows → cyan-white highlights)
       vec3 lit = mix(uC2 * .85, mix(uC1, vec3(.88, .97, 1.), .4), smoothstep(.1, .9, aLum));
       col = mix(col, mix(lit, uC3, step(.97, aRand.z)), uPortrait);
-      vColor = col * mix(1., .4 + .9 * aLum, uPortrait) + push * .55 + wave * .8;
-      vAlpha = uAlpha * mix(.22, 1., smoothstep(-15., -5.5, mv.z)) * (.4 + .6 * ip) * mix(1., .55 + .45 * aLum, uPortrait) * (1. - dsp * .75);
+      vColor = col * mix(1., .4 + .9 * aLum, uPortrait) + push * .55 + wave * .8 + pourLine * .9;
+      vAlpha = uAlpha * mix(.22, 1., smoothstep(-15., -5.5, mv.z)) * (.4 + .6 * ip) * mix(1., .55 + .45 * aLum, uPortrait) * (1. - dsp * .75) * pourVis;
     }`;
 
   const FRAG = /* glsl */`
@@ -354,7 +367,7 @@
       uTime: { value: 0 }, uFrom: { value: 0 }, uTo: { value: 0 }, uProgress: { value: 1 },
       uBloom: { value: 0 }, uBlob: { value: 0.32 }, uNoise: { value: 0.1 }, uIntro: { value: REDUCED ? 1 : 0 },
       uSize: { value: coarse ? 26 : 30 }, uPixelRatio: { value: dpr }, uAlpha: { value: 1 },
-      uMouse: { value: new THREE.Vector3(99, 99, 0) }, uMouseK: { value: 0 }, uPortrait: { value: 0 }, uDisperse: { value: 0 },
+      uMouse: { value: new THREE.Vector3(99, 99, 0) }, uMouseK: { value: 0 }, uPortrait: { value: 0 }, uDisperse: { value: 0 }, uPour: { value: 1 },
       uPulseO: { value: new THREE.Vector3(0, 0, 0) }, uPulseT: { value: 9 },
       uC1: { value: new THREE.Color('#00e5ff') }, uC2: { value: new THREE.Color('#9b5cf6') }, uC3: { value: new THREE.Color('#ec4899') },
     };
@@ -479,7 +492,14 @@
     const KEYS = ['x', 'y', 's', 'a', 'rx', 'rz', 'n', 'r', 'lk'];
     let spin = 0, last = performance.now(), time = 0, ft = 0, fn = 0, adapted = 0, lastScroll = -1, readyFired = false;
     let looping = enabled, dirty = true, disperse = 0, disperseTo = 0;
-    addEventListener('gl:portrait', (e) => { disperseTo = e.detail && e.detail.visible === false ? 1 : 0; dirty = true; });
+    let pour = 1;
+    addEventListener('gl:portrait', (e) => {
+      const show = !(e.detail && e.detail.visible === false);
+      disperseTo = show ? 0 : 1;
+      // coming back to particles: pour them in from above instead of drifting back
+      if (show && !REDUCED) { disperse = 0; pour = 0; intro = 1; introOn = true; }
+      dirty = true;
+    });
 
     function frame(now) {
       if (!enabled) { looping = false; return; }
@@ -519,6 +539,8 @@
       if (introOn && intro < 1) intro = Math.min(1, intro + dt / 2.6);
       U.uIntro.value = intro;
       disperse += (disperseTo - disperse) * (REDUCED ? 1 : 1 - Math.pow(0.04, dt));
+      if (pour < 1) pour = Math.min(1, pour + dt / 2.8);
+      U.uPour.value = pour;
       U.uDisperse.value = disperse;
 
       // pointer: smooth parallax + repulsion that fades when the mouse rests
@@ -535,7 +557,9 @@
       const facing = Math.atan2(Math.sin(spin), Math.cos(spin)) * (1 - cur.lk);
       group.position.set(cur.x, cur.y, 0);
       group.scale.setScalar(cur.s);
-      group.rotation.set(cur.rx + mouse.sy * 0.12, facing + mouse.sx * (0.25 - 0.1 * cur.lk), cur.rz);
+      // a locked portrait turns to face the camera, so its off-centre position doesn't skew it in perspective
+      const aimY = Math.atan2(-cur.x, camera.position.z) * cur.lk, aimX = Math.atan2(cur.y, camera.position.z) * cur.lk;
+      group.rotation.set(cur.rx + aimX + mouse.sy * 0.12, facing + aimY + mouse.sx * (0.25 - 0.1 * cur.lk), cur.rz);
       U.uAlpha.value = cur.a;
 
       camera.position.x = mouse.sx * 0.35;

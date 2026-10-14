@@ -260,20 +260,62 @@
       if (mode === 'halftone' && REDUCED) drawHalftone(performance.now());
     }
 
+    // ASCII reveal, level by level: the portrait "develops" like a rising bit-depth —
+    // silhouette → shadows → mid-tones → highlights. Each level sweeps top-to-bottom with a
+    // glowing scan front; cells that are not yet at their level show the closest lower tone.
+    const baseEls = asciiEls.filter((el) => !el.classList.contains('ascii-rain'));
+    const rainEl = $('.ascii-rain', stage), cap = $('.ascii-cap', stage);
+    const capLv = $('.cap-lv', cap), capNm = $('.cap-nm', cap), capBar = $('.cap-bar b', cap);
+    const RAMP = ' .:-=+*#%@';
+    const LEVELS = [['silhouette', 2], ['shadows', 4], ['mid-tones', 6], ['highlights', 9]];
+    const GRID = LINES.map((l) => l.padEnd(COLS));
+    const IDX = GRID.map((row) => Array.from(row, (ch) => (ch === ' ' ? 0 : Math.max(1, RAMP.indexOf(ch)))));
+    let capTimer = 0;
+    function caption(level, done) {
+      clearTimeout(capTimer);
+      cap.classList.add('is-on');
+      cap.classList.toggle('is-done', !!done);
+      capLv.textContent = done ? 'Render' : `Level ${level + 1}/${LEVELS.length}`;
+      capNm.textContent = done ? 'complete' : LEVELS[level][0];
+      if (done) capTimer = setTimeout(() => cap.classList.remove('is-on'), 1400);
+    }
     function decode() {
       cancelAnimationFrame(decodeRaf);
-      if (REDUCED) { asciiEls.forEach((el) => { el.textContent = TARGET; }); return; }
-      const t0 = performance.now(), dur = 1300;
+      if (REDUCED) { baseEls.forEach((el) => { el.textContent = TARGET; }); rainEl.textContent = ''; return; }
+      const SWEEP = 0.62, GAP = 0.18, STEP = SWEEP + GAP, TOTAL = LEVELS.length * STEP, t0 = performance.now();
+      let shownLevel = -1;
       const step = (now) => {
-        const p = Math.min(1, (now - t0) / dur) * 1.25;
-        let out = '';
-        for (let i = 0; i < TARGET.length; i++) {
-          const c = TARGET[i];
-          out += (c === ' ' || c === NL || order[i] < p - 0.2) ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        const t = (now - t0) / 1000;
+        if (t >= TOTAL) {
+          baseEls.forEach((el) => { el.textContent = TARGET; });
+          rainEl.textContent = '';
+          capBar.style.transform = 'scaleX(1)';
+          caption(0, true);
+          return;
         }
-        asciiEls.forEach((el) => { el.textContent = out; });
-        if (p < 1.25) decodeRaf = requestAnimationFrame(step);
-        else asciiEls.forEach((el) => { el.textContent = TARGET; });
+        const lv = Math.min(LEVELS.length - 1, Math.floor(t / STEP));
+        const scan = Math.min(1, (t - lv * STEP) / SWEEP) * (ROWS + 3);
+        const prevCap = lv > 0 ? LEVELS[lv - 1][1] : 0;
+        if (lv !== shownLevel) { shownLevel = lv; caption(lv); }
+        capBar.style.transform = `scaleX(${(t / TOTAL).toFixed(3)})`;
+        let base = '', rain = '';
+        for (let r = 0; r < ROWS; r++) {
+          const row = IDX[r], swept = r < scan, front = swept && r >= scan - 3;
+          const at = swept ? lv : lv - 1;
+          for (let c = 0; c < COLS; c++) {
+            const v = row[c];
+            if (!v || at < 0) { base += ' '; rain += ' '; continue; }
+            const ch = RAMP[Math.min(v, LEVELS[at][1])];
+            if (front && (lv === 0 || v > prevCap)) {      // this cell changes on this pass: it glows
+              base += ' ';
+              rain += Math.random() < 0.55 ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+            } else { base += ch; rain += ' '; }
+          }
+          base += NL; rain += NL;
+        }
+        baseEls.forEach((el) => { el.textContent = base; });
+        rainEl.textContent = rain;
+        decodeRaf = requestAnimationFrame(step);
       };
       decodeRaf = requestAnimationFrame(step);
     }
@@ -292,18 +334,34 @@
       }
       dots.sort((a, b) => a.b - b.b);
     }
+    // halftone reveals: a springy top-down cascade, or a circular iris mask with a glowing edge
+    let htReveal = 'cascade', htT0 = 0;
+    const backOut = (x) => 1 + 2.70158 * Math.pow(x - 1, 3) + 1.70158 * Math.pow(x - 1, 2);
     function drawHalftone(now) {
       htRaf = 0;
       const target = mode === 'halftone' ? 1 : 0;
-      htGrow = REDUCED ? target : htGrow + (target - htGrow) * 0.07;
-      const w = stage.clientWidth, h = stage.clientHeight, t = now / 1000;
+      htGrow = REDUCED || target ? target : htGrow + (0 - htGrow) * 0.08;
+      const w = stage.clientWidth, h = stage.clientHeight, t = now / 1000, el = (now - htT0) / 1000;
       ctx.clearRect(0, 0, w, h);
       const rect = stage.getBoundingClientRect(), lx = mx - rect.left, ly = my - rect.top, R2 = 100 * 100;
+      const cx = w * 0.5, cy = h * 0.4, maxR = Math.hypot(w, h) * 0.62;
+      const irisR = maxR * (1 - Math.pow(1 - clamp(el / 1.3, 0, 1), 3));
+      const revealing = !REDUCED && target === 1 && el < 2.6;
+      const edge = [];
       let shade = -1;
       for (let i = 0; i < dots.length; i++) {
         const p = dots[i];
+        let rf = 1;
+        if (revealing) {
+          if (htReveal === 'cascade') rf = backOut(clamp((el - ((p.y / h) * 0.95 + (p.x / w) * 0.12)) / 0.5, 0, 1));
+          else if (htReveal === 'levels') rf = backOut(clamp((el - (p.b * 0.32 + (p.y / h) * 0.3)) / 0.32, 0, 1));
+          else {
+            rf = clamp((irisR - Math.hypot(p.x - cx, p.y - cy)) / 26, 0, 1);
+            if (rf > 0 && rf < 1) { edge.push(p); continue; }
+          }
+        }
         if (p.b !== shade) { if (shade >= 0) ctx.fill(); shade = p.b; ctx.fillStyle = SHADES[shade]; ctx.beginPath(); }
-        let r = p.r * htGrow * (REDUCED ? 1 : 1 + 0.14 * Math.sin(t * 2.2 - p.k));
+        let r = p.r * htGrow * rf * (REDUCED ? 1 : 1 + 0.14 * Math.sin(t * 2.2 - p.k));
         const dx = p.x - lx, dy = p.y - ly, d2 = dx * dx + dy * dy;
         if (d2 < R2) r *= 1 + 0.75 * (1 - d2 / R2);
         if (r < 0.15) continue;
@@ -311,6 +369,11 @@
         ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
       }
       if (shade >= 0) ctx.fill();
+      if (edge.length) {   // the iris rim: oversized, brightest dots
+        ctx.fillStyle = '#e6fdff'; ctx.shadowColor = '#00e5ff'; ctx.shadowBlur = 12; ctx.beginPath();
+        edge.forEach((p) => { const r = Math.max(p.r, 2) * 1.8; ctx.moveTo(p.x + r, p.y); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); });
+        ctx.fill(); ctx.shadowBlur = 0;
+      }
       if (!REDUCED && inView && (target === 1 || htGrow > 0.01)) htRaf = requestAnimationFrame(drawHalftone);
     }
 
@@ -321,6 +384,8 @@
       stage.dataset.mode = m;
       dispatchEvent(new CustomEvent('gl:portrait', { detail: { visible: m === 'particles' } }));
       if (m === 'ascii') decode();
+      else { cancelAnimationFrame(decodeRaf); cap.classList.remove('is-on'); }
+      if (m === 'halftone') { htReveal = ['cascade', 'iris', 'levels'][(Math.random() * 3) | 0]; htT0 = performance.now(); }
       if (!htRaf) htRaf = requestAnimationFrame(drawHalftone);
     }
     const reroll = () => {
@@ -359,11 +424,45 @@
     place();
     // every visit opens on a random style
     const begin = () => {
-      if (!small.matches) setMode(MODES[(Math.random() * MODES.length) | 0]);
+      // ?portrait=ascii|particles|halftone forces the opening style (handy for demos)
+      const forced = new URLSearchParams(location.search).get('portrait');
+      setMode(small.matches ? 'particles' : MODES.includes(forced) ? forced : MODES[(Math.random() * MODES.length) | 0]);
       started = true;
       schedule();
     };
     if (window.__introDone) begin(); else addEventListener('intro', begin, { once: true });
+  })();
+
+  /* ------------------------------------------------------------------ */
+  /* Hero name: never overlaps the portrait's face                       */
+  /* ------------------------------------------------------------------ */
+  (function fitName() {
+    const h1 = $('.hero-name'), lines = $$('.hero-name .line');
+    if (!h1 || !lines.length) return;
+    const small = matchMedia('(max-width: 900px), (max-aspect-ratio: 9/10)');
+    function fit() {
+      h1.style.fontSize = '';
+      if (!small.matches) {
+        const r = window.__gl && window.__gl.portraitRect ? window.__gl.portraitRect() : null;
+        const stage = $('.pstage'), rect = r || (stage ? stage.getBoundingClientRect() : null);
+        if (rect && rect.width) {
+          const P = window.__PORTRAIT, hd = (P && P.head) || { cx: 0, rx: 0.25 };
+          const faceLeft = rect.left + rect.width * (0.5 + hd.cx - hd.rx * 1.15);
+          const left = lines[0].getBoundingClientRect().left;
+          const widest = Math.max.apply(null, lines.map((l) => l.getBoundingClientRect().width));
+          const room = faceLeft - left - 28;
+          if (widest > room) {
+            const fs = parseFloat(getComputedStyle(h1).fontSize);
+            h1.style.fontSize = Math.max(44, (fs * room) / widest) + 'px';
+          }
+        }
+      }
+      dispatchEvent(new Event('name:fit'));
+    }
+    addEventListener('resize', fit);
+    addEventListener('gl:ready', fit);
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(fit);
+    fit();
   })();
 
   /* ------------------------------------------------------------------ */
@@ -402,7 +501,7 @@
     const kick = () => { if (armed && !raf) raf = requestAnimationFrame(frame); };
     hero.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; kick(); });
     hero.addEventListener('pointerleave', () => { mx = -1e4; my = -1e4; kick(); });
-    addEventListener('resize', () => { if (armed) measure(); });
+    addEventListener('name:fit', () => { if (armed) measure(); });
     addEventListener('name:ready', () => { measure(); armed = true; }, { once: true });
   })();
 
@@ -675,42 +774,152 @@
   })();
 
   (function idCard() {
-    const card = $('#idc'), btn = $('.idc-flip');
+    const card = $('#idc'), btn = $('.idc-flip'), stage = $('#badge-stage');
     if (!card) return;
-    const front = $('.idc-front', card), back = $('.idc-back', card);
+    const front = $('.idc-front', card), back = $('.idc-back', card), tilt = $('.idc-tilt', card);
     const flip = (on) => {
       card.classList.toggle('is-flipped', on);
       if (btn) btn.setAttribute('aria-pressed', String(on));
       front.inert = on; back.inert = !on;
     };
+    const toggle = () => flip(!card.classList.contains('is-flipped'));
     flip(false);
-    if (btn) btn.addEventListener('click', () => flip(!card.classList.contains('is-flipped')));
-    card.addEventListener('click', (e) => { if (!e.target.closest('a')) flip(!card.classList.contains('is-flipped')); });
+    if (btn) btn.addEventListener('click', toggle);
 
     // ASCII "photo" — head & shoulders slice of the portrait
     const P = window.__PORTRAIT, pre = $('.idc-ascii', card), box = $('.idc-photo', card);
-    if (!P || !P.a || !pre) return;
-    const NL = String.fromCharCode(10), all = P.a.split(NL), W = Math.max.apply(null, all.map((r) => r.length));
-    // pad to full width: lines are right-trimmed, which would push the head off-centre
-    const rows = all.slice(5, 43).map((r) => r.padEnd(W));
-    const text = rows.join(NL), GL = '.:-=+*#%@';
-    const fit = () => { pre.style.fontSize = (box.clientHeight - 4) / rows.length + 'px'; };
-    pre.textContent = text;
-    fit();
-    addEventListener('resize', fit);
-    if (d.fonts && d.fonts.ready) d.fonts.ready.then(fit);
-    if (REDUCED) return;
-    // a subtle "live feed" flicker: a few characters glitch now and then
-    setInterval(() => {
-      if (d.hidden || card.classList.contains('is-flipped')) return;
-      const arr = text.split('');
-      for (let k = 0; k < 18; k++) {
-        const i = (Math.random() * arr.length) | 0;
-        if (arr[i] !== ' ' && arr[i] !== NL) arr[i] = GL[(Math.random() * GL.length) | 0];
+    if (P && P.a && pre) {
+      const NL = String.fromCharCode(10), all = P.a.split(NL), W = Math.max.apply(null, all.map((r) => r.length));
+      // pad to full width: lines are right-trimmed, which would push the head off-centre
+      const rows = all.slice(5, 43).map((r) => r.padEnd(W));
+      const text = rows.join(NL), GL = '.:-=+*#%@';
+      const fit = () => { pre.style.fontSize = (box.clientHeight - 4) / rows.length + 'px'; };
+      pre.textContent = text;
+      fit();
+      addEventListener('resize', fit);
+      if (d.fonts && d.fonts.ready) d.fonts.ready.then(fit);
+      if (!REDUCED) {
+        setInterval(() => {   // a subtle "live feed" flicker
+          if (d.hidden || card.classList.contains('is-flipped')) return;
+          const arr = text.split('');
+          for (let k = 0; k < 18; k++) {
+            const i = (Math.random() * arr.length) | 0;
+            if (arr[i] !== ' ' && arr[i] !== NL) arr[i] = GL[(Math.random() * GL.length) | 0];
+          }
+          pre.textContent = arr.join('');
+          setTimeout(() => { pre.textContent = text; }, 120);
+        }, 1600);
       }
-      pre.textContent = arr.join('');
-      setTimeout(() => { pre.textContent = text; }, 120);
-    }, 1600);
+    }
+
+    /* ---- lanyard: a verlet-integrated strap with the card hanging from its end ---- */
+    if (!stage) return;
+    const band = $('.strap-band', stage), edge = $('.strap-edge', stage);
+    const N = 10;
+    let w = 0, L = 150, seg = 0, ax = 0, pts = [], drag = null, down = null, spin = 0;
+    let raf = 0, last = 0, acc = 0, t = 0, visible = false, entered = false;
+
+    function layout() {
+      w = stage.clientWidth;
+      L = parseFloat(getComputedStyle(stage).getPropertyValue('--strap')) || 150;
+      ax = w / 2; seg = L / (N - 1);
+      pts = Array.from({ length: N }, (_, i) => ({ x: ax, y: i * seg, px: ax, py: i * seg }));
+      render();
+    }
+    function step() {
+      t += 1 / 60;
+      for (let i = 1; i < N; i++) {
+        if (drag && i === N - 1) continue;
+        const p = pts[i], vx = clamp((p.x - p.px) * 0.982, -22, 22), vy = clamp((p.y - p.py) * 0.982, -22, 22);
+        p.px = p.x; p.py = p.y;
+        p.x += vx + (i === N - 1 ? Math.sin(t * 0.9) * 0.014 : 0);   // a faint breeze
+        p.y += vy + 0.6;                                               // gravity
+      }
+      if (drag) { const e = pts[N - 1]; e.px = e.x; e.py = e.y; e.x = drag.x; e.y = drag.y; }
+      for (let k = 0; k < 16; k++) {
+        for (let i = 0; i < N - 1; i++) {
+          const a = pts[i], b = pts[i + 1], isEnd = i + 1 === N - 1;
+          const dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 0.001, diff = (dist - seg) / dist;
+          // anchor never moves; the heavy card end moves least (and not at all while held)
+          const wa = i === 0 ? 0 : isEnd ? (drag ? 1 : 0.85) : 0.5, wb = 1 - wa;
+          a.x += dx * diff * wa; a.y += dy * diff * wa;
+          b.x -= dx * diff * wb; b.y -= dy * diff * wb;
+        }
+        pts[0].x = ax; pts[0].y = 0;
+      }
+    }
+    function render() {
+      const e = pts[N - 1], p = pts[N - 2];
+      const ang = -Math.atan2(e.x - p.x, e.y - p.y);
+      spin += (clamp((e.x - e.px) * 2.6, -32, 32) - spin) * 0.12;
+      card.style.transform = `translate3d(${(e.x - ax).toFixed(2)}px, ${(e.y - L).toFixed(2)}px, 0) rotate(${ang.toFixed(4)}rad)`;
+      tilt.style.transform = `rotateY(${spin.toFixed(2)}deg)`;
+      tilt.style.setProperty('--hx', (50 + spin * 1.8).toFixed(1) + '%');
+      tilt.style.setProperty('--hy', (50 + ang * 60).toFixed(1) + '%');
+      let dPath = `M${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+      for (let i = 1; i < N - 1; i++) {
+        const a = pts[i], b = pts[i + 1];
+        dPath += ` Q${a.x.toFixed(1)} ${a.y.toFixed(1)} ${((a.x + b.x) / 2).toFixed(1)} ${((a.y + b.y) / 2).toFixed(1)}`;
+      }
+      dPath += ` L${e.x.toFixed(1)} ${e.y.toFixed(1)}`;
+      band.setAttribute('d', dPath); edge.setAttribute('d', dPath);
+    }
+    function frame(now) {
+      raf = 0;
+      acc += Math.min(0.05, (now - last) / 1000); last = now;
+      for (let n = 0; acc >= 1 / 60 && n < 4; n++) { step(); acc -= 1 / 60; }
+      render();
+      if (visible || drag) raf = requestAnimationFrame(frame);
+    }
+    const run = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+
+    layout();
+    new ResizeObserver(() => { if (Math.abs(stage.clientWidth - w) > 1) layout(); }).observe(stage);
+
+    if (REDUCED) {   // no physics: the card simply hangs; a tap flips it
+      card.addEventListener('click', (e) => { if (!e.target.closest('a')) toggle(); });
+      return;
+    }
+    const local = (e) => { const r = stage.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+    card.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('a, button')) return;
+      const q = local(e), end = pts[N - 1];
+      down = { x: q.x, y: q.y, ox: end.x - q.x, oy: end.y - q.y, moved: 0 };
+      card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const q = local(e);
+      down.moved = Math.max(down.moved, Math.hypot(q.x - down.x, q.y - down.y));
+      if (down.moved < 6) return;
+      card.classList.add('is-drag');
+      let tx = q.x + down.ox, ty = q.y + down.oy;
+      const dx = tx - ax, dist = Math.hypot(dx, ty), max = L * 1.15;
+      if (dist > max) { tx = ax + (dx / dist) * max; ty = (ty / dist) * max; }
+      drag = { x: tx, y: ty };
+      run();
+    });
+    const release = (e) => {
+      if (!down) return;
+      const tapped = down.moved < 6 && e.type === 'pointerup';
+      down = null; drag = null;
+      card.classList.remove('is-drag');
+      if (tapped) toggle();
+      run();
+    };
+    card.addEventListener('pointerup', release);
+    card.addEventListener('pointercancel', release);
+
+    // entrance: the badge drops in from the side and swings to rest
+    new IntersectionObserver(([en]) => {
+      visible = en.isIntersecting;
+      if (visible && !entered) {
+        entered = true;
+        // start raised 40° to the side (a valid strap length), then let gravity swing it down
+        pts.forEach((p, i) => { p.x = p.px = ax + Math.sin(0.7) * i * seg; p.y = p.py = Math.cos(0.7) * i * seg; });
+      }
+      if (visible) run();
+    }, { threshold: 0.1 }).observe(stage);
   })();
 
   /* ------------------------------------------------------------------ */
