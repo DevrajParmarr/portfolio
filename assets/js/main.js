@@ -96,8 +96,9 @@
     const text = el.textContent;
     el.textContent = '';
     return Array.from(text).map((c) => {
+      const w = d.createElement('span'); w.className = 'chw';
       const s = d.createElement('span'); s.className = 'ch'; s.textContent = c;
-      el.appendChild(s); return s;
+      w.appendChild(s); el.appendChild(w); return s;
     });
   }
   $$('.hero-name .line').forEach(splitChars);
@@ -108,35 +109,48 @@
   function runLoader(done) {
     const loader = $('#loader');
     if (!loader) return done();
-    const count = $('.loader-count span', loader), bar = $('.loader-bar i', loader), status = $('.loader-status', loader);
+    const pct = $('.loader-pct span', loader), nameEl = $('.loader-name', loader), log = $('.loader-log', loader);
     const quick = REDUCED || !HAS_GSAP || store.get('dp-visited');
     store.set('dp-visited', '1');
+    const t0 = performance.now(), now = new Date();
+    const line = (k, v, ok = true) => {
+      const li = d.createElement('li');
+      li.innerHTML = `<span class="t">${((performance.now() - t0) / 1000).toFixed(2)}</span><span class="k">${k}</span><span class="v">${v}</span><span class="s ${ok ? 'ok' : 'warn'}">${ok ? 'ok' : 'fallback'}</span>`;
+      log.appendChild(li);
+      while (log.children.length > 5) log.firstChild.remove();
+    };
+    line('boot', `devraj.portfolio · v${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}`);
 
-    let glReady = !!window.__glReady, fontsReady = false;
-    addEventListener('gl:ready', () => { glReady = true; }, { once: true });
-    (d.fonts && d.fonts.ready ? d.fonts.ready : Promise.resolve()).then(() => { fontsReady = true; });
+    let gl = window.__glReady ? (window.__gl ? { ok: true, ...window.__gl } : { ok: false }) : null, fontsReady = false, glLogged = false;
+    addEventListener('gl:ready', (e) => { gl = e.detail || { ok: false }; }, { once: true });
+    (d.fonts && d.fonts.ready ? d.fonts.ready : Promise.resolve()).then(() => { fontsReady = true; line('fonts', 'Syne · Outfit · JetBrains Mono'); });
 
-    const msgs = ['Loading typefaces', 'Compiling shaders', 'Assembling particles', 'Calibrating', 'Ready'];
-    const start = performance.now(), minT = quick ? 300 : 1700, maxT = 5000;
-    let shown = 0;
-    function tick(now) {
-      const t = now - start;
-      const ready = (fontsReady && glReady) || t > maxT;
-      const goal = ready && t > minT ? 100 : Math.min(94, (t / minT) * 80 + (fontsReady ? 7 : 0) + (glReady ? 7 : 0));
-      shown += (goal - shown) * (quick ? 0.3 : 0.085);
-      if (goal === 100 && shown > 99.5) shown = 100;
-      count.textContent = Math.round(shown);
-      bar.style.transform = `scaleX(${shown / 100})`;
-      status.textContent = msgs[Math.min(msgs.length - 1, Math.floor(shown / 22))];
-      if (shown >= 100) return exit();
+    const minT = quick ? 350 : 1900, maxT = 5000;
+    let shown = 0, done_ = false;
+    function tick(t) {
+      const el = t - t0;
+      if (gl && !glLogged) {
+        glLogged = true;
+        if (gl.ok) {
+          line('webgl', `${gl.webgl2 ? 'WebGL2' : 'WebGL'} · ${gl.count.toLocaleString('en-IN')} particles`);
+          if (window.__PORTRAIT) line('portrait', `density map · ${window.__PORTRAIT.w}×${window.__PORTRAIT.h} → 3D`);
+        } else line('webgl', 'unavailable · 2D portrait', false);
+      }
+      const ready = (fontsReady && gl) || el > maxT;
+      const goal = ready && el > minT ? 100 : Math.min(93, (el / minT) * 78 + (fontsReady ? 7 : 0) + (gl ? 8 : 0));
+      shown += (goal - shown) * (quick ? 0.3 : 0.07);
+      if (goal === 100 && shown > 99.6) shown = 100;
+      nameEl.style.setProperty('--p', shown.toFixed(2) + '%');
+      pct.textContent = String(Math.round(shown)).padStart(3, '0');
+      if (shown >= 100 && !done_) { done_ = true; line('scene', 'ready · entering'); setTimeout(exit, quick ? 120 : 380); return; }
       requestAnimationFrame(tick);
     }
     function exit() {
       if (MOTION) {
         G.timeline({ onComplete: () => loader.remove() })
-          .to($$('.loader-inner > *', loader), { y: -30, opacity: 0, duration: 0.45, ease: 'power2.in', stagger: 0.05 })
-          .to(loader, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1, ease: 'expo.inOut' }, '-=.1')
-          .add(done, '-=.6');
+          .to($$('.loader-inner > *', loader), { y: -28, opacity: 0, duration: 0.5, ease: 'power2.in', stagger: 0.06 })
+          .to($$('.loader-strips i', loader), { yPercent: -101, duration: 1, ease: 'expo.inOut', stagger: { each: 0.06, from: 'center' } }, '-=.2')
+          .add(done, '-=.8');
       } else {
         loader.style.transition = 'opacity .3s';
         loader.style.opacity = '0';
@@ -156,13 +170,13 @@
 
     $$('.hero [data-count]').forEach(countUp);
     startRoles();
-    if (!MOTION) return;
-    G.timeline({ defaults: { ease: 'expo.out', duration: 1.4 } })
+    if (!MOTION) { dispatchEvent(new Event('name:ready')); return; }
+    G.timeline({ defaults: { ease: 'expo.out', duration: 1.4 }, onComplete: () => dispatchEvent(new Event('name:ready')) })
       .from('.nav', { yPercent: -100, opacity: 0, duration: 1.2 }, 0)
       .from('.hero-name .ch', { yPercent: 118, rotate: 7, stagger: 0.035 }, 0.05)
+      .from('.hero-name .outline .ch', { color: '#00e5ff', duration: 1.8, ease: 'power2.out', stagger: 0.06, clearProps: 'color' }, 0.45)
       .from('.hero [data-intro]', { y: 26, opacity: 0, stagger: 0.08, duration: 1.1 }, 0.35)
-      .from('.hero-foot .wrap > *', { y: 18, opacity: 0, stagger: 0.1, duration: 1 }, 0.65)
-      .from('.hud', { opacity: 0, duration: 1 }, 0.8);
+      .from('.hero-foot .wrap > *', { y: 18, opacity: 0, stagger: 0.1, duration: 1 }, 0.65);
   }
 
   /* ------------------------------------------------------------------ */
@@ -196,7 +210,7 @@
     const el = $('#role');
     if (!el || rolesStarted || REDUCED) return;
     rolesStarted = true;
-    const roles = ['full-stack systems', 'GenAI pipelines', 'agentic AI', 'distributed backends', 'real-time UIs'];
+    const roles = ['full-stack systems', 'conversational AI', 'GenAI pipelines', 'agentic AI', 'distributed backends'];
     let i = 0;
     setInterval(() => {
       if (d.hidden) return;
@@ -205,30 +219,192 @@
     }, 2800);
   }
 
-  const hud = $('.hud');
-  if (hud) {
-    const hx = $('[data-hud="x"]', hud), hy = $('[data-hud="y"]', hud), hs = $('[data-hud="scroll"]', hud);
-    let raf = 0, mx = 0, my = 0;
-    addEventListener('pointermove', (e) => {
-      mx = (e.clientX / innerWidth) * 2 - 1; my = -(e.clientY / innerHeight) * 2 + 1;
-      if (!raf) raf = requestAnimationFrame(() => {
-        raf = 0;
-        hx.textContent = (mx >= 0 ? '+' : '') + mx.toFixed(3);
-        hy.textContent = (my >= 0 ? '+' : '') + my.toFixed(3);
-      });
-    }, { passive: true });
-    onScroll(() => {
-      const max = d.documentElement.scrollHeight - innerHeight;
-      hs.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, '0') + '%';
-    });
-    const fill = (det) => {
-      const p = $('[data-hud="pts"]', hud), r = $('[data-hud="api"]', hud);
-      if (det && det.ok) { p.textContent = det.count.toLocaleString('en-IN'); r.textContent = det.webgl2 ? 'WebGL2' : 'WebGL'; }
-      else { p.textContent = '—'; r.textContent = 'off'; }
+  /* ------------------------------------------------------------------ */
+  /* Hero portrait styles: 3D particles → ASCII → halftone (auto-cycles)  */
+  /* ------------------------------------------------------------------ */
+  (function portraitModes() {
+    const P = window.__PORTRAIT, stage = $('.pstage');
+    if (!stage) return;
+    if (!P || !P.a) { stage.remove(); return; }
+    const NL = String.fromCharCode(10), GLYPHS = '.:-=+*#%@';
+    const TARGET = P.a, LINES = TARGET.split(NL), ROWS = LINES.length;
+    const COLS = Math.max.apply(null, LINES.map((l) => l.length));
+    const MODES = ['particles', 'ascii', 'halftone'];
+    const asciiEls = $$('.ascii', stage), hi = $('.ascii-hi', stage);
+    const cvs = $('.halftone', stage), ctx = cvs.getContext('2d');
+    const small = matchMedia('(max-width: 900px), (max-aspect-ratio: 9/10)');
+    let mode = 'particles', glOk = !!window.__gl, inView = true, wasOut = false, started = false, timer = 0;
+    let decodeRaf = 0, htRaf = 0, htGrow = 0, mx = -999, my = -999, dots = [];
+
+    // decode order: mostly top-to-bottom, with noise — reads like a scan
+    const order = new Float32Array(TARGET.length);
+    for (let i = 0, row = 0; i < TARGET.length; i++) {
+      if (TARGET[i] === NL) row++;
+      order[i] = 0.5 * Math.random() + 0.5 * (row / ROWS);
+    }
+
+    function place() {
+      const r = window.__gl && window.__gl.portraitRect ? window.__gl.portraitRect() : null;
+      if (r && r.width > 0) Object.assign(stage.style, { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', right: 'auto' });
+      const w = stage.clientWidth, h = stage.clientHeight;
+      if (!w || !h) return;
+      const fs = h / ROWS;
+      const m = d.createElement('canvas').getContext('2d');
+      m.font = `500 ${fs}px "JetBrains Mono", monospace`;
+      const ls = w / COLS - m.measureText('M').width;
+      asciiEls.forEach((el) => { el.style.fontSize = fs + 'px'; el.style.letterSpacing = ls + 'px'; });
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cvs.width = Math.round(w * dpr); cvs.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buildDots(w, h);
+      if (mode === 'halftone' && REDUCED) drawHalftone(performance.now());
+    }
+
+    function decode() {
+      cancelAnimationFrame(decodeRaf);
+      if (REDUCED) { asciiEls.forEach((el) => { el.textContent = TARGET; }); return; }
+      const t0 = performance.now(), dur = 1300;
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur) * 1.25;
+        let out = '';
+        for (let i = 0; i < TARGET.length; i++) {
+          const c = TARGET[i];
+          out += (c === ' ' || c === NL || order[i] < p - 0.2) ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        }
+        asciiEls.forEach((el) => { el.textContent = out; });
+        if (p < 1.25) decodeRaf = requestAnimationFrame(step);
+        else asciiEls.forEach((el) => { el.textContent = TARGET; });
+      };
+      decodeRaf = requestAnimationFrame(step);
+    }
+
+    const L = Uint8Array.from(atob(P.l), (c) => c.charCodeAt(0));
+    const SHADES = ['#3b2470', '#5b3fc4', '#7469ee', '#4fa8f5', '#2fd8ff', '#b8f5ff'];
+    function buildDots(w, h) {
+      const step = 2, cols = P.w / step, rows = P.h / step, sx = w / cols, sy = h / rows;
+      dots = [];
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const v = L[y * step * P.w + x * step] / 255;
+          if (v < 0.06) continue;
+          dots.push({ x: (x + 0.5) * sx, y: (y + 0.5) * sy, r: sx * 0.58 * Math.sqrt(v), b: Math.min(SHADES.length - 1, (v * SHADES.length) | 0), k: (x + y) * 0.16 });
+        }
+      }
+      dots.sort((a, b) => a.b - b.b);
+    }
+    function drawHalftone(now) {
+      htRaf = 0;
+      const target = mode === 'halftone' ? 1 : 0;
+      htGrow = REDUCED ? target : htGrow + (target - htGrow) * 0.07;
+      const w = stage.clientWidth, h = stage.clientHeight, t = now / 1000;
+      ctx.clearRect(0, 0, w, h);
+      const rect = stage.getBoundingClientRect(), lx = mx - rect.left, ly = my - rect.top, R2 = 100 * 100;
+      let shade = -1;
+      for (let i = 0; i < dots.length; i++) {
+        const p = dots[i];
+        if (p.b !== shade) { if (shade >= 0) ctx.fill(); shade = p.b; ctx.fillStyle = SHADES[shade]; ctx.beginPath(); }
+        let r = p.r * htGrow * (REDUCED ? 1 : 1 + 0.14 * Math.sin(t * 2.2 - p.k));
+        const dx = p.x - lx, dy = p.y - ly, d2 = dx * dx + dy * dy;
+        if (d2 < R2) r *= 1 + 0.75 * (1 - d2 / R2);
+        if (r < 0.15) continue;
+        ctx.moveTo(p.x + r, p.y);
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+      }
+      if (shade >= 0) ctx.fill();
+      if (!REDUCED && inView && (target === 1 || htGrow > 0.01)) htRaf = requestAnimationFrame(drawHalftone);
+    }
+
+    function setMode(m) {
+      if (m === 'particles' && !glOk) m = 'ascii';
+      if (m === mode && started) return;
+      mode = m;
+      stage.dataset.mode = m;
+      dispatchEvent(new CustomEvent('gl:portrait', { detail: { visible: m === 'particles' } }));
+      if (m === 'ascii') decode();
+      if (!htRaf) htRaf = requestAnimationFrame(drawHalftone);
+    }
+    const reroll = () => {
+      const opts = MODES.filter((m) => m !== mode && (m !== 'particles' || glOk));
+      setMode(opts[(Math.random() * opts.length) | 0]);
     };
-    if (window.__gl) fill({ ok: true, ...window.__gl });
-    addEventListener('gl:ready', (e) => fill(e.detail));
-  }
+    function schedule() {
+      clearTimeout(timer);
+      if (REDUCED || !inView || small.matches || !started) return;
+      timer = setTimeout(() => { reroll(); schedule(); }, 7000 + Math.random() * 4000);
+    }
+
+    addEventListener('pointermove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      if (mode === 'ascii') {
+        const r = stage.getBoundingClientRect();
+        hi.style.setProperty('--sx', (mx - r.left) + 'px');
+        hi.style.setProperty('--sy', (my - r.top) + 'px');
+      }
+    }, { passive: true });
+    new IntersectionObserver(([e]) => {
+      inView = e.isIntersecting;
+      if (!inView) { wasOut = true; clearTimeout(timer); return; }
+      if (wasOut && started && !REDUCED && !small.matches) reroll();   // a fresh look every time you come back
+      wasOut = false;
+      schedule();
+      if (mode === 'halftone' && !htRaf) htRaf = requestAnimationFrame(drawHalftone);
+    }).observe($('#hero'));
+    addEventListener('resize', place);
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(place);
+    addEventListener('gl:ready', (e) => {
+      glOk = !!(e.detail && e.detail.ok);
+      place();
+      if (!glOk && mode === 'particles') setMode('ascii');
+    });
+    place();
+    // every visit opens on a random style
+    const begin = () => {
+      if (!small.matches) setMode(MODES[(Math.random() * MODES.length) | 0]);
+      started = true;
+      schedule();
+    };
+    if (window.__introDone) begin(); else addEventListener('intro', begin, { once: true });
+  })();
+
+  /* ------------------------------------------------------------------ */
+  /* Hero name: letters thin out near the cursor, then lift off on scroll */
+  /* ------------------------------------------------------------------ */
+  (function nameFx() {
+    const h1 = $('.hero-name');
+    if (!h1) return;
+    const chars = $$('.ch', h1), wraps = $$('.chw', h1);
+    if (MOTION) {
+      G.to(wraps, {
+        yPercent: (i) => -70 - ((i * 47) % 9) * 24,
+        rotate: (i) => (((i * 31) % 7) - 3) * 5,
+        opacity: 0, ease: 'none', stagger: 0.035,
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: '75% top', scrub: 0.6 },
+      });
+    }
+    addEventListener('name:ready', () => h1.classList.add('is-free'), { once: true });
+    if (!FINE || REDUCED) return;
+    const hero = $('#hero'), k = chars.map(() => 0);
+    let pts = [], mx = -1e4, my = -1e4, raf = 0, armed = false;
+    const measure = () => {
+      pts = chars.map((c) => { const r = c.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2 + scrollY]; });
+    };
+    function frame() {
+      raf = 0;
+      let moving = false;
+      chars.forEach((c, i) => {
+        const target = Math.max(0, 1 - Math.hypot(mx - pts[i][0], my + scrollY - pts[i][1]) / 250);
+        k[i] += (target - k[i]) * 0.14;
+        if (Math.abs(target - k[i]) > 0.002) moving = true;
+        c.style.fontWeight = String(Math.round(800 - 440 * k[i]));
+      });
+      if (moving) raf = requestAnimationFrame(frame);
+    }
+    const kick = () => { if (armed && !raf) raf = requestAnimationFrame(frame); };
+    hero.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; kick(); });
+    hero.addEventListener('pointerleave', () => { mx = -1e4; my = -1e4; kick(); });
+    addEventListener('resize', () => { if (armed) measure(); });
+    addEventListener('name:ready', () => { measure(); armed = true; }, { once: true });
+  })();
 
   /* ------------------------------------------------------------------ */
   /* Cursor + magnetic                                                   */
@@ -432,20 +608,218 @@
       ST.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => countUp(el) });
     });
 
-    G.fromTo('.tl-fill', { scaleY: 0 }, {
-      scaleY: 1, ease: 'none',
-      scrollTrigger: { trigger: '.timeline', start: 'top 70%', end: 'bottom 55%', scrub: 0.6 },
-    });
-    $$('.job').forEach((j) => ST.create({
-      trigger: j, start: 'top 68%',
-      onEnter: () => j.classList.add('is-on'), onLeaveBack: () => j.classList.remove('is-on'),
-    }));
+    // credentials tilt up in a 3D wave as they scroll in
+    const wave = (sel, trig) => {
+      const els = $$(sel);
+      if (!els.length) return;
+      G.fromTo(els, { rotateX: 58, y: 90, opacity: 0, transformPerspective: 900, transformOrigin: '50% 100%' }, {
+        rotateX: 0, y: 0, opacity: 1, ease: 'power2.out', stagger: 0.12,
+        scrollTrigger: { trigger: trig, start: 'top 90%', end: 'top 35%', scrub: 0.8 },
+      });
+    };
+    wave('.bento .ach', '.bento');
+    wave('.certs .cert', '.certs');
 
-    // the giant footer wordmark drifts up as it enters
-    G.from('.bigname', { yPercent: 35, ease: 'none', scrollTrigger: { trigger: '.bigname', start: 'top bottom', end: 'bottom bottom', scrub: true } });
-  } else {
-    $$('.job').forEach((j) => j.classList.add('is-on'));
+    // the contact headline zooms into place
+    G.fromTo('.contact-title', { scale: 0.72, opacity: 0.25 }, {
+      scale: 1, opacity: 1, ease: 'none',
+      scrollTrigger: { trigger: '#contact', start: 'top 95%', end: 'top 30%', scrub: 0.6 },
+    });
+
+    // the giant footer wordmark rises letter by letter
+    const bn = $('.bigname');
+    if (bn) {
+      bn.innerHTML = Array.from(bn.textContent).map((ch) => `<span class="bc">${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
+      G.from($$('.bc', bn), {
+        yPercent: 110, ease: 'none', stagger: 0.06,
+        scrollTrigger: { trigger: bn, start: 'top bottom', end: 'bottom 80%', scrub: 0.6 },
+      });
+    }
+
+    // the project grid leans with scroll speed
+    const grid = $('.pgrid');
+    if (grid && lenis) {
+      const setSkew = G.quickSetter(grid, 'skewY', 'deg');
+      let sk = 0;
+      G.ticker.add(() => {
+        sk += (clamp(-(lenis.velocity || 0) * 0.12, -3, 3) - sk) * 0.1;
+        if (Math.abs(sk) < 0.005) sk = 0;
+        setSkew(sk);
+      });
+    }
   }
+
+  /* ------------------------------------------------------------------ */
+  /* About: cinematic intro (pinned, scroll-scrubbed) + flippable ID card */
+  /* ------------------------------------------------------------------ */
+  (function cinematic() {
+    const cine = $('#cine');
+    if (!cine || !MOTION) return;
+    const lines = $$('.cine-line', cine), count = $('.cine-count', cine), n = lines.length;
+    G.set(lines, { yPercent: -50 });
+    const tl = G.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: cine, start: 'top top', end: () => '+=' + innerHeight * n * 0.85,
+        pin: true, scrub: 0.8, invalidateOnRefresh: true, refreshPriority: 2,
+        onUpdate: (self) => { count.textContent = String(Math.min(n, 1 + Math.floor(self.progress * n * 0.999))).padStart(2, '0') + ' / ' + String(n).padStart(2, '0'); },
+      },
+    });
+    lines.forEach((l, i) => {
+      tl.fromTo(l, { opacity: 0, y: 70, filter: 'blur(16px)', letterSpacing: '0.1em' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', letterSpacing: '-0.035em', duration: 1, ease: 'power3.out' });
+      tl.to({}, { duration: 0.7 });
+      if (i < n - 1) tl.to(l, { opacity: 0, y: -70, filter: 'blur(12px)', duration: 0.8, ease: 'power2.in' });
+    });
+    tl.fromTo($('.cine-bar i', cine), { scaleX: 0 }, { scaleX: 1, duration: tl.duration() }, 0);
+  })();
+
+  (function idCard() {
+    const card = $('#idc'), btn = $('.idc-flip');
+    if (!card) return;
+    const front = $('.idc-front', card), back = $('.idc-back', card);
+    const flip = (on) => {
+      card.classList.toggle('is-flipped', on);
+      if (btn) btn.setAttribute('aria-pressed', String(on));
+      front.inert = on; back.inert = !on;
+    };
+    flip(false);
+    if (btn) btn.addEventListener('click', () => flip(!card.classList.contains('is-flipped')));
+    card.addEventListener('click', (e) => { if (!e.target.closest('a')) flip(!card.classList.contains('is-flipped')); });
+
+    // ASCII "photo" — head & shoulders slice of the portrait
+    const P = window.__PORTRAIT, pre = $('.idc-ascii', card), box = $('.idc-photo', card);
+    if (!P || !P.a || !pre) return;
+    const NL = String.fromCharCode(10), rows = P.a.split(NL).slice(5, 43);
+    const text = rows.join(NL), GL = '.:-=+*#%@';
+    const fit = () => { pre.style.fontSize = (box.clientHeight - 4) / rows.length + 'px'; };
+    pre.textContent = text;
+    fit();
+    addEventListener('resize', fit);
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(fit);
+    if (REDUCED) return;
+    // a subtle "live feed" flicker: a few characters glitch now and then
+    setInterval(() => {
+      if (d.hidden || card.classList.contains('is-flipped')) return;
+      const arr = text.split('');
+      for (let k = 0; k < 18; k++) {
+        const i = (Math.random() * arr.length) | 0;
+        if (arr[i] !== ' ' && arr[i] !== NL) arr[i] = GL[(Math.random() * GL.length) | 0];
+      }
+      pre.textContent = arr.join('');
+      setTimeout(() => { pre.textContent = text; }, 120);
+    }, 1600);
+  })();
+
+  /* ------------------------------------------------------------------ */
+  /* Experience: vertical scroll drives a horizontal timeline            */
+  /* ------------------------------------------------------------------ */
+  (function horizontal() {
+    const hx = $('#hx');
+    if (!hx || !MOTION) return;
+    const track = $('.hx-track', hx), fill = $('.hx-fill', hx), marks = $$('.hx-marks li', hx), panels = $$('.panel', track);
+    G.matchMedia().add('(min-width: 1000px) and (min-height: 620px)', () => {
+      hx.classList.add('is-h');
+      const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+      const tween = G.to(track, { x: () => -dist(), ease: 'none' });
+      ST.create({
+        trigger: hx, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.8,
+        animation: tween, invalidateOnRefresh: true, refreshPriority: 1,
+        onUpdate: (self) => {
+          fill.style.transform = `scaleX(${self.progress})`;
+          const on = Math.round(self.progress * (marks.length - 1));
+          marks.forEach((m, i) => m.classList.toggle('is-on', i <= on));
+        },
+      });
+      panels.forEach((p, i) => {
+        if (i === 0) return;
+        G.fromTo(p, { opacity: 0.35, scale: 0.94 }, {
+          opacity: 1, scale: 1, ease: 'none',
+          scrollTrigger: { trigger: p, containerAnimation: tween, start: 'left 92%', end: 'left 45%', scrub: true },
+        });
+      });
+      return () => { hx.classList.remove('is-h'); G.set(track, { clearProps: 'transform' }); G.set(panels, { clearProps: 'opacity,transform' }); };
+    });
+  })();
+
+  /* Umbrella panel: HTTP polling (stale steps) vs WebSocket stream (every tick) */
+  (function ticker() {
+    const cvs = $('#ticker');
+    if (!cvs) return;
+    const ctx = cvs.getContext('2d'), N = 96, POLL = 9;
+    let w = 0, h = 0, v = 100, tick = 0, visible = false, timer = 0;
+    const stream = [], poll = [];
+    const next = () => { v += (Math.random() - 0.5) * 2.6 + (100 - v) * 0.02; tick++; return v; };
+    for (let i = 0; i < N; i++) { stream.push(next()); poll.push(i % POLL === 0 || !poll.length ? v : poll[poll.length - 1]); }
+    function fit() {
+      const r = cvs.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = r.width; h = r.height;
+      cvs.width = Math.round(w * dpr); cvs.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+    function draw() {
+      if (!w) return;
+      ctx.clearRect(0, 0, w, h);
+      const lo = Math.min.apply(null, stream) - 1, hi = Math.max.apply(null, stream) + 1;
+      const X = (i) => 12 + (i / (N - 1)) * (w - 70), Y = (val) => 34 + (1 - (val - lo) / (hi - lo)) * (h - 52);
+      ctx.strokeStyle = 'rgba(255,255,255,.05)'; ctx.lineWidth = 1;
+      for (let g = 0; g < 4; g++) { const y = 34 + g * (h - 52) / 3; ctx.beginPath(); ctx.moveTo(12, y); ctx.lineTo(w - 58, y); ctx.stroke(); }
+      ctx.setLineDash([3, 4]); ctx.strokeStyle = '#7c7c9a'; ctx.lineWidth = 1.4; ctx.beginPath();
+      poll.forEach((p, i) => { const x = X(i), y = Y(p); if (!i) ctx.moveTo(x, y); else { ctx.lineTo(x, Y(poll[i - 1])); ctx.lineTo(x, y); } });
+      ctx.stroke(); ctx.setLineDash([]);
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2; ctx.shadowColor = '#f59e0b'; ctx.shadowBlur = 8; ctx.beginPath();
+      stream.forEach((p, i) => { const x = X(i), y = Y(p); if (!i) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      ctx.stroke(); ctx.shadowBlur = 0;
+      const lx = X(N - 1), ly = Y(stream[N - 1]), py = Y(poll[N - 1]);
+      ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(lx, ly, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#7c7c9a'; ctx.beginPath(); ctx.arc(lx, py, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.font = '500 11px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#f59e0b'; ctx.fillText(stream[N - 1].toFixed(2), lx + 8, ly + 4);
+      ctx.fillStyle = '#7c7c9a'; ctx.fillText(poll[N - 1].toFixed(2), lx + 8, py + (Math.abs(py - ly) < 14 ? 16 : 4));
+    }
+    function step() {
+      timer = 0;
+      if (!visible) return;
+      stream.push(next()); stream.shift();
+      poll.push(tick % POLL === 0 ? v : poll[poll.length - 1]); poll.shift();
+      draw();
+      timer = setTimeout(step, 140);
+    }
+    new ResizeObserver(fit).observe(cvs);
+    if (REDUCED) return;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !timer) step(); }).observe(cvs);
+  })();
+
+  /* AlgoUniversity panel: submissions stream in with verdicts */
+  (function judge() {
+    const box = $('#judge');
+    if (!box) return;
+    const SUBS = [
+      ['two_sum.cpp', 'ac', '12 ms'], ['lru_cache.py', 'tle', '2000 ms'], ['dijkstra.java', 'ac', '88 ms'],
+      ['knapsack.cpp', 'wa', 'test 7'], ['trie.py', 'ac', '41 ms'], ['segment_tree.cpp', 're', 'SIGSEGV'],
+      ['union_find.java', 'ac', '63 ms'], ['kmp.cpp', 'ac', '9 ms'],
+    ];
+    const LABEL = { ac: 'AC', wa: 'WA', tle: 'TLE', re: 'RE' };
+    let n = 4127, k = 0, visible = false, timer = 0;
+    const cmd = d.createElement('div');
+    cmd.className = 'cmd';
+    cmd.innerHTML = '$ docker run --rm <b>--cpus=1 --memory=256m</b> judge:sandbox';
+    box.appendChild(cmd);
+    function add() {
+      const [file, v, ms] = SUBS[k++ % SUBS.length];
+      const row = d.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `<span class="id">#${n++}</span><span>${file}</span><span class="v ${v}">${LABEL[v]}</span><span class="ms">${ms}</span>`;
+      box.appendChild(row);
+      const rows = $$('.row', box);
+      if (rows.length > 6) rows[0].remove();
+    }
+    for (let i = 0; i < 5; i++) add();
+    if (REDUCED) return;
+    const loop = () => { timer = 0; if (!visible) return; add(); timer = setTimeout(loop, 1100); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !timer) timer = setTimeout(loop, 600); }).observe(box);
+  })();
 
   /* ------------------------------------------------------------------ */
   /* Skill sphere — built from the category lists (single source)        */
@@ -472,7 +846,7 @@
       return { x: Math.cos(th) * r, y, z: Math.sin(th) * r };
     });
     let ax = -0.3, ay = 0, vx = 0.0012, vy = 0.0035, R = 0, dragging = false, lx = 0, ly = 0, visible = false, raf = 0;
-    const measure = () => { R = el.clientWidth * 0.38; };
+    const measure = () => { R = Math.min(el.clientWidth * 0.38, el.clientWidth * 0.5 - 56); };
     measure();
     new ResizeObserver(measure).observe(el);
 
@@ -493,7 +867,7 @@
     }
     function frame() {
       if (!dragging) { vx = lerp(vx, 0.0012, 0.02); vy = lerp(vy, 0.0035, 0.02); }
-      ax += vx; ay += vy;
+      ax += vx; ay += vy + (lenis ? lenis.velocity : 0) * 0.0012;
       render();
       raf = visible ? requestAnimationFrame(frame) : 0;
     }
@@ -727,6 +1101,7 @@
       cur.append(tag, txt, caret);
       body.appendChild(cur);
       setAgent(L.node || L.a);
+      dispatchEvent(new CustomEvent('agent:active', { detail: L.node || L.a }));
       if (retry) retry.classList.toggle('is-active', !!L.retry);
       stepEl.textContent = `step ${String(li + 1).padStart(2, '0')}/${S.length}`;
     }
@@ -777,6 +1152,42 @@
   })();
 
   /* ------------------------------------------------------------------ */
+  /* Current-role card: illustrative "free text → structured search" demo */
+  /* ------------------------------------------------------------------ */
+  (function nluDemo() {
+    const box = $('#nlu');
+    if (!box) return;
+    const steps = $$('[data-step]', box), bubbles = $$('.bub', box);
+    const chip = $('#nlu-adults', box), adults = $('b', chip);
+    const texts = bubbles.map((b) => b.textContent);
+    if (!MOTION) { adults.textContent = '3'; chip.classList.add('is-changed'); return; }
+    let visible = false, running = false;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const show = (i) => steps[i].classList.add('is-in');
+    async function type(el, text) {
+      for (let i = 1; i <= text.length; i++) { el.textContent = text.slice(0, i); await wait(24); }
+    }
+    async function loop() {
+      while (visible) {
+        steps.forEach((s) => s.classList.remove('is-in'));
+        bubbles.forEach((b) => { b.textContent = ''; });
+        adults.textContent = '2'; chip.classList.remove('is-changed');
+        await wait(450);
+        show(0); await type(bubbles[0], texts[0]); await wait(300);
+        show(1); await wait(1700);
+        show(2); await type(bubbles[1], texts[1]); await wait(350);
+        adults.textContent = '3'; chip.classList.add('is-changed'); show(3);
+        await wait(4200);
+      }
+      running = false;
+    }
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !running) { running = true; loop(); }
+    }, { threshold: 0.35 }).observe(box);
+  })();
+
+  /* ------------------------------------------------------------------ */
   /* Clipboard + toast                                                   */
   /* ------------------------------------------------------------------ */
   const toastEl = $('#toast');
@@ -808,6 +1219,175 @@
   addEventListener('gl:state', (e) => toast(e.detail.enabled ? '3D background resumed' : '3D background paused'));
 
   /* ------------------------------------------------------------------ */
+  /* Projects: long descriptions collapse behind "Read more"             */
+  /* ------------------------------------------------------------------ */
+  (function readMore() {
+    $$('.pc-desc').forEach((p) => {
+      p.classList.add('is-clamped');
+      if (p.scrollHeight <= p.clientHeight + 2) { p.classList.remove('is-clamped'); return; }
+      const btn = d.createElement('button');
+      btn.type = 'button'; btn.className = 'more-btn'; btn.textContent = 'Read more ↓';
+      btn.setAttribute('aria-expanded', 'false');
+      p.after(btn);
+      btn.addEventListener('click', () => {
+        const open = p.classList.toggle('is-clamped') === false;
+        btn.textContent = open ? 'Show less ↑' : 'Read more ↓';
+        btn.setAttribute('aria-expanded', String(open));
+        if (ST) ST.refresh();
+      });
+    });
+    $$('.rdetails').forEach((dt) => dt.addEventListener('toggle', () => { if (ST) ST.refresh(); }));
+  })();
+
+  /* ------------------------------------------------------------------ */
+  /* NeuroAgent inspector: what each node takes in, emits, and why        */
+  /* ------------------------------------------------------------------ */
+  (function inspector() {
+    const box = $('#inspect');
+    if (!box) return;
+    const INFO = {
+      user: ['User input', 'A task in plain English', 'Task + repo context', 'No tickets or specs needed — ambiguity becomes clarifying questions.'],
+      orchestrator: ['Orchestrator', 'Task + shared graph state', 'Which agent runs next', 'A LangGraph state machine: conditional edges route on test and review outcomes.'],
+      planner: ['PlannerAgent', 'Task in plain English', 'Ordered subtasks with acceptance criteria', 'Small, testable steps keep generated diffs focused and reviewable.'],
+      coder: ['CoderAgent', 'One subtask + relevant files', 'A code diff', 'GPT-4 / Claude with file-system tools, plus similar past fixes recalled from pgvector.'],
+      tester: ['TestAgent', 'The diff', 'Test results + traces', 'Writes tests and runs them in an isolated Docker sandbox — no side effects on the host.'],
+      reviewer: ['ReviewerAgent', 'Diff + test results', 'Pass, or retry with feedback', 'The quality gate: failures loop back to the coder with the trace instead of shipping.'],
+      deploy: ['DeployAgent', 'An approved diff', 'A commit + CI run', 'Commits through the GitHub API and triggers CI/CD; the run streams live over WebSockets.'],
+    };
+    const h = $('.inspect-h', box), io = $$('.inspect-io dd', box), why = $('.inspect-why', box);
+    let pinned = false;
+    const show = (id) => {
+      const it = INFO[id];
+      if (!it) return;
+      h.textContent = it[0]; io[0].textContent = it[1]; io[1].textContent = it[2]; why.textContent = it[3];
+    };
+    $$('#pipeline .pnode').forEach((n) => {
+      n.tabIndex = 0;
+      n.setAttribute('aria-describedby', 'inspect');
+      const on = () => { pinned = true; show(n.dataset.agent); };
+      const off = () => { pinned = false; };
+      n.addEventListener('mouseenter', on); n.addEventListener('focus', on);
+      n.addEventListener('mouseleave', off); n.addEventListener('blur', off);
+    });
+    addEventListener('agent:active', (e) => { if (!pinned && e.detail && e.detail !== 'done') show(e.detail); });
+  })();
+
+  /* ------------------------------------------------------------------ */
+  /* Ask Devraj: a scripted, keyword-matched assistant (no LLM)          */
+  /* ------------------------------------------------------------------ */
+  let openChat = () => {};
+  (function chat() {
+    const panel = $('#chat'), log = $('#chat-log'), chipsBox = $('#chat-chips'), form = $('#chat-form'), input = $('#chat-input');
+    const fab = $('.chat-fab');
+    if (!panel) return;
+    const LI = 'https://www.linkedin.com/in/devraj-parmar-459363187';
+    const KB = [
+      { id: 'flight planner', k: ['flight planner', 'flight', 'internal', 'internals'], a: 'Flight Planner lets people search, refine and book flights in plain English. It is a production product, so its internals stay confidential — Devraj is happy to discuss it at a high level in an interview.' },
+      { id: 'resume', k: ['resume', 'cv'], a: 'Here you go — his one-page resume.', act: [['Download resume', 'resume']] },
+      { id: 'cgpa', k: ['cgpa', 'gpa', 'grade', 'marks'], a: 'CGPA 7.05/10 — his shipped work tells the fuller story.' },
+      { id: 'contact', k: ['contact', 'email', 'mail', 'reach', 'hire', 'phone', 'call', 'connect', 'linkedin', 'talk'], a: 'Email devrajparmar232@gmail.com or message him on LinkedIn — he replies quickly.', act: [['Copy email', 'copy'], ['LinkedIn', LI]] },
+      { id: 'work', k: ['work', 'job', 'company', 'current', 'neural', 'nurture', 'experience', 'employ', 'role', 'intern', 'umbrella', 'algouniversity'], a: 'Now: SDE at Neural Nurture (Apr 2026 – present), working across Flight Planner, a conversational AI flight-booking product — NLP models, a streaming chat UI, payments, auth and release engineering. Before: Umbrella Corporate (real-time trading, −25% latency) and AlgoUniversity (an online judge built solo).', act: [['Experience', '#experience']] },
+      { id: 'skills', k: ['skill', 'stack', 'tech', 'language', 'tools', 'framework', 'know'], a: 'Languages: C++, Python, JavaScript/TypeScript, SQL. Backend: Node.js, Express, FastAPI, microservices, WebSockets. AI: LLMs, RAG, LangChain/LangGraph, PyTorch, NER. Data & cloud: PostgreSQL, MongoDB, Redis, Pinecone, Docker, AWS, CI/CD.', act: [['Tech stack', '#stack']] },
+      { id: 'projects', k: ['project', 'built', 'build', 'github', 'neuroagent', 'rag', 'route', 'judge'], a: 'Highlights: NeuroAgent (an autonomous coding agent on LangGraph), a multi-agent RAG system (90% retrieval precision), Route Optimizer (−20% distance vs a nearest-neighbour baseline) and Judge My Code (a Docker-sandboxed judge). Ten in total.', act: [['Browse projects', '#projects'], ['GitHub', 'https://github.com/DevrajParmarr']] },
+      { id: 'ai', k: ['ai', 'ml', 'llm', 'nlp', 'agent', 'genai', 'machine', 'model', 'models'], a: 'At work he trains NER and intent models for a conversational product. On the side: NeuroAgent (multi-agent coding with LangGraph) and a self-correcting multi-agent RAG pipeline. Oracle-certified in Generative AI.', act: [['See NeuroAgent', '#sysdesign']] },
+      { id: 'education', k: ['education', 'college', 'degree', 'university', 'study', 'studied', 'sgsits', 'graduat', 'btech', 'b.tech'], a: 'B.Tech in Computer Science & Engineering at SGSITS Indore (RGPV), 2022 – May 2026.' },
+      { id: 'achievements', k: ['achievement', 'leetcode', 'codechef', 'codeforces', 'rating', 'competitive', 'dsa', 'jee', 'rank', 'certif', 'oracle'], a: '550+ LeetCode problems, CodeChef 3★ (1692, top 10% globally), Codeforces Specialist (1474), JEE Mains AIR ~40K, and two Oracle AI certifications.', act: [['Credentials', '#credentials']] },
+      { id: 'location', k: ['where', 'location', 'based', 'live', 'city', 'relocat', 'remote', 'indore'], a: 'Based in Indore, India — and open to relocation.' },
+      { id: 'hobbies', k: ['hobby', 'hobbies', 'sport', 'sports', 'fun', 'volleyball', 'free'], a: 'Off-screen: state-level volleyball and kho-kho.' },
+      { id: 'about', k: ['who', 'about', 'yourself', 'introduce', 'name', 'devraj'], a: 'Devraj Parmar — a Software Development Engineer at Neural Nurture in Indore and a 2026 B.Tech CSE graduate of SGSITS. He builds full-stack systems and AI products end to end.', act: [['About', '#about']] },
+      { id: 'meta', k: ['you ai', 'are you', 'chatgpt', 'gpt', 'bot', 'human', 'real'], a: 'I am a scripted assistant — keyword matching over pre-written answers, no LLM. A small nod to the intent classifiers Devraj builds for real.' },
+      { id: 'greeting', k: ['hi', 'hello', 'hey', 'yo', 'namaste', 'morning', 'evening'], a: 'Hey! Ask me about Devraj’s work, skills, projects, education — or how to reach him.' },
+      { id: 'thanks', k: ['thank', 'thanks', 'bye', 'great', 'cool', 'nice', 'awesome'], a: 'Anytime! The fastest way to talk properly is email.', act: [['Copy email', 'copy']] },
+    ];
+    const FALLBACK = 'I am a simple scripted bot, so I might have missed that. Try asking about skills, projects, experience, education or contact.';
+    const SUGGEST = [['Who is Devraj?', 'who is devraj'], ['Where does he work?', 'where does he work'], ['Top skills', 'skills'], ['Best projects', 'projects'], ['AI work', 'ai work'], ['Education', 'education'], ['Achievements', 'achievements'], ['How to contact?', 'contact']];
+    const asked = new Set();
+    let busy = false, lastFocus = null;
+
+    function classify(text) {
+      const t = text.toLowerCase(), words = t.split(/[^a-z0-9.+#]+/).filter(Boolean);
+      let best = null, bestScore = 0;
+      KB.forEach((it) => {
+        let sc = 0;
+        it.k.forEach((k) => { if (k.includes(' ') ? t.includes(k) : words.some((w) => w.startsWith(k))) sc += k.includes(' ') ? 2 : 1; });
+        if (sc > bestScore) { best = it; bestScore = sc; }
+      });
+      return best ? { it: best, conf: Math.min(0.98, 0.62 + 0.12 * bestScore) } : null;
+    }
+    function bubble(cls) {
+      const m = d.createElement('div');
+      m.className = 'msg ' + cls;
+      log.appendChild(m);
+      log.scrollTop = log.scrollHeight;
+      return m;
+    }
+    function act(target) {
+      if (target === 'copy') return copyEmail();
+      if (target === 'resume') { const a = d.createElement('a'); a.href = 'Resume_Devraj_Parmar.pdf'; a.download = ''; d.body.appendChild(a); a.click(); a.remove(); return; }
+      if (target.startsWith('#')) { if (innerWidth < 700) close(); scrollToTarget(target); return; }
+      window.open(target, '_blank', 'noopener');
+    }
+    function botSay(text, opts = {}) {
+      const m = bubble('bot');
+      const p = d.createElement('span'); p.textContent = text; m.appendChild(p);
+      if (opts.acts && opts.acts.length) {
+        const row = d.createElement('div'); row.className = 'msg-acts';
+        opts.acts.forEach(([label, target]) => {
+          const b = d.createElement('button'); b.type = 'button'; b.textContent = label;
+          b.addEventListener('click', () => act(target));
+          row.appendChild(b);
+        });
+        m.appendChild(row);
+      }
+      if (opts.intent) { const tag = d.createElement('span'); tag.className = 'msg-intent'; tag.textContent = opts.intent; m.appendChild(tag); }
+      log.scrollTop = log.scrollHeight;
+    }
+    function chips() {
+      chipsBox.textContent = '';
+      SUGGEST.filter(([, q]) => !asked.has(q)).slice(0, 4).forEach(([label, q]) => {
+        const b = d.createElement('button'); b.type = 'button'; b.textContent = label;
+        b.addEventListener('click', () => ask(label, q));
+        chipsBox.appendChild(b);
+      });
+    }
+    function ask(shown, query) {
+      if (busy) return;
+      const q = (query || shown).trim();
+      if (!q) return;
+      asked.add(q);
+      const me = bubble('me'); me.textContent = shown;
+      busy = true;
+      const typing = bubble('bot typing'); typing.innerHTML = '<i></i><i></i><i></i>';
+      const r = classify(q);
+      setTimeout(() => {
+        typing.remove(); busy = false;
+        if (r) botSay(r.it.a, { acts: r.it.act, intent: `intent · ${r.it.id} · ${r.conf.toFixed(2)}` });
+        else botSay(FALLBACK, { intent: 'intent · unknown' });
+        chips();
+      }, REDUCED ? 0 : 450 + Math.random() * 450);
+    }
+    function open() {
+      if (!panel.hidden) return;
+      lastFocus = d.activeElement;
+      panel.hidden = false;
+      if (fab) fab.setAttribute('aria-expanded', 'true');
+      if (!log.children.length) { botSay('Hi! I’m Devraj’s portfolio assistant. Pick a question or type your own.'); chips(); }
+      setTimeout(() => input.focus(), 60);
+    }
+    function close() {
+      if (panel.hidden) return;
+      panel.hidden = true;
+      if (fab) fab.setAttribute('aria-expanded', 'false');
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    openChat = open;
+    d.addEventListener('click', (e) => { if (e.target.closest('[data-chat-open]')) { e.preventDefault(); open(); } });
+    $$('[data-chat-close]', panel).forEach((b) => b.addEventListener('click', close));
+    panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); close(); } });
+    form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; ask(v); });
+  })();
+
+  /* ------------------------------------------------------------------ */
   /* Command palette (Ctrl/⌘ K)                                          */
   /* ------------------------------------------------------------------ */
   (function palette() {
@@ -826,6 +1406,7 @@
       { g: 'Navigate', label: 'NeuroAgent architecture', icon: 'bot', run: go('#sysdesign'), k: 'system design' },
       { g: 'Navigate', label: 'Credentials', icon: 'award', run: go('#credentials'), k: 'certifications achievements' },
       { g: 'Navigate', label: 'Contact', icon: 'mail', run: go('#contact') },
+      { g: 'Actions', label: 'Ask Devraj (chat)', icon: 'message', run: () => openChat(), k: 'bot assistant questions' },
       { g: 'Actions', label: 'Copy email address', icon: 'copy', hint: EMAIL, run: () => copyEmail() },
       { g: 'Actions', label: 'Download resume', icon: 'download', hint: 'PDF', run: () => { const a = d.createElement('a'); a.href = 'Resume_Devraj_Parmar.pdf'; a.download = ''; d.body.appendChild(a); a.click(); a.remove(); }, k: 'cv' },
       { g: 'Actions', label: 'Write an email', icon: 'mail', run: () => { location.href = 'mailto:' + EMAIL; } },

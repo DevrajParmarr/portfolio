@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Devraj Parmar — Full Stack · GenAI · Software Engineer</title>
-<meta name="description" content="Devraj Parmar — software engineer building production-grade full-stack systems, distributed backends and agentic AI pipelines. Projects, experience, architecture and contact.">
+<meta name="description" content="Devraj Parmar — Software Development Engineer at Neural Nurture building conversational AI, full-stack systems and agentic AI pipelines. Projects, experience, architecture and contact.">
 <meta name="theme-color" content="#05050a">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Syne:wght@400..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -76,16 +76,23 @@
   <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 18l-3-3c1-4 4.5-9.5 12-12 0 0 .5 6-12 15z"/><circle cx="15" cy="9" r="1.5"/></symbol>
   <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15"/><path d="M15 6v15"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
 </svg>
 
 <!-- ============ Loader ============ -->
 <div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-strips"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="loader-inner">
-    <div class="loader-top"><span>Devraj Parmar</span><span>Portfolio © <span data-year>2026</span></span></div>
-    <p class="loader-status">Loading typefaces</p>
-    <div>
-      <div class="loader-bar"><i></i></div>
-      <div class="loader-row"><span>Full Stack · GenAI · Agentic AI</span><span class="loader-count"><span>0</span><small>%</small></span></div>
+    <div class="loader-top"><span class="loader-brand"><span class="brand-mark">DP</span>Portfolio</span><span>Indore, IN · © <span data-year>2026</span></span></div>
+    <div class="loader-mid">
+      <p class="loader-name"><span class="ln-outline">Devraj Parmar</span><span class="ln-fill">Devraj Parmar</span></p>
+      <p class="loader-sub">Full Stack · GenAI · Agentic AI</p>
+    </div>
+    <div class="loader-foot">
+      <ol class="loader-log"></ol>
+      <p class="loader-pct"><span>000</span><small>%</small></p>
     </div>
   </div>
 </div>
@@ -93,7 +100,6 @@
 <!-- ============ Atmosphere ============ -->
 <canvas id="gl" aria-hidden="true"></canvas>
 <div class="gl-fallback" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="cursor cursor-dot" aria-hidden="true"></div>
@@ -150,27 +156,26 @@
 <main id="main">
 
 <!-- ============ Hero ============ -->
-<section class="hero" id="hero" data-gl="shape:0;x:2.6;y:.05;s:1;a:1;n:.1;r:.12" data-gl-m="x:0;y:.9;s:.62;a:.7" aria-label="Introduction">
-  <div class="hud" aria-hidden="true">
-    <div>render <b data-hud="api">…</b> · particles <b data-hud="pts">…</b></div>
-    <div>cursor x <b data-hud="x">+0.000</b> y <b data-hud="y">+0.000</b></div>
-    <div>scroll <b data-hud="scroll">000%</b> · click to pulse</div>
+<section class="hero" id="hero" data-gl="shape:7;x:3.4;y:-.15;s:1.12;a:1;n:.02;r:0;lk:1" data-gl-m="x:0;y:1.45;s:.56;a:.42;lk:1" aria-label="Introduction">
+  <div class="pstage" data-mode="particles" aria-hidden="true">
+    <div class="ascii-wrap"><pre class="ascii"></pre><pre class="ascii ascii-hi"></pre></div>
+    <canvas class="halftone"></canvas>
   </div>
   <div class="wrap hero-inner">
     <p class="status" data-intro>
-      <span class="dot" aria-hidden="true"></span>Open to SDE · Full Stack · GenAI roles
-      <span class="sep" aria-hidden="true"></span><span class="loc"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Indore, IN</span>
+      <span class="dot" aria-hidden="true"></span>SDE @ Neural Nurture
+      <span class="sep" aria-hidden="true"></span><span class="loc"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Indore, IN · open to relocation</span>
     </p>
-    <h1 class="hero-name" aria-label="Devraj Parmar" data-cursor="lens">
+    <h1 class="hero-name" aria-label="Devraj Parmar">
       <span class="line" aria-hidden="true">Devraj</span>
       <span class="line outline" aria-hidden="true">Parmar</span>
     </h1>
     <p class="hero-role" data-intro>
       <span>I build</span>
       <span class="scramble" id="role" aria-hidden="true">full-stack systems</span>
-      <span class="sr-only">full-stack systems, GenAI pipelines, agentic AI, distributed backends and real-time UIs</span>
+      <span class="sr-only">full-stack systems, conversational AI, GenAI pipelines, agentic AI and distributed backends</span>
     </p>
-    <p class="hero-tag" data-intro>Final-year CS engineer who builds <strong>production-grade systems</strong> — from logistics algorithms and distributed backends to <strong>agentic AI pipelines</strong> that ship real code.</p>
+    <p class="hero-tag" data-intro>Software engineer who ships <strong>production-grade systems</strong> — from conversational AI products and distributed backends to <strong>agentic AI pipelines</strong> that write, test and ship real code.</p>
     <div class="hero-ctas" data-intro>
       <a href="#projects" class="btn btn-primary" data-magnetic=".3"><span class="btn-label">View projects</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
       <a href="Resume_Devraj_Parmar.pdf" class="btn btn-ghost btn-cv" download data-magnetic=".3"><span class="btn-label">Download resume</span><svg class="icon icon-dl" aria-hidden="true"><use href="#i-download"/></svg></a>
@@ -182,10 +187,10 @@
   <div class="hero-foot">
     <div class="wrap">
       <dl class="hero-stats">
-        <div><dt>LeetCode solved</dt><dd data-count="450" data-suffix="+">450+</dd></div>
-        <div><dt>CodeChef rating</dt><dd data-count="1680" data-suffix="+">1680+</dd></div>
-        <div><dt>Internships</dt><dd data-count="2">2</dd></div>
-        <div><dt>Projects shipped</dt><dd data-count="9">9</dd></div>
+        <div><dt>LeetCode solved</dt><dd data-count="550" data-suffix="+">550+</dd></div>
+        <div><dt>CodeChef · 3★</dt><dd data-count="1692">1,692</dd></div>
+        <div><dt>Codeforces · Specialist</dt><dd data-count="1474">1,474</dd></div>
+        <div><dt>Projects shipped</dt><dd data-count="10">10</dd></div>
       </dl>
       <a href="#about" class="scroll-cue"><span class="mouse" aria-hidden="true"></span><span>Scroll to explore</span></a>
     </div>
@@ -194,69 +199,90 @@
 
 <!-- ============ Marquee ============ -->
 <div class="marquee" aria-hidden="true">
-  <div class="mq-row"><span>React</span><span>Node.js</span><span>LangGraph</span><span>FastAPI</span><span>Docker</span><span>Kubernetes</span><span>AWS</span><span>PostgreSQL</span><span>Redis</span><span>TypeScript</span></div>
-  <div class="mq-row outline"><span>Agentic AI</span><span>RAG</span><span>System Design</span><span>Algorithms</span><span>WebSockets</span><span>CI/CD</span><span>Deep Learning</span><span>Next.js</span><span>pgvector</span></div>
+  <div class="mq-row"><span>Next.js</span><span>React</span><span>Node.js</span><span>LangGraph</span><span>FastAPI</span><span>PyTorch</span><span>Docker</span><span>AWS</span><span>PostgreSQL</span><span>Pinecone</span><span>TypeScript</span></div>
+  <div class="mq-row outline"><span>Conversational AI</span><span>Agentic AI</span><span>RAG</span><span>NLP</span><span>System Design</span><span>Algorithms</span><span>Real-time streaming</span><span>Payments</span><span>CI/CD</span></div>
 </div>
 
 <!-- ============ About ============ -->
-<section class="section" id="about" data-gl="shape:1;x:-4.3;s:1;a:.55;rz:.45;n:.05;r:.3" data-gl-m="x:0;s:.8;a:.3" aria-labelledby="about-title">
+<section class="section about" id="about" data-gl="shape:1;x:-4.3;s:1;a:.55;rz:.45;n:.05;r:.3" data-gl-m="x:0;s:.8;a:.3" aria-labelledby="about-title">
   <div class="wrap">
     <div class="sec-head">
       <div>
         <p class="eyebrow"><span class="num">01</span>About</p>
         <h2 class="title" id="about-title">Engineer. Builder. Problem <em>solver.</em></h2>
       </div>
+      <p class="sec-sub">The short version — keep scrolling to play it.</p>
     </div>
+  </div>
 
+  <div class="cine" id="cine">
+    <div class="cine-stage">
+      <p class="cine-kicker" aria-hidden="true"><span class="cine-rec"></span>devraj.about()<span class="cine-count">01 / 05</span></p>
+      <div class="cine-lines">
+        <p class="cine-line">Hi, I'm <em>Devraj.</em></p>
+        <p class="cine-line">I build systems that <em>ship</em> — not portfolio filler.</p>
+        <p class="cine-line">By day: <em>conversational AI</em> at Neural Nurture.</p>
+        <p class="cine-line">Before: live trading systems, and an online judge I built <em>solo.</em></p>
+        <p class="cine-line">After hours: <em>agents,</em> RAG, and things that think.</p>
+      </div>
+      <div class="cine-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </div>
+
+  <div class="wrap">
     <div class="about-grid">
-      <div class="about-left">
-        <div data-reveal><div class="id-card card" data-tilt="9">
-          <span class="id-holo" aria-hidden="true"></span>
-          <div class="id-top">
-            <span class="id-label">Engineer ID · 0xDP</span>
-            <span class="id-chip" aria-hidden="true"></span>
+      <div class="about-left" data-reveal>
+        <div class="idc" id="idc">
+          <div class="idc-tilt" data-tilt="8">
+            <div class="idc-inner">
+              <div class="idc-face idc-front">
+                <span class="idc-holo" aria-hidden="true"></span>
+                <div class="idc-top">
+                  <span class="idc-brand"><span class="brand-mark" aria-hidden="true">DP</span>Engineer access</span>
+                  <span class="id-chip" aria-hidden="true"></span>
+                </div>
+                <div class="idc-photo" aria-hidden="true"><pre class="idc-ascii"></pre><span class="idc-live">live</span></div>
+                <div>
+                  <p class="id-name">Devraj Parmar</p>
+                  <p class="id-role">Software Development Engineer</p>
+                </div>
+                <ul class="idc-access" aria-label="Focus areas"><li>Full stack</li><li>AI · NLP</li><li>Cloud</li></ul>
+                <div class="idc-foot"><span class="id-barcode" aria-hidden="true"></span><span class="idc-no">ID 0xDP · 2026</span></div>
+              </div>
+              <div class="idc-face idc-back">
+                <span class="idc-holo" aria-hidden="true"></span>
+                <div class="idc-top"><span class="idc-brand">Profile</span><span class="idc-seal" aria-hidden="true">DP</span></div>
+                <dl class="id-rows">
+                  <div><dt>Now</dt><dd>Neural Nurture</dd></div>
+                  <div><dt>Degree</dt><dd>B.Tech CSE · 2026</dd></div>
+                  <div><dt>Campus</dt><dd>SGSITS Indore</dd></div>
+                  <div><dt>Base</dt><dd class="open">Open to relocation</dd></div>
+                </dl>
+                <div class="idc-stats">
+                  <div><b>550+</b><span>LeetCode</span></div>
+                  <div><b>1,692</b><span>CodeChef</span></div>
+                  <div><b>1,474</b><span>Codeforces</span></div>
+                  <div><b>10</b><span>Projects</span></div>
+                </div>
+                <div class="idc-foot"><a class="idc-mail" href="mailto:devrajparmar232@gmail.com">devrajparmar232@gmail.com</a></div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div class="id-mono" aria-hidden="true">DP</div>
-            <p class="id-name">Devraj Parmar</p>
-            <p class="id-role">Full Stack · GenAI Engineer</p>
-          </div>
-          <div>
-            <dl class="id-rows">
-              <div><dt>Study</dt><dd>Computer Engineering</dd></div>
-              <div><dt>Campus</dt><dd>SGSITS Indore</dd></div>
-              <div><dt>Certified</dt><dd>Oracle AI · GenAI</dd></div>
-              <div><dt>Status</dt><dd class="open">Open to work</dd></div>
-            </dl>
-            <div class="id-barcode" aria-hidden="true"></div>
-          </div>
-        </div></div>
-        <div class="stats">
-          <div class="stat card" data-reveal><b data-count="450" data-suffix="+">450+</b><span>LeetCode</span></div>
-          <div class="stat card" data-reveal><b data-count="1680" data-suffix="+">1680+</b><span>CodeChef</span></div>
-          <div class="stat card" data-reveal><b data-count="9">9</b><span>Projects</span></div>
-          <div class="stat card" data-reveal><b data-count="2">2</b><span>Internships</span></div>
         </div>
+        <button class="idc-flip" type="button" aria-controls="idc" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-replay"/></svg><span>Flip the card</span></button>
       </div>
 
       <div class="about-right">
-        <p class="lead">I'm Devraj Parmar, a final-year Computer Engineering student at SGSITS Indore. I build production-ready systems — not portfolio filler.</p>
-        <div class="bio">
-          <p data-reveal>My work spans <strong>full-stack logistics platforms with real combinatorial algorithms</strong>, <strong>Dockerized execution engines deployed on AWS</strong>, and <strong>multi-agent AI systems</strong> that autonomously plan, code, test, and deploy software. I don't just learn technologies — I <span class="hl">ship them end-to-end</span>.</p>
-          <p data-reveal>At <strong>AlgoUniversity</strong>, I delivered a complete competitive programming judge solo — custom Docker sandbox, JWT auth, AWS EC2. At <strong>Umbrella Corporate</strong>, I hit a measurable <span class="hl">25% load-time improvement</span> by rearchitecting the WebSocket layer on a live trading platform.</p>
-          <p data-reveal>I hold <strong>Oracle certifications in AI Foundations and Generative AI</strong> and I'm actively building in the LLM/agentic AI space — the intersection of systems engineering and AI is where I want to work.</p>
-        </div>
-
         <div class="focus">
           <div class="focus-item card" data-reveal>
             <svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>
             <h3>Full-stack systems</h3>
-            <p>MERN &amp; Next.js apps, real-time UIs over WebSockets, algorithm-heavy backends.</p>
+            <p>Next.js &amp; MERN apps, real-time streaming UIs, payments and algorithm-heavy backends.</p>
           </div>
           <div class="focus-item card" data-reveal>
             <svg class="icon" aria-hidden="true"><use href="#i-bot"/></svg>
-            <h3>GenAI &amp; agents</h3>
-            <p>RAG pipelines, LangGraph multi-agent orchestration, LLM-powered dev tooling.</p>
+            <h3>AI &amp; NLP</h3>
+            <p>NER &amp; intent models, RAG pipelines, LangGraph multi-agent systems, LLM evaluation.</p>
           </div>
           <div class="focus-item card" data-reveal>
             <svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>
@@ -264,11 +290,16 @@
             <p>Docker, Kubernetes, AWS and CI/CD — I deploy what I build.</p>
           </div>
         </div>
-
+        <ul class="facts" data-reveal>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Indore, India · open to relocation</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-graduation"/></svg>B.Tech CSE, SGSITS · 2026</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg>Oracle certified · GenAI &amp; AI</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-activity"/></svg>State-level volleyball &amp; kho-kho</li>
+        </ul>
         <div class="about-ctas" data-reveal>
-          <a href="mailto:devrajparmar232@gmail.com" class="btn btn-primary" data-magnetic=".3"><span class="btn-label">Email me</span><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+          <button type="button" class="btn btn-primary" data-chat-open data-magnetic=".3"><span class="btn-label">Ask me anything</span><svg class="icon" aria-hidden="true"><use href="#i-message"/></svg></button>
+          <a href="mailto:devrajparmar232@gmail.com" class="btn btn-ghost" data-magnetic=".3"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span class="btn-label">Email</span></a>
           <a href="https://www.linkedin.com/in/devraj-parmar-459363187" target="_blank" rel="noopener" class="btn btn-ghost" data-magnetic=".3"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg><span class="btn-label">LinkedIn</span></a>
-          <a href="https://codolio.com/profile/Devraj_Parmar" target="_blank" rel="noopener" class="btn btn-ghost" data-magnetic=".3"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="btn-label">Codolio</span></a>
         </div>
       </div>
     </div>
@@ -296,28 +327,28 @@
 
       <div class="cats">
         <div class="cat" data-c="lang" style="--c:var(--cyan)" data-reveal>
-          <div><h3>Languages</h3><span class="cat-count">06 tools</span></div>
-          <ul class="pills"><li class="pill">C++</li><li class="pill">JavaScript</li><li class="pill">TypeScript</li><li class="pill">Python</li><li class="pill">SQL</li><li class="pill">PHP</li></ul>
+          <div><h3>Languages</h3><span class="cat-count">05 tools</span></div>
+          <ul class="pills"><li class="pill">C++</li><li class="pill">Python</li><li class="pill">JavaScript (ES6+)</li><li class="pill">TypeScript</li><li class="pill">SQL</li></ul>
         </div>
         <div class="cat" data-c="front" style="--c:var(--violet)" data-reveal>
           <div><h3>Frontend</h3><span class="cat-count">05 tools</span></div>
-          <ul class="pills"><li class="pill">React.js</li><li class="pill">Next.js</li><li class="pill">HTML5 / CSS3</li><li class="pill">Tailwind CSS</li><li class="pill">Leaflet.js</li></ul>
+          <ul class="pills"><li class="pill">React.js</li><li class="pill">Next.js</li><li class="pill">Redux</li><li class="pill">Tailwind CSS</li><li class="pill">Leaflet.js</li></ul>
         </div>
         <div class="cat" data-c="back" style="--c:var(--green)" data-reveal>
-          <div><h3>Backend</h3><span class="cat-count">05 tools</span></div>
-          <ul class="pills"><li class="pill">Node.js</li><li class="pill">Express.js</li><li class="pill">FastAPI</li><li class="pill">REST APIs</li><li class="pill">WebSockets</li></ul>
+          <div><h3>Backend &amp; Systems</h3><span class="cat-count">07 tools</span></div>
+          <ul class="pills"><li class="pill">Node.js</li><li class="pill">Express.js</li><li class="pill">FastAPI</li><li class="pill">REST APIs</li><li class="pill">Microservices</li><li class="pill">WebSockets</li><li class="pill">JWT / OAuth 2.0</li></ul>
         </div>
         <div class="cat" data-c="ai" style="--c:var(--pink)" data-reveal>
-          <div><h3>AI / ML</h3><span class="cat-count">06 tools</span></div>
-          <ul class="pills"><li class="pill">TensorFlow / Keras</li><li class="pill">scikit-learn</li><li class="pill">LangChain</li><li class="pill">LangGraph</li><li class="pill">OpenAI API</li><li class="pill">FAISS / RAG</li></ul>
+          <div><h3>AI / ML</h3><span class="cat-count">09 tools</span></div>
+          <ul class="pills"><li class="pill">LLMs</li><li class="pill">RAG</li><li class="pill">LangChain</li><li class="pill">LangGraph</li><li class="pill">Prompt Engineering</li><li class="pill">OpenAI API</li><li class="pill">PyTorch</li><li class="pill">NLP · NER</li><li class="pill">TensorFlow / Keras</li></ul>
         </div>
         <div class="cat" data-c="db" style="--c:var(--amber)" data-reveal>
-          <div><h3>Databases</h3><span class="cat-count">05 tools</span></div>
-          <ul class="pills"><li class="pill">MongoDB</li><li class="pill">PostgreSQL</li><li class="pill">MySQL</li><li class="pill">Redis</li><li class="pill">pgvector</li></ul>
+          <div><h3>Databases</h3><span class="cat-count">06 tools</span></div>
+          <ul class="pills"><li class="pill">MongoDB</li><li class="pill">PostgreSQL</li><li class="pill">Redis</li><li class="pill">Pinecone</li><li class="pill">pgvector</li><li class="pill">FAISS</li></ul>
         </div>
         <div class="cat" data-c="ops" style="--c:var(--blue)" data-reveal>
-          <div><h3>DevOps / Cloud</h3><span class="cat-count">06 tools</span></div>
-          <ul class="pills"><li class="pill">Docker</li><li class="pill">Kubernetes</li><li class="pill">AWS EC2 / ECR</li><li class="pill">GitHub Actions</li><li class="pill">Nginx</li><li class="pill">CI/CD</li></ul>
+          <div><h3>Cloud &amp; DevOps</h3><span class="cat-count">08 tools</span></div>
+          <ul class="pills"><li class="pill">Docker</li><li class="pill">AWS</li><li class="pill">Vercel</li><li class="pill">Kubernetes</li><li class="pill">GitHub Actions</li><li class="pill">CI/CD</li><li class="pill">Playwright</li><li class="pill">Nginx</li></ul>
         </div>
       </div>
     </div>
@@ -325,65 +356,131 @@
 </section>
 
 <!-- ============ Experience ============ -->
-<section class="section" id="experience" data-gl="shape:3;x:1.4;y:-.3;s:1.15;a:.5;rx:.95;r:.08" data-gl-m="x:0;s:.8;a:.32" aria-labelledby="exp-title">
+<section class="section exp" id="experience" data-gl="shape:3;x:1.4;y:-.3;s:1.15;a:.5;rx:.95;r:.08" data-gl-m="x:0;s:.8;a:.32" aria-labelledby="exp-title">
   <div class="wrap">
     <div class="sec-head">
       <div>
         <p class="eyebrow"><span class="num">03</span>Experience</p>
         <h2 class="title" id="exp-title">Where I've <em>shipped.</em></h2>
       </div>
-      <p class="sec-sub">Two internships. Real production systems. Real engineering pressure.</p>
+      <p class="sec-sub">Keep scrolling — this timeline runs sideways.</p>
     </div>
+  </div>
 
-    <div class="timeline">
-      <div class="tl-rail" aria-hidden="true"><div class="tl-fill"></div></div>
+  <div class="hx" id="hx">
+    <div class="hx-track">
 
-      <article class="job" data-reveal>
-        <span class="job-dot" aria-hidden="true"></span>
-        <div class="card job-card">
-          <header class="job-head">
+      <article class="panel" style="--accent: var(--cyan)" aria-labelledby="xp-nn">
+        <div class="panel-media">
+          <header class="panel-head">
+            <div class="job-logo" aria-hidden="true">NN</div>
+            <div class="job-id"><h3 id="xp-nn">Neural Nurture</h3><p>Software Development Engineer</p></div>
+            <div class="job-meta"><span class="tagp now">Current</span><span class="tagp hot">Apr 2026 – Present</span></div>
+          </header>
+          <div class="appwin">
+            <div class="appwin-bar"><span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>flight planner · illustrative</span></div>
+            <div class="nlu" id="nlu" role="img" aria-label="Illustration: the request 'cheapest flight Bangalore to Delhi next Friday, 2 adults' becomes structured search fields, and the follow-up 'make it 3 adults' updates only the adults field.">
+              <div class="bub" data-step>cheapest flight Bangalore → Delhi next Friday, 2 adults</div>
+              <div class="fields" data-step><span class="fld">from <b>BLR</b></span><span class="fld">to <b>DEL</b></span><span class="fld">date <b>next Fri</b></span><span class="fld" id="nlu-adults">adults <b>2</b></span><span class="fld">sort <b>price ↑</b></span></div>
+              <div class="bub" data-step>make it 3 adults</div>
+              <p class="nlu-note" data-step>↳ search refined, not restarted</p>
+            </div>
+          </div>
+          <ul class="job-metrics">
+            <li><b>End-to-end</b>chat → search → payment</li>
+            <li><b>NLP</b>NER + intent models</li>
+            <li><b>2 providers</b>Stripe · Razorpay/UPI</li>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <p class="product-lbl"><svg class="icon" aria-hidden="true"><use href="#i-plane"/></svg>Product · Flight Planner</p>
+          <h4 class="panel-h">Search, refine and book flights in plain English.</h4>
+          <ul class="job-pts">
+            <li>Full-stack work across a <strong>React / Next.js</strong> streaming chat UI, a <strong>Node.js</strong> API layer and a <strong>Python ML service</strong>.</li>
+            <li>Trained <strong>NER + intent models</strong> that turn free text into structured searches — follow-ups refine the live search.</li>
+            <li>Owned <strong>payments</strong> (Stripe, Razorpay/UPI), auth and release engineering, with <strong>Playwright E2E</strong> gating CI/CD.</li>
+            <li>Normalised third-party travel APIs into one schema; tuned React with memoisation, virtualisation and code-splitting.</li>
+          </ul>
+          <ul class="chips"><li class="chip">Next.js</li><li class="chip">React</li><li class="chip">TypeScript</li><li class="chip">Node.js</li><li class="chip">Python</li><li class="chip">NLP · NER</li><li class="chip">PostgreSQL</li><li class="chip">Stripe</li><li class="chip">Razorpay</li><li class="chip">Playwright</li></ul>
+          <p class="conf"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Production product — internals kept confidential.</p>
+        </div>
+      </article>
+
+      <article class="panel" style="--accent: var(--amber)" aria-labelledby="xp-uc">
+        <div class="panel-media">
+          <header class="panel-head">
+            <div class="job-logo" aria-hidden="true">UC</div>
+            <div class="job-id"><h3 id="xp-uc">Umbrella Corporate Ltd.</h3><p>Software Developer Intern</p></div>
+            <div class="job-meta"><span class="tagp hot">Apr – Jul 2025</span><span class="tagp">Onsite · Indore</span></div>
+          </header>
+          <div class="appwin">
+            <div class="appwin-bar"><span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>price feed · illustrative</span></div>
+            <div class="ticker">
+              <canvas id="ticker" role="img" aria-label="Illustration: a price line updated by HTTP polling lags in steps, while the WebSocket stream tracks every tick."></canvas>
+              <div class="ticker-legend" aria-hidden="true"><span class="lg-poll">HTTP polling</span><span class="lg-ws">WebSocket stream</span></div>
+            </div>
+          </div>
+          <ul class="job-metrics">
+            <li><b>−25%</b>data-propagation latency</li>
+            <li><b>Live</b>tick streaming</li>
+            <li><b>ML</b>trade signals via API</li>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <p class="product-lbl"><svg class="icon" aria-hidden="true"><use href="#i-trending"/></svg>Live trading dashboard</p>
+          <h4 class="panel-h">Real-time trading, minus the lag.</h4>
+          <ul class="job-pts">
+            <li>Cut data-propagation latency <strong>25%</strong> by replacing HTTP polling with a <strong>WebSocket streaming pipeline</strong> that pushes ticks to subscribers.</li>
+            <li>Fine-tuned and deployed a <strong>trade-signal model</strong>, serving inference behind an internal API for low-latency calls.</li>
+            <li>Refactored order handling to consume model predictions end-to-end, driving <strong>automated algorithmic execution</strong>.</li>
+          </ul>
+          <ul class="chips"><li class="chip">Node.js</li><li class="chip">MERN</li><li class="chip">WebSockets</li><li class="chip">Python ML</li><li class="chip">Algorithmic trading</li></ul>
+        </div>
+      </article>
+
+      <article class="panel" style="--accent: var(--violet)" aria-labelledby="xp-au">
+        <div class="panel-media">
+          <header class="panel-head">
             <div class="job-logo" aria-hidden="true">AU</div>
-            <div class="job-id"><h3>AlgoUniversity</h3><p>Software Development Extern</p></div>
+            <div class="job-id"><h3 id="xp-au">AlgoUniversity</h3><p>Software Development Extern</p></div>
             <div class="job-meta"><span class="tagp hot">May – Jul 2025</span><span class="tagp">Remote</span></div>
           </header>
+          <div class="appwin">
+            <div class="appwin-bar"><span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>judge-my-code · illustrative</span></div>
+            <div class="judge" id="judge" role="img" aria-label="Illustration: submissions run in isolated Docker containers and receive verdicts such as Accepted, Wrong Answer and Time Limit Exceeded."></div>
+          </div>
           <ul class="job-metrics">
-            <li><b>Solo</b>end-to-end build &amp; deploy</li>
-            <li><b>3 langs</b>C++ · Python · Java verdicts</li>
-            <li><b>AWS</b>EC2 · ECR · Nginx, set up by hand</li>
+            <li><b>Solo</b>built &amp; deployed</li>
+            <li><b>3 langs</b>C++ · Python · Java</li>
+            <li><b>AWS</b>EC2 · ECR · Nginx</li>
           </ul>
+        </div>
+        <div class="panel-body">
+          <p class="product-lbl"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg>Judge My Code</p>
+          <h4 class="panel-h">An online judge, built solo end-to-end.</h4>
           <ul class="job-pts">
-            <li>Built <strong>Judge My Code</strong> solo end-to-end — a production Online Judge with custom Docker-based code execution, no third-party sandbox APIs.</li>
-            <li>Execution engine spins isolated containers per submission, enforces CPU/memory limits, and returns verdicts (AC / WA / TLE) for C++, Python, Java.</li>
-            <li>Provisioned the full AWS stack from scratch — Dockerfiles, ECR registry, EC2, Nginx reverse proxy. No click-ops, all manual infra setup.</li>
-            <li>Implemented stateless <strong>JWT auth</strong> with role-based access, token refresh, and protected API routes across submission and admin flows.</li>
-            <li>Shipped a polished React frontend with real-time verdict updates, difficulty filters, and per-user submission history.</li>
+            <li>Custom <strong>Docker execution engine</strong> — an isolated container per submission with CPU/memory limits and AC / WA / TLE verdicts.</li>
+            <li>Provisioned AWS by hand: <strong>ECR, EC2 and an Nginx</strong> reverse proxy — no click-ops.</li>
+            <li><strong>JWT auth</strong> with roles, plus a React UI with real-time verdicts and per-user history.</li>
           </ul>
-          <ul class="chips"><li class="chip">React.js</li><li class="chip">Node.js</li><li class="chip">Express</li><li class="chip">MongoDB</li><li class="chip">Docker</li><li class="chip">AWS EC2/ECR</li><li class="chip">Nginx</li><li class="chip">JWT Auth</li></ul>
+          <ul class="chips"><li class="chip">React</li><li class="chip">Node.js</li><li class="chip">MongoDB</li><li class="chip">Docker</li><li class="chip">AWS EC2/ECR</li><li class="chip">JWT</li></ul>
         </div>
       </article>
 
-      <article class="job" data-reveal>
-        <span class="job-dot" aria-hidden="true"></span>
-        <div class="card job-card">
-          <header class="job-head">
-            <div class="job-logo" aria-hidden="true">UC</div>
-            <div class="job-id"><h3>Umbrella Corporate Ltd.</h3><p>Software Developer Intern</p></div>
-            <div class="job-meta"><span class="tagp hot">May – Jul 2024</span><span class="tagp">Onsite · Indore</span></div>
-          </header>
-          <ul class="job-metrics">
-            <li><b>−25%</b>page load time</li>
-            <li><b>Live</b>real-time trading dashboard</li>
-            <li><b>LSTM</b>signals surfaced on the chart</li>
-          </ul>
-          <ul class="job-pts">
-            <li>Built a <strong>real-time trading dashboard</strong> (MERN + WebSocket) — live price feeds, candlestick charts, automated trade signals, zero page refresh.</li>
-            <li>Refactored polling → debounced WebSocket subscriptions, cutting <strong>page load time by 25%</strong> and eliminating render lag under high-frequency data.</li>
-            <li>Integrated <strong>LSTM-based ML models</strong> from Python into the Node.js trading engine — buy/sell signals surfaced on the live chart in near real-time.</li>
-            <li>Collaborated directly with the product team on financial data pipelines and performance-critical frontend architecture for a live trading system.</li>
-          </ul>
-          <ul class="chips"><li class="chip">MERN Stack</li><li class="chip">WebSockets</li><li class="chip">LSTM / Python ML</li><li class="chip">Real-time UI</li><li class="chip">Performance Optimization</li></ul>
+      <div class="panel panel-end" style="--accent: var(--pink)">
+        <p class="eyebrow"><span class="num">→</span>Next chapter</p>
+        <p class="panel-end-h">Your team, <em>maybe?</em></p>
+        <p class="panel-end-sub">Open to SDE, full-stack and AI engineering roles — and to relocation.</p>
+        <div class="about-ctas">
+          <a href="#contact" class="btn btn-primary"><span class="btn-label">Let's talk</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <button type="button" class="btn btn-ghost" data-chat-open><svg class="icon" aria-hidden="true"><use href="#i-message"/></svg><span class="btn-label">Ask me anything</span></button>
         </div>
-      </article>
+      </div>
+    </div>
+
+    <div class="hx-rail" aria-hidden="true">
+      <div class="hx-line"><i class="hx-fill"></i></div>
+      <ol class="hx-marks"><li><b>Now</b>Neural Nurture</li><li><b>2025</b>Umbrella</li><li><b>2025</b>AlgoUniversity</li><li><b>Next</b>Your team?</li></ol>
     </div>
   </div>
 </section>
@@ -396,7 +493,7 @@
         <p class="eyebrow"><span class="num">04</span>Projects</p>
         <h2 class="title" id="proj-title">Built. Shipped. <em>Works.</em></h2>
       </div>
-      <p class="sec-sub">9 projects — each a real engineering problem solved, not a tutorial followed.</p>
+      <p class="sec-sub">10 projects — each a real engineering problem solved, not a tutorial followed.</p>
     </div>
 
     <div class="filters" role="group" aria-label="Filter projects">
@@ -488,13 +585,34 @@
               <button class="resolve" id="resolve" type="button"><svg class="icon" aria-hidden="true"><use href="#i-replay"/></svg>Re-solve</button>
             </div>
           </div>
-          <div class="rsecs">
-            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg>Algorithmic core</h4><p>Three strategies: <strong>2-opt local search</strong>, <strong>Clarke-Wright Savings</strong> and <strong>Greedy Nearest-Neighbor</strong> — run all three on the same instance and compare quality vs. speed side-by-side.</p></div>
-            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Backend engineering</h4><p>Node.js/Express for geospatial ingestion, vehicle constraints and async execution. <strong>OpenStreetMap</strong> road distances — not Euclidean guesses. MongoDB persists configs and solution history.</p></div>
-            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg>Interactive map UI</h4><p>React + Leaflet.js — define problems <em>directly on the map</em>: click to add waypoints, set demand and capacities. Routes render as animated multi-colour polylines per vehicle.</p></div>
-            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg>Real-world impact</h4><p>Cuts estimated fuel consumption by <strong>up to 20%</strong> vs. naive routing on benchmark cases, with graceful fallbacks for overloaded vehicles, isolated stops and unserviceable demand.</p></div>
+          <details class="rdetails">
+            <summary><span>How it works</span><span class="rd-hint">4 parts · algorithm, API, map, impact</span></summary>
+            <div class="rsecs">
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg>Algorithmic core</h4><p>Modelled fleet dispatch as a <strong>Heterogeneous Capacitated VRP</strong>, solved with a <strong>Clarke-Wright savings</strong> heuristic refined by <strong>2-opt</strong> local search — with greedy nearest-neighbour as the baseline to beat.</p></div>
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Backend engineering</h4><p>Modular Node.js/Express REST API with separate endpoints for route computation, <strong>ETA estimation</strong> and live-location updates; Haversine distances and non-blocking middleware keep the event loop free under large payloads.</p></div>
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg>Interactive map UI</h4><p>React + Leaflet.js — define problems <em>directly on the map</em>, then watch <strong>live multi-vehicle movement</strong> with dynamic re-routing as new location data arrives.</p></div>
+            <div class="rsec"><h4><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg>Real-world impact</h4><p>Cut total route distance by <strong>20%</strong> against a nearest-neighbour baseline across <strong>50+ node</strong> instances, with graceful fallbacks for overloaded vehicles and isolated stops.</p></div>
           </div>
-          <ul class="chips span-all"><li class="chip">React.js</li><li class="chip">Node.js</li><li class="chip">Express.js</li><li class="chip">MongoDB</li><li class="chip">Leaflet.js</li><li class="chip">OpenStreetMap</li><li class="chip">2-opt</li><li class="chip">Clarke-Wright</li></ul>
+          </details>
+          <ul class="chips span-all"><li class="chip">React.js</li><li class="chip">Node.js</li><li class="chip">Express.js</li><li class="chip">MongoDB</li><li class="chip">Leaflet.js</li><li class="chip">Haversine</li><li class="chip">2-opt</li><li class="chip">Clarke-Wright</li></ul>
+        </div>
+      </article>
+
+      <!-- Multi-Agent RAG -->
+      <article class="pc" data-cat="genai agentic" data-reveal>
+        <div class="pc-in card" data-tilt="5">
+          <div class="pc-top">
+            <div class="pc-icon" aria-hidden="true"><svg class="icon"><use href="#i-database"/></svg></div>
+            <span class="tagp hot">Feb 2026</span>
+          </div>
+          <p class="pc-cat">GenAI · Agentic RAG</p>
+          <h3 class="pc-name">Multi-Agent RAG System</h3>
+          <ul class="pc-metrics">
+            <li><b>90%</b>retrieval precision</li>
+            <li><b>−15%</b>end-to-end LLM latency</li>
+          </ul>
+          <p class="pc-desc">A stateful multi-agent RAG pipeline in <strong>LangGraph</strong> with a <strong>self-correction loop</strong>: low-confidence queries are rewritten and sent back to the retriever. Semantic search runs on OpenAI embeddings indexed in <strong>Pinecone</strong>, and prompt optimisation cut latency with no drop in answer quality. Containerised behind FastAPI with structured logging and latency tracing for repeatable evaluation runs.</p>
+          <ul class="chips"><li class="chip">LangGraph</li><li class="chip">LangChain</li><li class="chip">Pinecone</li><li class="chip">OpenAI</li><li class="chip">FastAPI</li><li class="chip">Docker</li></ul>
         </div>
       </article>
 
@@ -669,6 +787,12 @@
           <div class="pipe-group"><h4>Tools</h4><ul class="mini tools"><li>GitHub API</li><li>Docker</li><li>Web search</li><li>File system</li></ul></div>
         </div>
         <div class="pipe-group" style="margin-top:.8rem"><h4>Output</h4><ul class="mini out"><li>Tested code committed to Git</li><li>WebSocket thought stream</li></ul></div>
+        <div class="inspect" id="inspect" aria-live="polite">
+          <p class="inspect-k">Inspector <span>· hover or focus a node</span></p>
+          <p class="inspect-h">PlannerAgent</p>
+          <dl class="inspect-io"><div><dt>In</dt><dd>Task in plain English</dd></div><div><dt>Out</dt><dd>Ordered subtasks with acceptance criteria</dd></div></dl>
+          <p class="inspect-why">Small, testable steps keep generated diffs focused and reviewable.</p>
+        </div>
       </div>
 
       <div class="term" data-reveal>
@@ -705,39 +829,39 @@
     </div>
 
     <div class="bento">
-      <div class="ach big card" data-reveal>
+      <div class="ach big card">
         <span class="ach-glow" aria-hidden="true"></span>
         <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-zap"/></svg></div>
         <div>
-          <div class="ach-n" data-count="450" data-suffix="+">450+</div>
-          <p>LeetCode problems solved with optimal time &amp; space complexity — the habit behind every algorithm in my projects.</p>
+          <div class="ach-n" data-count="550" data-suffix="+">550+</div>
+          <p>Data structures &amp; algorithms problems solved on LeetCode — the habit behind every algorithm in my projects.</p>
         </div>
         <a class="link" href="https://leetcode.com/u/devrajparmar37/" target="_blank" rel="noopener">View LeetCode profile<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
       </div>
-      <div class="ach card" data-reveal>
+      <div class="ach card">
         <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-trophy"/></svg></div>
-        <div><div class="ach-n" data-count="1680" data-suffix="+">1680+</div><p>CodeChef rating — 3-star competitive programmer</p></div>
+        <div><div class="ach-n" data-count="1692">1,692</div><p>CodeChef 3-Star — top 10% globally in rated contests</p></div>
       </div>
-      <div class="ach card" data-reveal>
+      <div class="ach card">
+        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-code"/></svg></div>
+        <div><div class="ach-n" data-count="1474">1,474</div><p>Codeforces Specialist — rated competitive programming</p></div>
+      </div>
+      <div class="ach card">
         <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-target"/></svg></div>
         <div><div class="ach-n"><span class="tilde">~</span>40K</div><p>All India Rank (AIR) in JEE Mains 2022, out of 1M+ candidates</p></div>
       </div>
-      <div class="ach card" data-reveal>
+      <div class="ach card">
         <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-activity"/></svg></div>
         <div><div class="ach-n">State</div><p>State-level athlete — Volleyball &amp; Kho-Kho</p></div>
-      </div>
-      <div class="ach card" data-reveal>
-        <div class="ach-ic" aria-hidden="true"><svg class="icon"><use href="#i-award"/></svg></div>
-        <div><div class="ach-n">2×</div><p>Oracle certifications in AI &amp; Generative AI</p></div>
       </div>
     </div>
 
     <h3 class="subhead">Certifications</h3>
     <div class="certs">
-      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg><h3>Oracle Certified Professional</h3><p class="issuer">Generative AI</p><p class="yr">Oracle · 2025</p></div>
-      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-graduation"/></svg><h3>Oracle Certified Associate</h3><p class="issuer">AI Foundations</p><p class="yr">Oracle · 2025</p></div>
-      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg><h3>MERN Stack Development</h3><p class="issuer">LaunchED Platform</p><p class="yr">April – June 2025</p></div>
-      <div class="cert card" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><h3>Web Development Program</h3><p class="issuer">Acmegrade</p><p class="yr">June – July 2024</p></div>
+      <div class="cert card"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg><h3>Oracle Certified Professional</h3><p class="issuer">Generative AI</p><p class="yr">Oracle · 2025</p></div>
+      <div class="cert card"><svg class="icon" aria-hidden="true"><use href="#i-graduation"/></svg><h3>Oracle Foundations Associate</h3><p class="issuer">Artificial Intelligence</p><p class="yr">Oracle · 2025</p></div>
+      <div class="cert card"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg><h3>MERN Stack Development</h3><p class="issuer">LaunchED Platform</p><p class="yr">April – June 2025</p></div>
+      <div class="cert card"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><h3>Full Stack Development (MERN)</h3><p class="issuer">Acmegrade</p><p class="yr">June – July 2024</p></div>
     </div>
   </div>
 </section>
@@ -747,7 +871,7 @@
   <div class="wrap">
     <p class="eyebrow"><span class="num">07</span>Get in touch</p>
     <h2 class="title contact-title" id="contact-title">Let's build <em>something.</em></h2>
-    <p class="contact-sub" data-reveal>I'm actively seeking SDE, Full Stack, GenAI, or ML/DL engineering roles. Full-time, internship, or something worth building — I want to hear about it.</p>
+    <p class="contact-sub" data-reveal>Open to conversations about SDE, full-stack and AI engineering roles — and open to relocation. If you're building something worth building, I want to hear about it.</p>
     <div data-reveal>
       <a href="mailto:devrajparmar232@gmail.com" class="cta-orb" data-magnetic=".35"><span><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>Say hello</span></a>
     </div>
@@ -795,6 +919,28 @@
   </div>
 </div>
 
+<button class="chat-fab" type="button" data-chat-open aria-controls="chat" aria-expanded="false">
+  <span class="chat-fab-ava" aria-hidden="true">DP</span><span>Ask me</span>
+</button>
+<div class="chat" id="chat" role="dialog" aria-labelledby="chat-title" hidden>
+  <header class="chat-head">
+    <span class="chat-ava" aria-hidden="true">DP</span>
+    <div class="chat-hd">
+      <p class="chat-title" id="chat-title">Ask Devraj</p>
+      <p class="chat-sub"><span class="dot" aria-hidden="true"></span>Scripted assistant · instant answers</p>
+    </div>
+    <button class="chat-x" type="button" data-chat-close aria-label="Close chat"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </header>
+  <div class="chat-log" id="chat-log" role="log" aria-live="polite" data-lenis-prevent></div>
+  <div class="chat-chips" id="chat-chips"></div>
+  <form class="chat-form" id="chat-form" autocomplete="off">
+    <label class="sr-only" for="chat-input">Ask a question</label>
+    <input id="chat-input" type="text" maxlength="200" placeholder="Ask about skills, work, projects…">
+    <button type="submit" aria-label="Send"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
+  </form>
+  <p class="chat-note">Pre-written answers matched by keywords — not a live AI.</p>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="toast-msg"></span></div>
 
 <!-- ============ Scripts ============ -->
@@ -802,6 +948,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Flip.min.js" integrity="sha384-CHvG5TSBYWY4gs18D+se5IrGOZ6r8JlhAWob7LbkaUcfqD8PWzaYz2pqZdH7LsXQ" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
+<script src="assets/js/portrait-data.js" defer></script>
 <script src="assets/js/scene.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 <script>
