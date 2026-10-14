@@ -690,7 +690,9 @@
     // ASCII "photo" — head & shoulders slice of the portrait
     const P = window.__PORTRAIT, pre = $('.idc-ascii', card), box = $('.idc-photo', card);
     if (!P || !P.a || !pre) return;
-    const NL = String.fromCharCode(10), rows = P.a.split(NL).slice(5, 43);
+    const NL = String.fromCharCode(10), all = P.a.split(NL), W = Math.max.apply(null, all.map((r) => r.length));
+    // pad to full width: lines are right-trimmed, which would push the head off-centre
+    const rows = all.slice(5, 43).map((r) => r.padEnd(W));
     const text = rows.join(NL), GL = '.:-=+*#%@';
     const fit = () => { pre.style.fontSize = (box.clientHeight - 4) / rows.length + 'px'; };
     pre.textContent = text;
